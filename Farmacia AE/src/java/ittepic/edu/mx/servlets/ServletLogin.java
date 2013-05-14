@@ -38,7 +38,6 @@ public class ServletLogin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        
         String usuario = request.getParameter("txtNombre");
         String pwd = request.getParameter("txtPasswd");
         
