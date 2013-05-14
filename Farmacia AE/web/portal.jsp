@@ -14,8 +14,8 @@
     <body>
          <table>
             <tr>
-                <td><a href="consultaGeneralPersonas.jsp">Ver Usuarios Registrados</a></td>
-                <td><a href="altaPersonas.jsp">Registrar Nueva Usuario</a></td>
+                <td><a href="consultaPersonas.jsp">Ver Personas</a></td>
+                <td><a href="altaPersonas.jsp">Registrar Nueva Persona</a></td>
             </tr>
             <tr>
                 <td><a href="consultaGeneralArticulos.jsp">Ver Medicamentos Disponibles</a></td>
