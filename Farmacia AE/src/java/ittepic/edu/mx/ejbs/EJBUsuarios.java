@@ -16,7 +16,7 @@ import javax.persistence.PersistenceUnit;
  *
  * @author sears
  */
-@Stateful
+@Stateful (name = "EJBUsuarios")
 @Remote (EJBUsuariosRemote.class)
 public class EJBUsuarios implements EJBUsuariosRemote {
     
@@ -32,10 +32,12 @@ public class EJBUsuarios implements EJBUsuariosRemote {
         Usuario user = null;
        em=emf.createEntityManager();
         try{
-            return (Usuario)em.createQuery("select u from Usuario u where u.login=:login and u.password:=password")
-                    .setParameter("login", usuario).setParameter("password", pwd)
-                    .getResultList();
+            return (Usuario)em.createQuery("select u from Usuario u where u.login like :login and u.password like :password")
+                    .setParameter("login", usuario)
+                    .setParameter("password", pwd)
+                    .getSingleResult();
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }

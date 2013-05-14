@@ -5,6 +5,8 @@
 package ittepic.edu.mx.servlets;
 
 import ittepic.edu.mx.ejbs.EJBUsuarios;
+import ittepic.edu.mx.ejbs.EJBUsuariosRemote;
+import ittepic.edu.mx.entidades.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletLogin extends HttpServlet {
       
       @EJB
-      EJBUsuarios ejbUsuario;        
+      private EJBUsuariosRemote ejbUsuario;        
       
     
     /**
@@ -40,24 +42,14 @@ public class ServletLogin extends HttpServlet {
         String usuario = request.getParameter("txtNombre");
         String pwd = request.getParameter("txtPasswd");
         
-        ejbUsuario.obtenerUsuario(usuario, pwd);
+        Usuario user = ejbUsuario.obtenerUsuario(usuario, pwd);
         
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletLogin</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletLogin at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {            
-            out.close();
+        if (user !=null){
+            response.sendRedirect("wpBien.jsp");
+        }else {
+            response.sendRedirect("wpMal.jsp");
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

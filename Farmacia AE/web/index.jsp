@@ -14,13 +14,13 @@
     <body>
         <h2>Iniciar Sesion:</h2>
         <br>
-        <form action="/ServletLogin" method="POST">
+        <form action="http://localhost:8080/Farmacia_AE/ServletLogin" method="POST">
             <table>
                 <tr>
                     <td>Usuario:</td><td><input type="text" name="txtNombre"></td>
                 </tr>
                 <tr>
-                    <td>Password:</td><td><input type="text" name="txtPasswd"></td>
+                    <td>Password:</td><td><input type="password" name="txtPasswd"></td>
                 </tr>
             </table>
             <input type="submit" name="btnEnviar">
