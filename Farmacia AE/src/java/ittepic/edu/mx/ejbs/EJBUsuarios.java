@@ -30,8 +30,11 @@ public class EJBUsuarios implements EJBUsuariosRemote {
     @Override
     public Usuario obtenerUsuario(String usuario, String pwd) {
         Usuario user = null;
+       em=emf.createEntityManager();
         try{
-            return user;
+            return (Usuario)em.createQuery("select u from Usuario u where u.login=:login and u.password:=password")
+                    .setParameter("login", usuario).setParameter("password", pwd)
+                    .getResultList();
         }catch (Exception e){
             return null;
         }
