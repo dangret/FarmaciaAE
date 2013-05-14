@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ittepic.edu.mx.ejbs;
+package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Producto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "producto_idproducto_seq")
+    @SequenceGenerator(name = "producto_idproducto_seq", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "idproducto")
     private Integer idproducto;

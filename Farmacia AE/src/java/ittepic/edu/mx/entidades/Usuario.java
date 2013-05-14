@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ittepic.edu.mx.ejbs;
+package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,9 +42,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByFechacreacion", query = "SELECT u FROM Usuario u WHERE u.fechacreacion = :fechacreacion")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_idusuario_seq")
+    @SequenceGenerator(name = "usuario_idusuario_seq", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "idusuario")
     private Integer idusuario;
@@ -163,5 +166,4 @@ public class Usuario implements Serializable {
     public String toString() {
         return "ittepic.edu.mx.ejbs.Usuario[ idusuario=" + idusuario + " ]";
     }
-    
 }

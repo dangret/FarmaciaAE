@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ittepic.edu.mx.ejbs;
+package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -43,9 +44,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByCelular", query = "SELECT p FROM Persona p WHERE p.celular = :celular"),
     @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email")})
 public class Persona implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_idcliente_seq")
+    @SequenceGenerator(name = "persona_idcliente_seq", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "idcliente")
     private Integer idcliente;
@@ -200,5 +203,4 @@ public class Persona implements Serializable {
     public String toString() {
         return "ittepic.edu.mx.ejbs.Persona[ idcliente=" + idcliente + " ]";
     }
-    
 }
