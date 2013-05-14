@@ -4,6 +4,7 @@
  */
 package ittepic.edu.mx.ejbs;
 
+import ittepic.edu.mx.entidades.Usuario;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
@@ -12,6 +13,6 @@ import javax.ejb.Remote;
  * @author sears
  */
 @Remote
-public interface EJBUsuariosLocal {
-    
+public interface EJBUsuariosRemote {
+    public Usuario obtenerUsuario (String usuario, String pwd); 
 }

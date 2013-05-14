@@ -4,6 +4,7 @@
  */
 package ittepic.edu.mx.servlets;
 
+import ittepic.edu.mx.ejbs.EJBUsuarios;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletLogin extends HttpServlet {
       
       @EJB
-      EJBUsuario ejbUsuario;        
+      EJBUsuarios ejbUsuario;        
       
     
     /**
@@ -38,6 +39,8 @@ public class ServletLogin extends HttpServlet {
         
         String usuario = request.getParameter("txtNombre");
         String pwd = request.getParameter("txtPasswd");
+        
+        ejbUsuario.obtenerUsuario(usuario, pwd);
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
