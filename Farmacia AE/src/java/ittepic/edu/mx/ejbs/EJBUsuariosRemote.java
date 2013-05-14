@@ -5,6 +5,8 @@
 package ittepic.edu.mx.ejbs;
 
 import ittepic.edu.mx.entidades.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Remote;
 
@@ -15,4 +17,11 @@ import javax.ejb.Remote;
 @Remote
 public interface EJBUsuariosRemote {
     public Usuario obtenerUsuario (String usuario, String pwd); 
+    
+    public List<Usuario> consultaGeneral();
+
+    public int alta(Usuario u);
+    public int modificar(Usuario p);
+    public Usuario consultaPorNombre(String login);
+    public int eliminarPorId(int idpersona);
 }
