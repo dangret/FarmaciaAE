@@ -14,31 +14,29 @@
       
     </div>
     <ul id="nav">
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Nuestros Productos</a></li>
-      <li><a href="#">Login</a></li>
-      <li><a href="#">Contactanos</a></li>
+      <li><a href="#">Mi Perfil</a></li>
+      <li><a href="#"> Productos</a></li>
+      <li><a href="#">Pedidos</a></li>
+      <li><a href="#">Clientes</a></li>
+      <li><a href="#">Usuarios</a></li>
     </ul>
   </div>
   <!-- /header -->
   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
     <div class="side fr">
+      
       <div id="bm"> <img src="images/s.jpg" alt="" /> </div>
     </div>
     <div class="main fl">
       <div id="text">
-        <h2>Compra Tu Medicinas Al Mejor Precio</h2>
-        <p> Similares a tu alcance!!! parecen lo mismo pero solo parecen jajja <a href="http://www.farmaciasdesimilares.com.mx/">Somos Mejor que Esto!!!!!</a> <br/>
+        <h2>Datos del Cliente</h2>
+        <p> Datos del cliente y sus medios de pago <br/>
           <br/>
-          <div>
-              <ul>
-              <li><a href="cliente.jsp">Clientes</a></li>  
-              <li> <a href="adm.jsp">Administrador</a></li>  
-              </ul>
+        
       </div>
       
-   
-    </div>
+      
+        
     <!-- /content -->
   </div>
   <div class="clearfix"></div>
