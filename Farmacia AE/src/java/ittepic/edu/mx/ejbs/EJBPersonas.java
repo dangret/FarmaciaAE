@@ -7,7 +7,8 @@ package ittepic.edu.mx.ejbs;
 import ittepic.edu.mx.entidades.Persona;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -17,7 +18,8 @@ import javax.persistence.PersistenceUnit;
  *
  * @author JESUS
  */
-@Stateless
+@Stateful
+@Remote (EJBPersonasLocal.class)
 public class EJBPersonas implements EJBPersonasLocal {
 
     private List<Persona> personas = new ArrayList<Persona>();
@@ -76,5 +78,18 @@ public class EJBPersonas implements EJBPersonasLocal {
     public void eliminar(Persona p) {
         personas.remove(p);
     }
+
+    @Override
+    public int alta(Persona p) {
+        try {
+            em.merge(p);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    
 
 }

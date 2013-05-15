@@ -21,4 +21,5 @@ public interface EJBPersonasLocal {
     public int eliminar(int idcliente);
     public void eliminar(Persona p);
     public void reemplazar(List<Persona> list_p);
+    public int alta(Persona p);
 }

@@ -1,3 +1,8 @@
+<%@page import="ittepic.edu.mx.entidades.CatTiposusuario"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBTipoUsuarioLocal"%>
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasLocal"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="ittepic.edu.mx.entidades.Persona"%>
@@ -7,12 +12,18 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!    EJBUsuariosRemote ejb = null;
+<%!    EJBPersonasLocal ejb = null;
+    EJBUsuariosRemote ejb2 = null;
+    EJBTipoUsuarioLocal ejb3 = null;
 
     public void jspInit() {
         try {
             InitialContext ic = new InitialContext();
-            ejb = (EJBUsuariosRemote) ic.lookup(EJBUsuariosRemote.class.getName());
+            ejb = (EJBPersonasLocal) ic.lookup(EJBPersonasLocal.class.getName());
+            
+            InitialContext ic2 = new InitialContext();
+            ejb3 = (EJBTipoUsuarioLocal) ic.lookup(EJBTipoUsuarioLocal.class.getName());
+            
             System.out.println("Bean cargado");
         } catch (Exception ex) {
             System.out.println("Error:"
@@ -21,23 +32,23 @@
     }
 %>
 <%
+    usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
+    int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
     Usuario usr;
     Persona per;
+    CatTiposusuario tipoUsr;
 
     if (!nombre.equals("")) {
-        System.out.println("entro3");
-        String apepat = request.getParameter("apepat");
-        String apemat = request.getParameter("apemat");
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date fecnac = format.parse(request.getParameter("fecnac"));
-        String telf = request.getParameter("telf");
-        String celular = request.getParameter("celular");
-        String direccion = request.getParameter("direccion");
-        String email = request.getParameter("email");
-        String user = request.getParameter("user");
-        String password = request.getParameter("password");
-
+        //TABLA PERSONA
+        String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat");
+        String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecnac = format.parse(request.getParameter("fecnac") == null ? "" : request.getParameter("fecnac"));
+        String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf");
+        String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
+        String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion");
+        String email = request.getParameter("email") == null ? "" : request.getParameter("email");
         per = new Persona();
         per.setNombre(nombre);
         per.setAppat(apepat);
@@ -47,8 +58,27 @@
         per.setCelular(celular);
         per.setDireccion(direccion);
         per.setEmail(email);
+        //ejb.alta(per);
+        
+        //TIPO DE USUARIO
+        tipoUsr = new CatTiposusuario();
+        int tipo = combo;
+        tipoUsr.setDescripcion(combo);
+        ejb3.altaTipo(tipoUsr);
 
+
+        // TABLA USUARIO
         usr = new Usuario();
+        int tipoUsuario = combo;
+        int idcliente = u.ultimo() + 1;
+        String user = request.getParameter("user");
+        String password = request.getParameter("password");
+        Calendar calendario = GregorianCalendar.getInstance();
+        Date fecha = calendario.getTime();
+        SimpleDateFormat formato = new SimpleDateFormat("dd-MM-yyyy");
+        String fecCre1 = formato.format(fecha);
+        System.out.println(fecCre1);
+        Date fecCre2 = formato.parse(fecCre1);
 
     }
 
@@ -57,28 +87,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de alumnos</title>
+        <script>
+            function cancelar1() {
+                window.location="index.jsp";
+            }
+                
+        </script>
     </head>
     <body>
         <div align="center">
             <H2>REGISTRO DE USUARIOS</H1>
         </div>
 
-        <form name="formulario" action="consultaGeneral.jsp" method="POST">
-            <script>
-                function cancelar1() {
-                    window.location="index.jsp";
-                }
-                
-        function validar(){
-            valor=document.formu.combo.value;
-            if(valor=='#') 
-                alert('valor invalido') 
-            else if(valor==1)
-                <%System.out.println("Selecciono 1");%>
-                else if(valor==2)
-                <%System.out.println("Selecciono 2");%>
-                                            }
-            </script>
+        <form name="formulario" action="registroUsuario.jsp" method="POST">
             <div align="center">
                 <table border="1">
                     <tr>
@@ -127,13 +148,11 @@
                     <tr>
                         <td>PASSWORD:</td>
                         <td><input type="password" name="password"></td>
-                        <td><form method="POST" name="formu" ">
-                            TIPO: <SELECT NAME="combo" SIZE=1 onclick="validar();"> 
+                        <td>TIPO: <SELECT NAME="combo" SIZE=1> 
                                 <option value="#">:: Seleccione ::</option> 
                                 <OPTION VALUE="1">Administrador</OPTION>
                                 <OPTION VALUE="2">Usuario</OPTION>
                             </SELECT> 
-                            </form>
                         </td>
                     </tr>
 
