@@ -19,6 +19,4 @@ public interface EJBPersonasLocal {
     public int alta_modificacion (Persona p);
     public Persona consultaPorId(int idcliente );
     public int eliminar(int idcliente);
-    public void eliminar(Persona p);
-    public void reemplazar(List<Persona> list_p);
 }

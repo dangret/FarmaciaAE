@@ -4,6 +4,7 @@
     Author     : JESUS
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="ittepic.edu.mx.entidades.Persona"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -27,16 +28,16 @@
 %>
 
 <%    
-    int idcliente = request.getParameter("idcliente")==null?0:Integer.parseInt(request.getParameter("idcliente"));
+    int idcliente = request.getParameter("modificar")==null?0:Integer.parseInt(request.getParameter("modificar"));
     Persona p = null;
     String nombre="", appat="", apmat="", fechnac="", telefono="", direccion="", email="", celular="";
-    
+    SimpleDateFormat sdffecha = new SimpleDateFormat("yyyy-MM-dd");
     if(idcliente!=0) {
         p = ejb.consultaPorId(idcliente);
         nombre=p.getNombre()==null?"":p.getNombre();
         appat=p.getAppat()==null?"":p.getAppat();
         apmat=p.getApmat()==null?"":p.getApmat();
-        fechnac=p.getFechnac().toString()==null?"":p.getFechnac().toString();
+        fechnac=sdffecha.format(p.getFechnac())==null?"":sdffecha.format(p.getFechnac());
         telefono=p.getTelefono()==null?"":p.getTelefono();
         direccion=p.getDireccion()==null?"":p.getDireccion();
         email=p.getEmail()==null?"":p.getEmail();
@@ -46,7 +47,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>FARMACIA SAN CAZOLA - EDITAR</title>
         <script>
               function cancelar() {
                   window.location="portal.jsp";
@@ -54,7 +55,7 @@
         </script>
     </head>
     <body>
-        <h1>Alta Personas</h1>
+        <h1>Alta/Modificacion de Personas</h1>
         <form method="POST" action="consultaPersonas.jsp?idcliente=<%=idcliente%>">
             <table>
                  <tr>
@@ -70,7 +71,7 @@
                     <td><input type="text" name="apmat" value="<%=apmat%>"></td>
                 </tr>
                 <td>Fecha de Nacimiento: </td>
-                    <td><input type="date" name="fechnac" id="fechnac"></td>
+                <td><input type="date" name="fechnac" id="fechnac" value="<%=fechnac%>"></td>
                 <tr>
                     <td>Telefono</td>
                     <td><input type="text" name="telefono" value="<%=telefono%>"></td>
