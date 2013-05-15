@@ -29,39 +29,54 @@ public class EJBProductos implements EJBProductosRemote {
     
     @Override
     public List<Producto> productoObtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+           em = emf.createEntityManager();
+           return em.createNamedQuery("Producto.findAll")
+                   .getResultList();
+        }catch (Exception e){
+            return null;
+        }
     }
 
+    
     @Override
-    public int productoAlta(Producto p) {
+    public int productoBaja(Producto p) {
         try{
             em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.persist(p);
-            em.getTransaction().commit();
-            em.close();
+            em.remove(em.merge(p));
             return 1;
-        }catch(Exception e){
+        }catch (Exception e){
+            e.printStackTrace();
             return -1;
         }
     }
 
     @Override
-    public int productoBaja(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int ProductoModificar(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public int ProductoGuardar(Producto p) {
+        try{
+            em = emf.createEntityManager();
+            em.merge(p);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     @Override
-    public Producto productoObtenerPorID(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Producto productoObtenerPorID(int id) {
+         try{
+            em = emf.createEntityManager();
+            
+            return (Producto) em.createNamedQuery("Producto.findByIdproducto")
+                    .setParameter("idproducto", id)
+                    .getSingleResult();
+        }catch(Exception e){
+            return null;
+        }
     }
 
 }
