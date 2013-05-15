@@ -42,6 +42,7 @@
    String direccion = request.getParameter("direccion");
    String celular = request.getParameter("celular");
    String email = request.getParameter("email");
+   int idcliente = Integer.parseInt(request.getParameter("idcliente"));
    Persona p = new Persona();
    p.setNombre(nombre);
    p.setAppat(appat);
@@ -54,6 +55,7 @@
    if(modificar==null&&eliminar==null){
             ejb.alta_modificacion(p); 
         } else if(modificar!=null ){
+            p.setIdcliente(idcliente);
             ejb.alta_modificacion(p);
         }
    } else if(eliminar!=null){
@@ -106,7 +108,7 @@
                <tr>
                <% for(int i=0; i<personas.size(); i++){ %>
                <td>
-                   <a href="modificarPersona.jsp?i=<%=i+""%>">
+                   <a href="altaPersonas.jsp?i=<%=i+""%>">
                         <%out.print(personas.get(i).getNombre());%>
                    </a>
                </td>
