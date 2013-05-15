@@ -5,6 +5,7 @@
 package ittepic.edu.mx.ejbs;
 
 import ittepic.edu.mx.entidades.Persona;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,6 +20,8 @@ import javax.persistence.PersistenceUnit;
 @Stateless
 public class EJBPersonas implements EJBPersonasLocal {
 
+    private List<Persona> personas = new ArrayList<Persona>();
+    
     @PersistenceContext
     private EntityManager em;
     @PersistenceUnit
@@ -62,5 +65,16 @@ public class EJBPersonas implements EJBPersonasLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public void reemplazar(List<Persona> list_p) {
+        personas.clear();
+        personas.addAll(list_p);
+    }
+
+    @Override
+    public void eliminar(Persona p) {
+        personas.remove(p);
+    }
 
 }

@@ -4,6 +4,7 @@
     Author     : JESUS
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
@@ -28,18 +29,10 @@
 %>
 
 <%
-  jspInit();
-  SimpleDateFormat sdffecha = new SimpleDateFormat("dd-MM-yyyy");
-  List<Persona> personas = null;
   String nombre = request.getParameter("nombre");
-  String[] borrar = request.getParameterValues("cbBorrar");
-  if (borrar!=null)
-  {
-   for(int i=0; i<borrar.length; i++)
-   {
-    ejb.eliminar(Integer.parseInt(borrar[i]));
-   }
-  }
+  String modificar = request.getParameter("modificar");
+  String eliminar = request.getParameter("eliminar");
+  SimpleDateFormat sdffecha = new SimpleDateFormat("dd-MM-yyyy");
   if(nombre!=null)
   {
    String appat = request.getParameter("appat");
@@ -49,9 +42,6 @@
    String direccion = request.getParameter("direccion");
    String celular = request.getParameter("celular");
    String email = request.getParameter("email");
-   //Funcionamiento del merge
-   int idcliente = Integer.parseInt(request.getParameter("idcliente"));
-  
    Persona p = new Persona();
    p.setNombre(nombre);
    p.setAppat(appat);
@@ -61,17 +51,27 @@
    p.setDireccion(direccion);
    p.setCelular(celular);
    p.setEmail(email);
-   if(idcliente!=0)
-   {
-    p.setIdcliente(idcliente);
-    ejb.alta_modificacion(p);
-   }
-   else
-   {
-    ejb.alta_modificacion(p);
-   }
-  }
-  personas = ejb.consultaPersonas();
+   if(modificar==null&&eliminar==null){
+            ejb.alta_modificacion(p); 
+        } else if(modificar!=null ){
+            ejb.alta_modificacion(p);
+        }
+   } else if(eliminar!=null){
+        ejb.eliminar(Integer.parseInt(eliminar));
+    } else {
+        String [] listaeliminar = request.getParameterValues("borrar");
+        if(listaeliminar!=null) {
+            List<Persona> listaactual = ejb.consultaPersonas(); //obtengo todos los elementos que hay actualmente en el EJB
+            List<Persona> listaaeliminar = new ArrayList<Persona>(); //Creo una nueva lista en la que almacenaré los elementos a eliminar
+            for(int i=0; i<listaeliminar.length; i++) { //Copio en la lista los objetos de tipo estudiante que deseo eliminar
+                listaaeliminar.add(listaactual.get(Integer.parseInt(listaeliminar[i])));
+            }
+            listaactual.removeAll(listaaeliminar); //Elimino todos los elementos que deseo eliminar
+             //Actualizo los datos en el EJB
+        }
+    }
+    session.setAttribute("ejb", ejb);
+    List<Persona> personas = ejb.consultaPersonas();
 %>
 <html>
     <head>
@@ -98,13 +98,15 @@
                    <th>Apellido Materno</th>
                    <th>Fecha de Nacimiento</th>
                    <th>Telefono</th>
+                   <th>Direccion</th>
                    <th>Celular</th>
                    <th>E-mail</th>
+                   <th>Eliminar</th>
                </tr>
                <tr>
                <% for(int i=0; i<personas.size(); i++){ %>
                <td>
-                   <a href="modificarPersona.jsp?i=<%=personas.get(i).getIdcliente()+""%>">
+                   <a href="modificarPersona.jsp?i=<%=i+""%>">
                         <%out.print(personas.get(i).getNombre());%>
                    </a>
                </td>
@@ -115,7 +117,7 @@
                <td><%out.print(personas.get(i).getDireccion());%></td>
                <td><%out.print(personas.get(i).getCelular());%></td>
                <td><%out.print(personas.get(i).getEmail());%></td>
-               <td><input type="checkbox" name="cbBorrar" value="<%=personas.get(i).getIdcliente()+""%>"></td>
+               <td><input type="checkbox" value="<%=i%>" name="borrar"></td>
                </tr>
            <%}%>
            </table>
@@ -131,7 +133,7 @@
                     </tr>
                     </table>
                <%}%>
-           </table>
+           </table>          
      </form>
  </body>
 </html>

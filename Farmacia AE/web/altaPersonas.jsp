@@ -23,12 +23,14 @@
         }
         
     }
+    
 %>
 
-<%
+<%    
     int idcliente = request.getParameter("idcliente")==null?0:Integer.parseInt(request.getParameter("idcliente"));
     Persona p = null;
     String nombre="", appat="", apmat="", fechnac="", telefono="", direccion="", email="", celular="";
+    
     if(idcliente!=0) {
         p = ejb.consultaPorId(idcliente);
         nombre=p.getNombre()==null?"":p.getNombre();
@@ -45,6 +47,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script>
+              function cancelar() {
+                  window.location="portal.jsp";
+              }
+        </script>
     </head>
     <body>
         <h1>Alta Personas</h1>
@@ -84,7 +91,7 @@
             <table>
                 <tr>
                     <td><input type="submit" value="Guardar" name="btnGuardar"></td>
-                    <td></td>
+                    <td><input type="button" value="Cancelar" name="btnCancelar" onclick="cancelar();"</td>
                 </tr>
             </table>
         </form>
