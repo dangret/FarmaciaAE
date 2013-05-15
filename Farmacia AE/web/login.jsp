@@ -25,6 +25,7 @@
             </table>
             <input type="submit" name="btnEnviar">
             <a href="portal.jsp">Portal</a>
+            <a href="registroUsuario.jsp">Registrarse</a>
         </form>
     </body>
 </html>
