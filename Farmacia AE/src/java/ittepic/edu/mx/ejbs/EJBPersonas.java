@@ -20,8 +20,6 @@ import javax.persistence.PersistenceUnit;
 @Stateless
 public class EJBPersonas implements EJBPersonasLocal {
 
-    private List<Persona> personas = new ArrayList<Persona>();
-    
     @PersistenceContext
     private EntityManager em;
     @PersistenceUnit
@@ -36,8 +34,9 @@ public class EJBPersonas implements EJBPersonasLocal {
 
     @Override
     public int alta_modificacion(Persona p) {
+        em = emf.createEntityManager();
         try{
-        em.merge(p);
+            em.merge(p);
         }catch (Exception e){
             return -1;
         }
@@ -55,6 +54,7 @@ public class EJBPersonas implements EJBPersonasLocal {
         try
         {
          em = emf.createEntityManager();
+         
          em.createNamedQuery("Persona.eliminar").setParameter("idcliente", idcliente).executeUpdate();
         }catch(Exception e)
         {
@@ -65,16 +65,5 @@ public class EJBPersonas implements EJBPersonasLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
-
-    @Override
-    public void reemplazar(List<Persona> list_p) {
-        personas.clear();
-        personas.addAll(list_p);
-    }
-
-    @Override
-    public void eliminar(Persona p) {
-        personas.remove(p);
-    }
 
 }
