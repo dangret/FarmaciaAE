@@ -8,6 +8,10 @@ import ittepic.edu.mx.entidades.Producto;
 import java.util.List;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 
 /**
  *
@@ -16,7 +20,13 @@ import javax.ejb.Stateful;
 @Stateful
 @Remote(EJBProductosRemote.class)
 public class EJBProductos implements EJBProductosRemote {
-
+    
+    @PersistenceContext
+    private EntityManager em;
+    @PersistenceUnit
+    private EntityManagerFactory emf;
+    
+    
     @Override
     public List<Producto> productoObtenerTodos() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -24,7 +34,16 @@ public class EJBProductos implements EJBProductosRemote {
 
     @Override
     public int productoAlta(Producto p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(p);
+            em.getTransaction().commit();
+            em.close();
+            return 1;
+        }catch(Exception e){
+            return -1;
+        }
     }
 
     @Override
@@ -39,5 +58,10 @@ public class EJBProductos implements EJBProductosRemote {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public Producto productoObtenerPorID(long id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }
