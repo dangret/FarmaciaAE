@@ -4,16 +4,15 @@
  */
 package ittepic.edu.mx.servlets;
 
-import ittepic.edu.mx.ejbs.EJBUsuarios;
 import ittepic.edu.mx.ejbs.EJBUsuariosRemote;
 import ittepic.edu.mx.entidades.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -44,7 +43,12 @@ public class ServletLogin extends HttpServlet {
         Usuario user = ejbUsuario.obtenerUsuario(usuario, pwd);
         
         if (user !=null){
-            response.sendRedirect("wpBien.jsp");
+            HttpSession sesion = request.getSession(true);
+            sesion.setAttribute("usuario", user);
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                response.sendRedirect("admin.jsp");
+            else
+                response.sendRedirect("cliente.jsp");
         }else {
             response.sendRedirect("wpMal.jsp");
         }

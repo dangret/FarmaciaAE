@@ -14,9 +14,10 @@ import javax.ejb.Remote;
  * @author JESUS
  */
 @Remote
-public interface EJBPersonasLocal {
+public interface EJBPersonasRemote {
     public List<Persona> consultaPersonas();
     public int alta_modificacion (Persona p);
     public Persona consultaPorId(int idcliente );
     public int eliminar(int idcliente);
+    public void reemplazar(List<Persona> list_p);
 }

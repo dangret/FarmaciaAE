@@ -19,8 +19,8 @@ import javax.persistence.PersistenceUnit;
  * @author JESUS
  */
 @Stateful
-@Remote (EJBPersonasLocal.class)
-public class EJBPersonas implements EJBPersonasLocal {
+@Remote (EJBPersonasRemote.class)
+public class EJBPersonas implements EJBPersonasRemote {
 
     @PersistenceContext
     private EntityManager em;

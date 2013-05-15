@@ -1,8 +1,8 @@
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="ittepic.edu.mx.entidades.CatTiposusuario"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBTipoUsuarioLocal"%>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
-<%@page import="ittepic.edu.mx.ejbs.EJBPersonasLocal"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="ittepic.edu.mx.entidades.Persona"%>
@@ -12,18 +12,21 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!    EJBPersonasLocal ejb = null;
+<%! EJBPersonasRemote ejb = null;
     EJBUsuariosRemote ejb2 = null;
     EJBTipoUsuarioLocal ejb3 = null;
 
     public void jspInit() {
         try {
             InitialContext ic = new InitialContext();
-            ejb = (EJBPersonasLocal) ic.lookup(EJBPersonasLocal.class.getName());
+            ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
             
             InitialContext ic2 = new InitialContext();
-            ejb3 = (EJBTipoUsuarioLocal) ic.lookup(EJBTipoUsuarioLocal.class.getName());
+            ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
             
+            InitialContext ic3 = new InitialContext();
+            ejb3 = (EJBTipoUsuarioLocal) ic3.lookup(EJBTipoUsuarioLocal.class.getName());
+    
             System.out.println("Bean cargado");
         } catch (Exception ex) {
             System.out.println("Error:"
@@ -58,15 +61,11 @@
         per.setCelular(celular);
         per.setDireccion(direccion);
         per.setEmail(email);
-        //ejb.alta(per);
+        //ejb.alta_modificacion(per);
         
         //TIPO DE USUARIO
-        tipoUsr = new CatTiposusuario();
         int tipo = combo;
-        tipoUsr.setDescripcion(combo);
-        ejb3.altaTipo(tipoUsr);
-
-
+        
         // TABLA USUARIO
         usr = new Usuario();
         int tipoUsuario = combo;
@@ -79,7 +78,15 @@
         String fecCre1 = formato.format(fecha);
         System.out.println(fecCre1);
         Date fecCre2 = formato.parse(fecCre1);
-
+        
+        //Setear Usuario
+        usr.setTipousuario(ejb3.obtenerPorID(tipo));
+        usr.setIdcliente(per);
+        usr.setLogin(user);
+        usr.setPassword(password);
+        usr.setFechacreacion(fecCre2);
+        
+        ejb2.alta(usr);
     }
 
 %>
