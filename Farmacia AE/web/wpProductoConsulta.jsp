@@ -63,7 +63,7 @@
                 <td><%=productos.get(i).getProducto()%></td>
                 <td><%=productos.get(i).getCantidad() %></td>
                 <td><%=productos.get(i).getPrecio() %></td>
-                <td><input type="button" value="Borrar" onclick="borrar(<%=out.print(productos.get(i).getIdproducto())%>)" name="btnBorrar"></td>
+                <td><input type="button" value="Borrar" onclick="<%borrar(productos.get(i));%>" name="btnBorrar"></td>
                 <td><input type="button" value="Modificar" onclick="<%modificar(productos.get(i));%>" name="btnModificar"></td>
                 
                 <%}%>
