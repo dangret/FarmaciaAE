@@ -14,10 +14,27 @@ public class usuario {
     private String apepat;
     private String apemat;
     private String fecnac;
-    private String telefono;
+    private String telFijo;
     private String direccion;
     private String celular;
     private String email;
+    private String telPer;
+
+    public String getTelFijo() {
+        return telFijo;
+    }
+
+    public void setTelFijo(String telFijo) {
+        this.telFijo = telFijo;
+    }
+
+    public String getTelPer() {
+        return telPer;
+    }
+
+    public void setTelPer(String telPer) {
+        this.telPer = telPer;
+    }
 
     public String getNombre() {
         return nombre;
@@ -49,14 +66,6 @@ public class usuario {
 
     public void setFecnac(String fecnac) {
         this.fecnac = fecnac;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public String getDireccion() {
