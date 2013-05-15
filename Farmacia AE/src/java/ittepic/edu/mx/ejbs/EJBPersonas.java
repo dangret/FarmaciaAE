@@ -69,22 +69,6 @@ public class EJBPersonas implements EJBPersonasLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public int alta(Persona p) {
-        try {
-            em.merge(p);
-        } catch(Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-        return 0;
-    }
-
-    @Override
-    public void eliminar(Persona p) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
     public void reemplazar(List<Persona> list_p) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
