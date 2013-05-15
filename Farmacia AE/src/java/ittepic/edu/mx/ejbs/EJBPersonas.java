@@ -22,8 +22,6 @@ import javax.persistence.PersistenceUnit;
 @Remote (EJBPersonasLocal.class)
 public class EJBPersonas implements EJBPersonasLocal {
 
-    private List<Persona> personas = new ArrayList<Persona>();
-    
     @PersistenceContext
     private EntityManager em;
     @PersistenceUnit
@@ -38,8 +36,9 @@ public class EJBPersonas implements EJBPersonasLocal {
 
     @Override
     public int alta_modificacion(Persona p) {
+        em = emf.createEntityManager();
         try{
-        em.merge(p);
+            em.merge(p);
         }catch (Exception e){
             return -1;
         }
@@ -57,6 +56,7 @@ public class EJBPersonas implements EJBPersonasLocal {
         try
         {
          em = emf.createEntityManager();
+         
          em.createNamedQuery("Persona.eliminar").setParameter("idcliente", idcliente).executeUpdate();
         }catch(Exception e)
         {
@@ -69,17 +69,6 @@ public class EJBPersonas implements EJBPersonasLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public void reemplazar(List<Persona> list_p) {
-        personas.clear();
-        personas.addAll(list_p);
-    }
-
-    @Override
-    public void eliminar(Persona p) {
-        personas.remove(p);
-    }
-
-    @Override
     public int alta(Persona p) {
         try {
             em.merge(p);
@@ -88,6 +77,16 @@ public class EJBPersonas implements EJBPersonasLocal {
             return -1;
         }
         return 0;
+    }
+
+    @Override
+    public void eliminar(Persona p) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void reemplazar(List<Persona> list_p) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     

@@ -29,10 +29,20 @@
 %>
 
 <%
+  jspInit();
+  List<Persona> personas = null;
+  SimpleDateFormat sdffechaguardar = new SimpleDateFormat("yyyy-MM-dd");
+  SimpleDateFormat sdffechamostrar = new SimpleDateFormat("dd-MM-yyyy");
   String nombre = request.getParameter("nombre");
-  String modificar = request.getParameter("modificar");
-  String eliminar = request.getParameter("eliminar");
-  SimpleDateFormat sdffecha = new SimpleDateFormat("dd-MM-yyyy");
+  String[] borrar = request.getParameterValues("cbBorrar");
+  if (borrar!=null)
+  {
+   for(int i=0; i<borrar.length; i++)
+   {
+    System.out.println("Borrar["+i+"]="+borrar[i]);
+    ejb.eliminar(Integer.parseInt(borrar[i]));
+   }
+  }
   if(nombre!=null)
   {
    String appat = request.getParameter("appat");
@@ -42,43 +52,28 @@
    String direccion = request.getParameter("direccion");
    String celular = request.getParameter("celular");
    String email = request.getParameter("email");
+   //Funcionamiento del merge
    int idcliente = Integer.parseInt(request.getParameter("idcliente"));
    Persona p = new Persona();
    p.setNombre(nombre);
    p.setAppat(appat);
    p.setApmat(apmat);
-   p.setFechnac(sdffecha.parse(fechnac));
+   p.setFechnac(sdffechaguardar.parse(fechnac));
    p.setTelefono(telefono);
    p.setDireccion(direccion);
    p.setCelular(celular);
    p.setEmail(email);
-   if(modificar==null&&eliminar==null){
-            ejb.alta_modificacion(p); 
-        } else if(modificar!=null ){
-            p.setIdcliente(idcliente);
-            ejb.alta_modificacion(p);
-        }
-   } else if(eliminar!=null){
-        ejb.eliminar(Integer.parseInt(eliminar));
-    } else {
-        String [] listaeliminar = request.getParameterValues("borrar");
-        if(listaeliminar!=null) {
-            List<Persona> listaactual = ejb.consultaPersonas(); //obtengo todos los elementos que hay actualmente en el EJB
-            List<Persona> listaaeliminar = new ArrayList<Persona>(); //Creo una nueva lista en la que almacenaré los elementos a eliminar
-            for(int i=0; i<listaeliminar.length; i++) { //Copio en la lista los objetos de tipo estudiante que deseo eliminar
-                listaaeliminar.add(listaactual.get(Integer.parseInt(listaeliminar[i])));
-            }
-            listaactual.removeAll(listaaeliminar); //Elimino todos los elementos que deseo eliminar
-             //Actualizo los datos en el EJB
-        }
-    }
-    session.setAttribute("ejb", ejb);
-    List<Persona> personas = ejb.consultaPersonas();
+   if(idcliente!=0)
+    p.setIdcliente(idcliente);
+   ejb.alta_modificacion(p);
+  }
+  //session.setAttribute("ejb", ejb);
+  personas = ejb.consultaPersonas();
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>FARMACIA SAN CAZOLA - PERSONAS</title>
     <script>
             function validar()
             {
@@ -92,6 +87,7 @@
         </script>
     </head>
     <body>
+        <h1>Catalogo de Personas</h1>
     <form action="" method="POST" name="formulario">
        <table border="1">
                <tr>
@@ -108,18 +104,18 @@
                <tr>
                <% for(int i=0; i<personas.size(); i++){ %>
                <td>
-                   <a href="altaPersonas.jsp?i=<%=i+""%>">
+                   <a href="altaPersonas.jsp?modificar=<%=personas.get(i).getIdcliente()+""%>">
                         <%out.print(personas.get(i).getNombre());%>
                    </a>
                </td>
                <td><%out.print(personas.get(i).getAppat());%></td>
                <td><%out.print(personas.get(i).getApmat());%></td>
-               <td><%out.println(sdffecha.format(personas.get(i).getFechnac()));%></td>
+               <td><%out.print(sdffechamostrar.format(personas.get(i).getFechnac()));%></td>
                <td><%out.print(personas.get(i).getTelefono());%></td>
                <td><%out.print(personas.get(i).getDireccion());%></td>
                <td><%out.print(personas.get(i).getCelular());%></td>
                <td><%out.print(personas.get(i).getEmail());%></td>
-               <td><input type="checkbox" value="<%=i%>" name="borrar"></td>
+               <td><input type="checkbox" name="cbBorrar" value="<%=personas.get(i).getIdcliente()+""%>"></td>
                </tr>
            <%}%>
            </table>

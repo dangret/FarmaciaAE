@@ -15,9 +15,8 @@ import javax.ejb.Remote;
 @Remote
 public interface EJBProductosRemote {
     public List<Producto> productoObtenerTodos();
-    public int productoAlta(Producto p);
     public int productoBaja(Producto p);
-    public int ProductoModificar(Producto p);
-    public Producto productoObtenerPorID(long id);
+    public int ProductoGuardar(Producto p);
+    public Producto productoObtenerPorID(int id);
     
 }

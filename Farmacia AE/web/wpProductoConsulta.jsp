@@ -4,6 +4,8 @@
     Author     : Daniel
 --%>
 
+<%@page import="org.apache.taglibs.standard.tag.common.core.RedirectSupport"%>
+<%@page import="javax.ws.rs.core.Response"%>
 <%@page import="java.util.List"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBProductosRemote"%>
@@ -12,7 +14,9 @@
 <!DOCTYPE html>
 <%!
     EJBProductosRemote ejb = this.ejb;
+    
     int i=0;
+    
     public void jspInit() {
         try{
             InitialContext ic = new InitialContext ();
@@ -24,52 +28,69 @@
             System.out.println("Error:"+ ex.getMessage());
         }
    }
-    
-    public void modificar(Producto p){
-        ejb.ProductoModificar(p);
-    }
-    
-    public void borrar(Producto p){
-        ejb.productoBaja(p);
-    }
-        
-    public void alta(Producto p){
-        ejb.productoAlta(p);
+   
+%>
+<%!
+    public void borrar(int id){
+        Producto producto = new Producto();
+        producto.setIdproducto(id);
+        ejb.productoBaja(producto);
     }
 %>
-
 <%
+    try{
+        request.removeAttribute("productoObject");
+    }catch(Exception e){
+        out.println("no existe el objeto");
+    }
+    
     List<Producto> productos = ejb.productoObtenerTodos();
+    
+    session.setAttribute("ejb", ejb);
 %>
 <html>
     <head>
+        <script>
+            function jBorrar(id){
+                formulario = document.getElementsByName("formulario");
+                document.formulario.submit();
+            }
+            
+            function jNuevo(){
+                window.location = "wpProductoAlta.jsp";
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
-        <table>
-            <tr>
-                <th>Imagen</th>
-                <th>Nombre</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
-                <th>Modificar</th>
-                <th>Eliminar</th>
-            </tr>
-            <tr>
-                <%for (int i = 0; i<productos.size(); i++ ){%>
+        <form name="formulario" action="http://localhost:8080/Farmacia_AE/ServletProducto" method="POST" >
+            <table>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Eliminar</th>
+                </tr>
                 
-                <td><%=productos.get(i).getRuta()%></td>
-                <td><%=productos.get(i).getProducto()%></td>
-                <td><%=productos.get(i).getCantidad() %></td>
-                <td><%=productos.get(i).getPrecio() %></td>
-                <td><input type="button" value="Borrar" onclick="borrar(<%=out.print(productos.get(i).getIdproducto())%>)" name="btnBorrar"></td>
-                <td><input type="button" value="Modificar" onclick="<%modificar(productos.get(i));%>" name="btnModificar"></td>
+                    <%for (int i = 0; i<productos.size(); i++ ){%>
+                        <tr>
+                            <td><%=productos.get(i).getRuta() %></td>
+                            <td><a href="wpProductoAlta.jsp?id=<%=productos.get(i).getIdproducto()%>"><%=productos.get(i).getProducto() %></a></td>
+                            <td><%=productos.get(i).getCantidad() %></td>
+                            <td><%=productos.get(i).getPrecio() %></td>
+                            <td><input type="checkbox" value="<%=productos.get(i).getIdproducto()%>" name="chkBorrar"></td>
+                        </tr>
+                    <%}%>
                 
-                <%}%>
-            </tr>
-            
-            
-        </table>
+            </table>
+            <table>
+                <tr>
+                    <td><input type="button" onclick="jNuevo()" name="btnNuevo" value="Crear Nuevo Producto"></td>
+                    <td><input type="button" onclick="jBorrar()" name="btnBorrar" value="Borrar Seleccionados"></td>
+                </tr>
+            </table>
+        </form>
     </body>
 </html>
