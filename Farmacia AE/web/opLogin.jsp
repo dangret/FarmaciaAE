@@ -14,31 +14,31 @@
       
     </div>
     <ul id="nav">
-      <li><<a href="#">Mi Perfil</a></li>
-      <li><a href="#"> Productos</a></li>
-      <li><a href="#">Pedidos</a></li>
-      <li><a href="#" >Clientes</a></li>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="wpProductoConsulta.jsp">Nuestros Productos</a></li>
+      <li><a href="opLogin.jsp">Login</a></li>
+      <li><a href="#">Contactanos</a></li>
     </ul>
   </div>
   <!-- /header -->
   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
-    <div class="side fr">
+  <div >
+      <div id="text" >
+        <object data="login.jsp" height="300"></object>
+        <object data="registroUsuario.jsp" width="550" height="600" align="Left">
+        </object>
+        <div class="col">
+</div>
       
-      <div id="bm"> <img src="images/s.jpg" alt="" /> </div>
+   
     </div>
-    <div class="main fl">
-      <div id="text">
-        <h2>Datos del Cliente</h2>
-        <p> Datos del cliente y sus medios de pago <br/>
-          <br/>
-        
-      </div>
-        
-      
-      
-        
     <!-- /content -->
   </div>
+    <div class="side fr">
+      <div > Registrate!!
+        <br/></div>
+    </div>
+    
   <div class="clearfix"></div>
   <div id="footer">
     <div id="ftinner">
