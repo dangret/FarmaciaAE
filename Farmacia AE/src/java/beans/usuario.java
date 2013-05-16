@@ -4,82 +4,66 @@
  */
 package beans;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author sears
  */
 public class usuario {
 
-    private String nombre;
-    private String apepat;
-    private String apemat;
-    private String fecnac;
-    private String telefono;
-    private String direccion;
-    private String celular;
-    private String email;
+    private String login = "postgres";
+    private String password = "postgres";
+    private String url = "jdbc:postgresql://localhost:5432/Farmacia";
 
-    public String getNombre() {
-        return nombre;
-    }
+    public int ultimo() {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        Statement st = null;
+        ResultSet rs = null;
+        int ult = 0;
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+        try {
+            //conexion a la base de datos   
+            try {
+                Class.forName("org.postgresql.Driver");
+                conn = DriverManager.getConnection(url, login, password);
+                System.out.println("CONECTADO CORRECTAMENTE");
+            } catch (ClassNotFoundException ex) {
+                JOptionPane.showMessageDialog(null, "Error en la Conexion con la Base de Datos");
+            }
+            String sql = "SELECT MAX(idusuario) from usuario";
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                ult = rs.getInt(1);
+                System.out.println(ult);
+            }
 
-    public String getApepat() {
-        return apepat;
-    }
+        } catch (SQLException ex) {
+            System.out.println("Error al conectar la BD");
 
-    public void setApepat(String apepat) {
-        this.apepat = apepat;
-    }
+        } finally {
 
-    public String getApemat() {
-        return apemat;
-    }
+            try {
+                if (st != null) {
+                    st.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
 
-    public void setApemat(String apemat) {
-        this.apemat = apemat;
-    }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "ERROR AL CERRAR LA CONEXION A LA BASE DE DATOS.");
+            }
+        }
 
-    public String getFecnac() {
-        return fecnac;
-    }
-
-    public void setFecnac(String fecnac) {
-        this.fecnac = fecnac;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        return ult;
     }
 }

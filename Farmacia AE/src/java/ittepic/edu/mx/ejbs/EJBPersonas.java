@@ -7,7 +7,8 @@ package ittepic.edu.mx.ejbs;
 import ittepic.edu.mx.entidades.Persona;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.ejb.Remote;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
@@ -17,8 +18,9 @@ import javax.persistence.PersistenceUnit;
  *
  * @author JESUS
  */
-@Stateless
-public class EJBPersonas implements EJBPersonasLocal {
+@Stateful
+@Remote (EJBPersonasRemote.class)
+public class EJBPersonas implements EJBPersonasRemote {
 
     @PersistenceContext
     private EntityManager em;
@@ -65,5 +67,12 @@ public class EJBPersonas implements EJBPersonasLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public void reemplazar(List<Persona> list_p) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    
 
 }
