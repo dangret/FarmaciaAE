@@ -4,9 +4,17 @@
         <servlet-name>ServletLogin</servlet-name>
         <servlet-class>ittepic.edu.mx.servlets.ServletLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletProducto</servlet-name>
+        <servlet-class>ittepic.edu.mx.servlets.ServletProducto</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletProducto</servlet-name>
+        <url-pattern>/ServletProducto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

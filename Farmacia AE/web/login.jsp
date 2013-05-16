@@ -14,7 +14,7 @@
     <body>
         <h2>Iniciar Sesion:</h2>
         <br>
-        <form action="/ServletLogin" method="POST">
+        <form action="http://localhost/Farmacia_AE/ServletLogin" method="POST">
             <table>
                 <tr>
                     <td>Usuario:</td><td><input type="text" name="txtNombre"></td>

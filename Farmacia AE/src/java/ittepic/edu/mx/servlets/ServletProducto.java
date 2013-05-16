@@ -4,25 +4,23 @@
  */
 package ittepic.edu.mx.servlets;
 
-import ittepic.edu.mx.ejbs.EJBUsuariosRemote;
-import ittepic.edu.mx.entidades.Usuario;
+import ittepic.edu.mx.ejbs.EJBProductosRemote;
+import ittepic.edu.mx.entidades.Producto;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Daniel
+ * @author dangret
  */
-public class ServletLogin extends HttpServlet {
-      
-      @EJB
-      private EJBUsuariosRemote ejbUsuario;        
-      
+public class ServletProducto extends HttpServlet {
+    
+    @EJB
+    EJBProductosRemote ejb;
     
     /**
      * Processes requests for both HTTP
@@ -36,22 +34,60 @@ public class ServletLogin extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         
-        String usuario = request.getParameter("txtNombre");
-        String pwd = request.getParameter("txtPasswd");
         
-        Usuario user = ejbUsuario.obtenerUsuario(usuario, pwd);
+        String producto = request.getParameter("txtProducto");
+        String [] listBorrar = request.getParameterValues("chkBorrar");
         
-        if (user !=null){
-            HttpSession sesion = request.getSession(true);
-            sesion.setAttribute("usuario", user);
-            if (user.getTipousuario().getIdtipousuario() == 1)
-                response.sendRedirect("admin.jsp");
-            else
-                response.sendRedirect("cliente.jsp");
-        }else {
-            response.sendRedirect("wpMal.jsp");
+        if (producto != null){ 
+           if (!producto.equals("")){
+                
+            short cantidad = 0;
+            double precio = 0;
+            Integer id = null;
+            String imagen = null;
+            
+            try{
+                cantidad = Short.parseShort(request.getParameter("txtCantidad"));
+                precio = Double.parseDouble(request.getParameter("txtPrecio"));
+                id = (Integer) request.getSession().getAttribute("idproducto");
+                imagen = request.getParameter("txtImagen");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            
+            //Aqui guardar
+            Producto p = new Producto ();
+            
+            p.setProducto(producto);
+            if (id != null) p.setIdproducto(id);
+            p.setCantidad(cantidad);
+            p.setPrecio(precio);
+            
+            if ( ejb.ProductoGuardar(p) == 1 ){}     //bien
+            else{}                         
+           }//mal
         }
+        
+        
+        if (listBorrar != null){
+            //Aqui borrar
+            int idproducto;
+            Producto p = new Producto ();
+            for (int i=0; i<listBorrar.length; i++){
+                idproducto = Integer.parseInt(listBorrar[i]);
+                p = ejb.productoObtenerPorID(idproducto);
+                if ( ejb.productoBaja(p) == 1 ){}     //bien
+                else{}                  
+            }
+            
+        }
+        
+        response.sendRedirect("wpProductoConsulta.jsp");
+        
+        //Borar todos los parametros y atributos
+        
         
     }
 
