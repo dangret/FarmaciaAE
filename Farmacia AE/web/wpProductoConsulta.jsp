@@ -24,6 +24,18 @@
             System.out.println("Error:"+ ex.getMessage());
         }
    }
+    
+    public void modificar(Producto p){
+        ejb.ProductoModificar(p);
+    }
+    
+    public void borrar(Producto p){
+        ejb.productoBaja(p);
+    }
+        
+    public void alta(Producto p){
+        ejb.productoAlta(p);
+    }
 %>
 
 <%
@@ -31,11 +43,6 @@
 %>
 <html>
     <head>
-        <script>
-            function modificar (id){
-                
-            }
-        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
@@ -52,13 +59,13 @@
             <tr>
                 <%for (int i = 0; i<productos.size(); i++ ){%>
                 
-                <td><%=productos.get(i).getRuta()%>
-                <input type="hidden" name="hdId" value="<%=productos.get(i).getIdproducto()%>" ></td>
+                <td><%=productos.get(i).getRuta()%></td>
                 <td><%=productos.get(i).getProducto()%></td>
                 <td><%=productos.get(i).getCantidad() %></td>
                 <td><%=productos.get(i).getPrecio() %></td>
-                <td><input type="button" value="Borrar" name="btnBorrar"></td>
-                <td><input type="button" value="Modificar" onclick="modificar(hdID)" name="btnModificar"></td>
+                <td><input type="button" value="Borrar" onclick="<%borrar(productos.get(i));%>" name="btnBorrar"></td>
+                <td><input type="button" value="Modificar" onclick="<%modificar(productos.get(i));%>" name="btnModificar"></td>
+                
                 <%}%>
             </tr>
             

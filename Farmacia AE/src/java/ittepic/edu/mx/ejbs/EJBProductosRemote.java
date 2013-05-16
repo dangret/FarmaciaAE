@@ -18,5 +18,6 @@ public interface EJBProductosRemote {
     public int productoAlta(Producto p);
     public int productoBaja(Producto p);
     public int ProductoModificar(Producto p);
+    public Producto productoObtenerPorID(long id);
     
 }
