@@ -39,14 +39,19 @@
     }
 %>
 <%
-    String usuario = request.getParameter("usuario") == null ? "" : request.getParameter("nombre");
+    String nombreUsr = request.getParameter("usuariox") == null ? "" : request.getParameter("usuariox");
     Usuario usr;
     Persona per;
     CatTiposusuario tipoUsr;
     
-    if (!usuario.equals("")) {
+    if (!nombreUsr.equals("")) {
        usr=new Usuario();
-       usr=ejb2.consultaPorNombre(usuario);
+       per=usr.getIdcliente();
+       usr=ejb2.consultaPorNombre(nombreUsr);
+       tipoUsr=usr.getTipousuario();
+       
+       ejb.eliminar(per.getIdcliente());
+       ejb3.eliminarTipo(tipoUsr.getIdtipousuario());
        ejb2.eliminarPorId(usr.getIdusuario());
     }
 %>
@@ -62,15 +67,17 @@
         </script>
     </head>
     <body>
+        <form action="eliminarUsuario.jsp" method="POST" name="formEliminar">
         <table border="1">
             <tr>
                 <td>Usuario Eliminar:</td>
-                <td><input type="text" name="usuario"></td>
+                <td><input type="text" name="usuariox" id="usuariox"></td>
             </tr>
             <tr>
-                <td><input type="submit" name="guardar" value="Guardar"></td>
+                <td><input type="submit" name="guardar" value="Eliminar"></td>
                 <td> <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();"></td>
             </tr>
         </table>
+        </form>
     </body>
 </html>

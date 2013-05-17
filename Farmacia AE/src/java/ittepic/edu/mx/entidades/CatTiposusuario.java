@@ -26,8 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "CatTiposusuario.findAll", query = "SELECT c FROM CatTiposusuario c"),
     @NamedQuery(name = "CatTiposusuario.findByIdtipousuario", query = "SELECT c FROM CatTiposusuario c WHERE c.idtipousuario = :idtipousuario"),
+    @NamedQuery(name = "CatTiposusuario.eliminarPorId", query = "DELETE FROM CatTiposusuario c WHERE c.idtipousuario = :idtipousuario"),
     @NamedQuery(name = "CatTiposusuario.findByDescripcion", query = "SELECT c FROM CatTiposusuario c WHERE c.descripcion = :descripcion")})
 public class CatTiposusuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -85,5 +87,4 @@ public class CatTiposusuario implements Serializable {
     public String toString() {
         return "ittepic.edu.mx.entidades.CatTiposusuario[ idtipousuario=" + idtipousuario + " ]";
     }
-    
 }

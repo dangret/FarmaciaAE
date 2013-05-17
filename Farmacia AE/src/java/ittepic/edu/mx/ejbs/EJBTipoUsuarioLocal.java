@@ -16,4 +16,5 @@ import javax.ejb.Remote;
 public interface EJBTipoUsuarioLocal {
     public int altaTipo(CatTiposusuario tipo);
     public CatTiposusuario obtenerPorID(int id);
+    public int eliminarTipo(int tipousuario);
 }

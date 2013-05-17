@@ -52,4 +52,16 @@ public class EJBTipoUsuario implements EJBTipoUsuarioLocal {
         }
     }
 
+
+    @Override
+    public int eliminarTipo(int tipousuario) {
+          try {
+            em = emf.createEntityManager();
+            em.createNamedQuery("CatTiposusuario.eliminarPorId").setParameter("idtipousuario", tipousuario).executeUpdate();
+        } catch(Exception e) {
+            return -1;
+        }
+        return 1;
+    }
+
 }
