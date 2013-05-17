@@ -18,6 +18,7 @@
       <li><a href="wpProductoConsulta.jsp">Nuestros Productos</a></li>
       <li><a href="login.jsp">Login</a></li>
       <li><a href="#">Contactanos</a></li>
+      <li><a href="eliminarUsuario.jsp">Eliminar Usuarios</a></li>
     </ul>
   </div>
   <!-- /header -->

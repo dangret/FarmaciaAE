@@ -57,7 +57,7 @@ public class EJBUsuarios implements EJBUsuariosRemote {
     public int alta(Usuario u) {
         try {
             em = emf.createEntityManager();
-            em.merge(u);
+            em.persist(u);
         } catch(Exception e) {
             e.printStackTrace();
             return -1;
@@ -93,5 +93,6 @@ public class EJBUsuarios implements EJBUsuariosRemote {
         }
         return 1;
     }
+    
 
 }
