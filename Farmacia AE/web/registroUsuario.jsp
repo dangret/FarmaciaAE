@@ -64,7 +64,9 @@
         //ejb.alta_modificacion(per);
         
         //TIPO DE USUARIO
-        int tipo = combo;
+        tipoUsr=new CatTiposusuario();
+        tipoUsr.setIdtipousuario(combo);
+        tipoUsr.setDescripcion("EJEMPLO DE USUARIO");
         
         // TABLA USUARIO
         usr = new Usuario();
@@ -80,7 +82,7 @@
         Date fecCre2 = formato.parse(fecCre1);
         
         //Setear Usuario
-        usr.setTipousuario(ejb3.obtenerPorID(tipo));
+        usr.setTipousuario(tipoUsr);
         usr.setIdcliente(per);
         usr.setLogin(user);
         usr.setPassword(password);
