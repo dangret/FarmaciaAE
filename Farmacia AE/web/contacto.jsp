@@ -14,10 +14,10 @@
       
     </div>
     <ul id="nav">
-      <li><a href="#">Mi Perfil</a></li>
-      <li><a href="#"> Productos</a></li>
-      <li><a href="#">Pedidos</a></li>
-      <li><a href="#">Usuarios</a></li>
+      <li><a href="index.jsp">Inicio</a></li>
+      <li><a href="opProductos.jsp">Nuestros Productos</a></li>
+      <li><a href="opLogin.jsp">Login</a></li>
+      <li><a href="contacto.jsp">Contactanos</a></li>
     </ul>
   </div>
   <!-- /header -->
@@ -27,13 +27,19 @@
     </div>
     <div class="main fl">
       <div id="text">
-        <h2>Datos de Adminstrador</h2>
-        <p> Modificaciones de productos, usuarios y consulta de pedidos <br/>
+        <h2>Contactanos (Equipo):</h2>
+        <p></p> <br/>
           <br/>
-        
+          <div>
+             <lo>
+              <li>Daniel Negrete Infante</li>  
+              <li>Jose de Jesus Muñoz Cazola</li>  
+              <li>Gary Eduardo Diaz Palacios</li>  
+              <li>Martin Nicolas Torres Taizan</li>  
+              </lo>
       </div>
       
-    
+   
     </div>
     <!-- /content -->
   </div>

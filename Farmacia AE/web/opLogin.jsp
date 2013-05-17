@@ -14,29 +14,29 @@
       
     </div>
     <ul id="nav">
-      <li><a href="#">Inicio</a></li>
+      <li><a href="index.jsp">Inicio</a></li>
       <li><a href="wpProductoConsulta.jsp">Nuestros Productos</a></li>
       <li><a href="opLogin.jsp">Login</a></li>
-      <li><a href="#">Contactanos</a></li>
+      <li><a href="contacto.jsp">Contactanos</a></li>
     </ul>
   </div>
   <!-- /header -->
   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
   <div >
       <div id="text" >
-        <object data="login.jsp" height="300"></object>
-        <object data="registroUsuario.jsp" width="550" height="600" align="Left">
-        </object>
-        <div class="col">
-</div>
+      <object data="login.jsp" height="300"></object>
+      <frame id="vengaa" >
+      <object data="registroUsuario.jsp" width="320" height="650" align="center">
+      </object></fr>
+      </div>
+        
       
    
-    </div>
+
     <!-- /content -->
   </div>
     <div class="side fr">
-      <div > Registrate!!
-        <br/></div>
+      <div > </div>
     </div>
     
   <div class="clearfix"></div>

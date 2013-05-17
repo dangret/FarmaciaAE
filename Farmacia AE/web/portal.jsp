@@ -18,7 +18,7 @@
                 <td><a href="altaPersonas.jsp">Registrar Nueva Persona</a></td>
             </tr>
             <tr>
-                <td><a href="consultaGeneralArticulos.jsp">Ver Medicamentos Disponibles</a></td>
+                <td><a href="carritoCliente.jsp">Ver Medicamentos Disponibles</a></td>
                 <td><a href="altaArticulos.jsp">Registrar Nuevo Medicamento</a></td>
             </tr>
         </table>

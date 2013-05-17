@@ -14,9 +14,9 @@
       
     </div>
     <ul id="nav">
-      <li><a href="#">Mi Perfil</a></li>
-      <li><a href="#"> Productos</a></li>
-      <li><a href="#">Pedidos</a></li>
+     <li><a href="adm.jsp">Mi Perfil</a></li>
+      <li><a href="opProductosAdm.jsp"> Productos</a></li>
+      <li><a href="opPedidos.jsp">Pedidos</a></li>
       <li><a href="#">Usuarios</a></li>
     </ul>
   </div>
@@ -27,13 +27,10 @@
     </div>
     <div class="main fl">
       <div id="text">
-        <h2>Datos de Adminstrador</h2>
-        <p> Modificaciones de productos, usuarios y consulta de pedidos <br/>
-          <br/>
-        
+          <object data="wpProductoConsulta.jsp" width="400"></object>
       </div>
       
-    
+   
     </div>
     <!-- /content -->
   </div>

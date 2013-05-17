@@ -64,9 +64,7 @@
         //ejb.alta_modificacion(per);
         
         //TIPO DE USUARIO
-        tipoUsr=new CatTiposusuario();
-        tipoUsr.setIdtipousuario(combo);
-        tipoUsr.setDescripcion("EJEMPLO DE USUARIO");
+        int tipo = combo;
         
         // TABLA USUARIO
         usr = new Usuario();

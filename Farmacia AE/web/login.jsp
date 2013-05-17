@@ -23,9 +23,7 @@
                     <td>Password:</td><td><input type="text" name="txtPasswd"></td>
                 </tr>
             </table>
-            <input type="submit" name="btnEnviar">
-            <a href="portal.jsp">Portal</a>
-            <a href="registroUsuario.jsp">Registrarse</a>
+            <center> <input type="submit" name="btnEnviar" ></center>
         </form>
     </body>
 </html>
