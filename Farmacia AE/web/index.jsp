@@ -14,10 +14,10 @@
       
     </div>
     <ul id="nav">
-      <li><a href="#">Inicio</a></li>
-      <li><a href="wpProductoConsulta.jsp">Nuestros Productos</a></li>
-      <li><a href="login.jsp">Login</a></li>
-      <li><a href="#">Contactanos</a></li>
+      <li><a href="index.jsp">Inicio</a></li>
+      <li><a href="opProductos.jsp">Nuestros Productos</a></li>
+      <li><a href="opLogin.jsp">Login</a></li>
+      <li><a href="contacto.jsp">Contactanos</a></li>
     </ul>
   </div>
   <!-- /header -->
