@@ -50,7 +50,7 @@ public class ServletLogin extends HttpServlet {
             else
                 response.sendRedirect("cliente.jsp");
         }else {
-            response.sendRedirect("wpMal.jsp");
+            response.sendRedirect("login.jsp");
         }
         
     }
