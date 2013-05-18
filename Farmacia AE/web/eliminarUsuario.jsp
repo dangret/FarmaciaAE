@@ -50,9 +50,7 @@
        usr=ejb2.consultaPorNombre(nombreUsr);
        tipoUsr=usr.getTipousuario();
        
-       ejb.eliminar(per.getIdcliente());
-       ejb3.eliminarTipo(tipoUsr.getIdtipousuario());
-       ejb2.eliminarPorId(usr.getIdusuario());
+       ejb2.eliminarEntidad(usr);
     }
 %>
 <html>
