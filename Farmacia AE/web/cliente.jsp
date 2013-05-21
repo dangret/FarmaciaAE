@@ -2,16 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Farmacias Chichis para la Banda!!!</title>
+<title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
 <div id="wrap">
   <div id="header">
     <div id="logo">
-      <h1>Medicinas con Iva+</h1>
-      <h1>Gracias EPN</h1>
-      
+      <h1>Medicinas con Iva+</h1>      
     </div>
     <ul id="nav">
       <li><a href="#">Mi Perfil</a></li>
@@ -27,8 +25,8 @@
     </div>
     <div class="main fl">
       <div id="text">
-        <h2>Datos de Adminstrador</h2>
-        <p> Modificaciones de productos, usuarios y consulta de pedidos <br/>
+        <h2>Datos de Clienter</h2>
+        <p> Compras,Historial y perfil <br/>
           <br/>
         
       </div>
