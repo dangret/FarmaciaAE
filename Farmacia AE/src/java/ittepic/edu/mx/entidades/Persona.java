@@ -45,7 +45,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByEmail", query = "SELECT p FROM Persona p WHERE p.email = :email"),
     @NamedQuery(name = "Persona.eliminar", query = "DELETE FROM Persona p WHERE p.idcliente = :idcliente")})
 public class Persona implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persona_idcliente_seq")
@@ -56,6 +55,9 @@ public class Persona implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 2147483647)
+    @Column(name = "rfc")
+    private String rfc;
     @Size(max = 2147483647)
     @Column(name = "appat")
     private String appat;
@@ -104,6 +106,14 @@ public class Persona implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getRfc() {
+        return rfc;
+    }
+
+    public void setRfc(String rfc) {
+        this.rfc = rfc;
     }
 
     public String getAppat() {
@@ -202,6 +212,7 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "ittepic.edu.mx.ejbs.Persona[ idcliente=" + idcliente + " ]";
+        return "ittepic.edu.mx.entidades.Persona[ idcliente=" + idcliente + " ]";
     }
+    
 }
