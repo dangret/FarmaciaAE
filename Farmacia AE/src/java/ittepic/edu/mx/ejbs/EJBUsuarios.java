@@ -4,6 +4,7 @@
  */
 package ittepic.edu.mx.ejbs;
 
+import ittepic.edu.mx.entidades.Persona;
 import ittepic.edu.mx.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
-
 /**
  *
  * @author sears
@@ -92,6 +92,28 @@ public class EJBUsuarios implements EJBUsuariosRemote {
             return -1;
         }
         return 1;
+    }
+
+    /**
+     *
+     * @param usr
+     * @return
+     */
+    @Override
+    public int eliminarEntidad(Usuario usr) {
+         try {
+            em = emf.createEntityManager();
+            Persona per=usr.getIdcliente();
+            em.remove(em.merge(usr));
+            em.remove(em.merge(per));
+            return 1;
+            //em.createNamedQuery("Usuario.eliminar").setParameter("idpersona", idpersona).executeUpdate();
+        } catch(Exception e) {
+            e.printStackTrace();
+            return -1;
+
+        }
+      
     }
     
 
