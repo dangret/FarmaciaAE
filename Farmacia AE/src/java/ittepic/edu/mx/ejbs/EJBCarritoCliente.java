@@ -34,6 +34,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @PersistenceContext
     EntityManager em;
     private List<Producto> medicamentos = null;// lista todas las medicinas.
+    private List<Usuario> usuarios = null; //Lista todos los usuarios
     private List<Producto> pedido = null;//
     private List cantidades = null;// almacenar cuantas medicinas pide de cada una lista sin tipo de objetos.
     
@@ -41,9 +42,10 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @Override
     public void inicializar() {
          //throw new UnsupportedOperationException("Not supported yet.");
-        pedido = new ArrayList();// Lista que tambien esta vasia.
+        pedido = new ArrayList();// Lista que tambien esta vacia.
         cantidades = new ArrayList();// lista vacia.
         medicamentos = em.createNamedQuery("Producto.findAll").getResultList();// lista de todas las medicinas 
+        usuarios = em.createNamedQuery("Usuario.findAll").getResultList();
     }
 
     @Override
@@ -93,23 +95,19 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @Remove
     @Override
     public void terminarPedido() {
-        Pedido pe=new Pedido();
-        Producto medicamento = new Producto();
-        Usuario u = new Usuario();
-         pe.setIdproducto(medicamento);
-         pe.setFechapedido(new Date());
-         pe.setCantidad(pe.getCantidad());
-         em.persist(pe);//Guarda en la tabla Pedido
+        
        
-            for(int i=0; i<pedido.size(); i++) {
+        for(int i=0; i<pedido.size(); i++) {
+            
             int index = medicamentos.indexOf(medicamentos.get(i));
             Producto p = medicamentos.get(index);
-            p.setCantidad(Short.parseShort(String.valueOf(p.getCantidad()-Integer.parseInt(medicamentos.get(i).toString()))));
+            p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));
+            //p.setCantidad(Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString()))));
             em.merge(p); //Actualiza la cantidad en productos
             
             Detalleventa dv = new Detalleventa();
             dv.setIdproducto(p);
-            dv.setIdusuario(u);
+            dv.setIdusuario(usuarios.get(0));
             dv.setCantidad(Short.parseShort(String.valueOf(Integer.parseInt(cantidades.get(i).toString()))));
             dv.setHora(new Date());
             dv.setFechadetalleventa(new Date());
