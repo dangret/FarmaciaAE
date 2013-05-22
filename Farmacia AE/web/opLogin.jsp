@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Farmacias Chichis para la Banda!!!</title>
+<title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
@@ -10,8 +10,6 @@
   <div id="header">
     <div id="logo">
       <h1>Medicinas con Iva+</h1>
-      <h1>Gracias EPN</h1>
-      
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
@@ -24,15 +22,11 @@
   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
   <div >
       <div id="text" >
-      <object data="login.jsp" height="300"></object>
-      <frame id="vengaa" >
+      <object data="login.jsp" height="300" ></object>
       <object data="registroUsuario.jsp" width="320" height="650" align="center">
       </object></fr>
       </div>
         
-      
-   
-
     <!-- /content -->
   </div>
     <div class="side fr">

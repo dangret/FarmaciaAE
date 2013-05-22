@@ -20,13 +20,13 @@
         try {
             InitialContext ic = new InitialContext();
             ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
-            
+
             InitialContext ic2 = new InitialContext();
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
-            
+
             InitialContext ic3 = new InitialContext();
             ejb3 = (EJBTipoUsuarioLocal) ic3.lookup(EJBTipoUsuarioLocal.class.getName());
-    
+
             System.out.println("Bean cargado");
         } catch (Exception ex) {
             System.out.println("Error:"
@@ -37,12 +37,15 @@
 <%
     usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
+
+    String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
+    String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
     Usuario usr;
     Persona per;
     CatTiposusuario tipoUsr;
 
-    if (!nombre.equals("")) {
+    if ((!nombre.equals("")) || (!nickname.equals("")) || (!pass.equals(""))) {
         //TABLA PERSONA
         String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat");
         String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat");
@@ -62,10 +65,10 @@
         per.setDireccion(direccion);
         per.setEmail(email);
         //ejb.alta_modificacion(per);
-        
+
         //TIPO DE USUARIO
-         int tipo=combo;
-        
+        int tipo = combo;
+
         // TABLA USUARIO
         usr = new Usuario();
         int tipoUsuario = combo;
@@ -78,14 +81,14 @@
         String fecCre1 = formato.format(fecha);
         System.out.println(fecCre1);
         Date fecCre2 = formato.parse(fecCre1);
-        
+
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
         usr.setLogin(user);
         usr.setPassword(password);
         usr.setFechacreacion(fecCre2);
-        
+
         ejb2.alta(usr);
     }
 
@@ -96,7 +99,7 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="opLogin.jsp";
+                window.location="index.jsp";
             }
         </script>
     </head>
@@ -162,7 +165,7 @@
                                 <OPTION VALUE="1">Administrador</OPTION>
                                 <OPTION VALUE="2">Usuario</OPTION>
                             </SELECT></td>
-                        </tr>
+                    </tr>
 
                 </table>
 
@@ -170,7 +173,7 @@
                     <br>
                     <tr align="center">
                     <input type="submit" name="guardar" value="Guardar">
-                 
+
                     <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                     </tr>
                 </table>

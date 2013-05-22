@@ -20,6 +20,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,8 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p"),
     @NamedQuery(name = "Pedido.findByIdpedido", query = "SELECT p FROM Pedido p WHERE p.idpedido = :idpedido"),
-    @NamedQuery(name = "Pedido.findByFechapedido", query = "SELECT p FROM Pedido p WHERE p.fechapedido = :fechapedido"),
-    @NamedQuery(name = "Pedido.findByCantidad", query = "SELECT p FROM Pedido p WHERE p.cantidad = :cantidad")})
+    @NamedQuery(name = "Pedido.findByCantidad", query = "SELECT p FROM Pedido p WHERE p.cantidad = :cantidad"),
+    @NamedQuery(name = "Pedido.findByEstado", query = "SELECT p FROM Pedido p WHERE p.estado = :estado"),
+    @NamedQuery(name = "Pedido.findByFechapedido", query = "SELECT p FROM Pedido p WHERE p.fechapedido = :fechapedido")})
 public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,11 +44,18 @@ public class Pedido implements Serializable {
     @Basic(optional = false)
     @Column(name = "idpedido")
     private Integer idpedido;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad")
+    private int cantidad;
+    @Column(name = "estado")
+    private Integer estado;
     @Column(name = "fechapedido")
     @Temporal(TemporalType.DATE)
     private Date fechapedido;
-    @Column(name = "cantidad")
-    private Integer cantidad;
+    @JoinColumn(name = "idventa", referencedColumnName = "idventa")
+    @ManyToOne(optional = false)
+    private Venta idventa;
     @JoinColumn(name = "idproducto", referencedColumnName = "idproducto")
     @ManyToOne(optional = false)
     private Producto idproducto;
@@ -58,12 +67,33 @@ public class Pedido implements Serializable {
         this.idpedido = idpedido;
     }
 
+    public Pedido(Integer idpedido, int cantidad) {
+        this.idpedido = idpedido;
+        this.cantidad = cantidad;
+    }
+
     public Integer getIdpedido() {
         return idpedido;
     }
 
     public void setIdpedido(Integer idpedido) {
         this.idpedido = idpedido;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public Date getFechapedido() {
@@ -74,12 +104,12 @@ public class Pedido implements Serializable {
         this.fechapedido = fechapedido;
     }
 
-    public Integer getCantidad() {
-        return cantidad;
+    public Venta getIdventa() {
+        return idventa;
     }
 
-    public void setCantidad(Integer cantidad) {
-        this.cantidad = cantidad;
+    public void setIdventa(Venta idventa) {
+        this.idventa = idventa;
     }
 
     public Producto getIdproducto() {
@@ -112,7 +142,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        return "ittepic.edu.mx.ejbs.Pedido[ idpedido=" + idpedido + " ]";
+        return "ittepic.edu.mx.entidades.Pedido[ idpedido=" + idpedido + " ]";
     }
     
 }

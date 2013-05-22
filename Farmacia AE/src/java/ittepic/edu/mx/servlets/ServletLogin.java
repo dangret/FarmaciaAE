@@ -45,10 +45,12 @@ public class ServletLogin extends HttpServlet {
         if (user !=null){
             HttpSession sesion = request.getSession(true);
             sesion.setAttribute("usuario", user);
-            if (user.getTipousuario().getIdtipousuario() == 1)
+            if (user.getTipousuario().getIdtipousuario() == 1) {
                 response.sendRedirect("admin.jsp");
-            else
+            }
+            else {
                 response.sendRedirect("cliente.jsp");
+            }
         }else {
             response.sendRedirect("login.jsp");
         }

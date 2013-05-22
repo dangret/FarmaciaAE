@@ -30,12 +30,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "producto")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p order by p.idproducto"),
+    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
     @NamedQuery(name = "Producto.findByIdproducto", query = "SELECT p FROM Producto p WHERE p.idproducto = :idproducto"),
     @NamedQuery(name = "Producto.findByProducto", query = "SELECT p FROM Producto p WHERE p.producto = :producto"),
     @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad"),
-    @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
-    @NamedQuery(name = "Producto.findByRuta", query = "SELECT p FROM Producto p WHERE p.ruta = :ruta")})
+    @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio")})
 public class Producto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,9 +51,6 @@ public class Producto implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "precio")
     private Double precio;
-    @Size(max = 2147483647)
-    @Column(name = "ruta")
-    private String ruta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto")
     private List<Pedido> pedidoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto")
@@ -99,14 +95,6 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
-    public String getRuta() {
-        return ruta;
-    }
-
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
-    }
-
     @XmlTransient
     public List<Pedido> getPedidoList() {
         return pedidoList;
@@ -147,7 +135,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "ittepic.edu.mx.ejbs.Producto[ idproducto=" + idproducto + " ]";
+        return "ittepic.edu.mx.entidades.Producto[ idproducto=" + idproducto + " ]";
     }
     
 }

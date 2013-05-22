@@ -46,7 +46,7 @@
        }else if(terminar==1){
          carritoCliente.terminarPedido();
          jspInit();
-         response.sendRedirect("index.jsp");
+         response.sendRedirect("carritoCliente.jsp");
        }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();
@@ -138,7 +138,10 @@
                             <tr>
                                 <td><center><i><%=pedido.get(i).getProducto()%></i></center></td>
                                 <td><center><i><%=pedido.get(i).getPrecio()%></i></center></td>
-                                <td><center><i><%=pedido.get(i).getCantidad()%></i></center></td>
+                                <td><center><i>
+                                                <%int index=pedido.indexOf(medicamentos.get(i));%>   
+                                                <%=cantidades.get(index)%>
+                                </i></center></td>
                                 <td><center><input type="image" src="imgs/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
                                   </center></td>
                              <%--   <td>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Farmacias Chichis para la Banda!!!</title>
+<title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
@@ -10,8 +10,7 @@
   <div id="header">
     <div id="logo">
       <h1>Medicinas con Iva+</h1>
-      <h1>Gracias EPN</h1>
-      
+
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
@@ -32,12 +31,14 @@
           <br/>
           <div>
               <ul>
-              <li><a href="cliente.jsp">Clientes</a></li>  
-              <li> <a href="adm.jsp">Administrador</a></li>  
+              <li><a href="carritoCliente.jsp">Mi Compra</a></li>  
+              <li> <a href="login.jsp">Login</a></li>  
+              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>  
+              <li> <a href="eliminarUsuario.jsp">Eliminar un Usuario</a></li>  
+              <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
+              <li> <a href="wpProductoConsulta.jsp">Consulta de Productos</a></li>  
               </ul>
       </div>
-      
-   
     </div>
     <!-- /content -->
   </div>
