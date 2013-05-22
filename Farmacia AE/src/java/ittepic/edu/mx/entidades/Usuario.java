@@ -44,7 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.login like :login"),
     @NamedQuery(name = "Usuario.findByFechacreacion", query = "SELECT u FROM Usuario u WHERE u.fechacreacion = :fechacreacion")})
 public class Usuario implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_idusuario_seq")
@@ -72,7 +71,7 @@ public class Usuario implements Serializable {
     @ManyToOne
     private CatTiposusuario tipousuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
-    private List<Detalleventa> detalleventaList;
+    private List<Venta> ventaList;
 
     public Usuario() {
     }
@@ -136,12 +135,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Detalleventa> getDetalleventaList() {
-        return detalleventaList;
+    public List<Venta> getVentaList() {
+        return ventaList;
     }
 
-    public void setDetalleventaList(List<Detalleventa> detalleventaList) {
-        this.detalleventaList = detalleventaList;
+    public void setVentaList(List<Venta> ventaList) {
+        this.ventaList = ventaList;
     }
 
     @Override
@@ -166,6 +165,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "ittepic.edu.mx.ejbs.Usuario[ idusuario=" + idusuario + " ]";
+        return "ittepic.edu.mx.entidades.Usuario[ idusuario=" + idusuario + " ]";
     }
+    
 }

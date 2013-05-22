@@ -16,13 +16,20 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface EJBUsuariosRemote {
-    public Usuario obtenerUsuario (String usuario, String pwd); 
-    
+
+    public Usuario obtenerUsuario(String usuario, String pwd);
+
     public List<Usuario> consultaGeneral();
 
     public int alta(Usuario u);
+
     public int modificar(Usuario p);
+
     public Usuario consultaPorNombre(String login);
+
     public int eliminarPorId(int idpersona);
+
     public int eliminarEntidad(Usuario usr);
+
+    public Usuario consultaPorId(int idusuario);
 }

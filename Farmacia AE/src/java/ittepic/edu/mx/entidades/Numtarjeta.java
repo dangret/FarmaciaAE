@@ -111,7 +111,7 @@ public class Numtarjeta implements Serializable {
 
     @Override
     public String toString() {
-        return "ittepic.edu.mx.ejbs.Numtarjeta[ notarjeta=" + notarjeta + " ]";
+        return "ittepic.edu.mx.entidades.Numtarjeta[ notarjeta=" + notarjeta + " ]";
     }
     
 }

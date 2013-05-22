@@ -81,6 +81,11 @@ public class EJBUsuarios implements EJBUsuariosRemote {
     em = emf.createEntityManager();
         return (Usuario)em.createNamedQuery("Usuario.findByNombre").setParameter("login",login ).getSingleResult();
     }
+    
+        public Usuario consultaPorId(int idusuario) {
+        em = emf.createEntityManager();
+        return (Usuario)em.createNamedQuery("Usuario.findByIdusuario").setParameter("idusuario",idusuario ).getSingleResult();
+    }
 
     
     @Override
