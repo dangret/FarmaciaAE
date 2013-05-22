@@ -38,6 +38,7 @@
               <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
               <li> <a href="wpProductoConsulta.jsp">Consulta de Productos</a></li>  
               </ul>
+              <object data="prueba.jsp" width="200"></object>
       </div>
     </div>
     <!-- /content -->
