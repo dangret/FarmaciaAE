@@ -107,10 +107,10 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
             
             Detalleventa dv = new Detalleventa();
             dv.setIdproducto(p);
-            dv.setIdusuario(usuarios.get(0));
+            //dv.setIdusuario(usuarios.get(0));
             dv.setCantidad(Short.parseShort(String.valueOf(Integer.parseInt(cantidades.get(i).toString()))));
-            dv.setHora(new Date());
-            dv.setFechadetalleventa(new Date());
+            //dv.setHora(new Date());
+            //dv.setFechadetalleventa(new Date());
             em.persist(dv); //Guarda en la tabla detalleventa                           
          }
     }
