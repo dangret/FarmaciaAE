@@ -8,6 +8,7 @@ import ittepic.edu.mx.entidades.Detalleventa;
 import ittepic.edu.mx.entidades.Pedido;
 import ittepic.edu.mx.entidades.Producto;
 import ittepic.edu.mx.entidades.Usuario;
+import ittepic.edu.mx.entidades.Venta;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +73,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
                 cantidades.add(cantidad);// agrega la cantidad. 
                 pedido.add(p);
             }
+            
         } catch (Exception e) {
         }
         return pedido;
@@ -95,24 +97,39 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @Remove
     @Override
     public void terminarPedido() {
-        
-       
-        for(int i=0; i<pedido.size(); i++) {
-            
-            int index = medicamentos.indexOf(medicamentos.get(i));
-            Producto p = medicamentos.get(index);
-            p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));
-            //p.setCantidad(Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString()))));
-            em.merge(p); //Actualiza la cantidad en productos
-            
-            Detalleventa dv = new Detalleventa();
-            dv.setIdproducto(p);
-            //dv.setIdusuario(usuarios.get(0));
-            dv.setCantidad(Short.parseShort(String.valueOf(Integer.parseInt(cantidades.get(i).toString()))));
-            //dv.setHora(new Date());
-            //dv.setFechadetalleventa(new Date());
-            em.persist(dv); //Guarda en la tabla detalleventa                           
+        Venta v = new Venta();
+        v.setIdusuario(usuarios.get(0));
+        v.setHora(new Date());
+        v.setFechadetalleventa(new Date());
+        em.persist(v);
+        for(int i=0; i<pedido.size(); i++)
+        {
+         int index = medicamentos.indexOf(medicamentos.get(i));
+         Producto p = medicamentos.get(index);
+         Detalleventa dv = new Detalleventa();
+         dv.setIdproducto(p);
+         dv.setIdventa(v);
+         dv.setCantidad(p.getCantidad());
+         em.persist(dv);
+         
+         if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+         {
+          p.setCantidad(Short.parseShort("0"));
+          Pedido pe = new Pedido();
+          pe.setIdproducto(p);
+          pe.setIdventa(v);
+          pe.setCantidad(Short.parseShort(cantidades.get(i).toString())-p.getCantidad());
+          pe.setEstado(1);//estado del pedido
+          pe.setFechapedido(new Date());
+          em.merge(pe);
          }
+         else
+         {
+           p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));
+           
+         }
+         em.merge(p); //Actualiza la cantidad en productos        
+        }
     }
 
     @Override
