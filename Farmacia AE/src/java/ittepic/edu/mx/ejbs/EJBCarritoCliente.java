@@ -101,7 +101,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         v.setIdusuario(usuarios.get(0));
         v.setHora(new Date());
         v.setFechadetalleventa(new Date());
-        em.persist(v);
+        em.persist(v);//Se registra una nueva venta
         for(int i=0; i<pedido.size(); i++)
         {
          int index = medicamentos.indexOf(medicamentos.get(i));
@@ -109,8 +109,8 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
          Detalleventa dv = new Detalleventa();
          dv.setIdproducto(p);
          dv.setIdventa(v);
-         dv.setCantidad(p.getCantidad());
-         em.persist(dv);
+         dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+         em.persist(dv);//Se registra el detalle de la venta con la lista de los productos
          
          if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
          {
@@ -118,17 +118,18 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
           Pedido pe = new Pedido();
           pe.setIdproducto(p);
           pe.setIdventa(v);
-          pe.setCantidad(Short.parseShort(cantidades.get(i).toString())-p.getCantidad());
+          pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+          //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
           pe.setEstado(1);//estado del pedido
           pe.setFechapedido(new Date());
-          em.merge(pe);
+          em.merge(pe);//Se registra el pedido
          }
          else
          {
-           p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));
+           p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
            
          }
-         em.merge(p); //Actualiza la cantidad en productos        
+         em.merge(p); //Actualiza la cantidad en productos despues de la venta realizada     
         }
     }
 

@@ -59,19 +59,17 @@
         
         <script>
             function agregarMedicina(idproducto, disponibles, index) {
-                var cantidad = prompt("Indica cuantos ejemplares quiere de este medicamento",0);
-                anterior = eval("document.getElementById('txtAnterior"+index+"').value");
-                //alert(anterior);
-                
-                if(cantidad !=null){
-                    total = parseInt(cantidad) + parseInt(anterior);
-                    if(total>disponibles)
-                        alert('No existen suficientes ejemplares de dicha medicina para cubrir el pedido');
-                    else
-                        location.href = "carritoCliente.jsp?idproducto="+idproducto+"&cantidad="+cantidad;
+                var cantidad = prompt("Introduzca la cantidad de productos",0);
+                if(cantidad==null)
+                {
+                    location.href = "carritoCliente.jsp";
+                }
+                else
+                {
+                    anterior = eval("document.getElementById('txtAnterior"+index+"').value");
+                    location.href = "carritoCliente.jsp?idproducto="+idproducto+"&cantidad="+cantidad;
                 }
             }
-            
             function removerMedicina (idproducto, index){
                 if(confirm("¿Seguro que deseas eliminar esta medicina de tu lista de pedido?")){
                    location.href="carritoCliente.jsp?remover="+
@@ -93,7 +91,6 @@
                 <tr>
                     <td><center><b>Nombre del Medicamento</b></center></td>
                     <td><center><b>Precio</b></center></td>
-                    <td><center><b>Cantidad</b></center></td>
                     <td><center><b>Agregar</b></center></td>
                 </tr>
                 <%
@@ -102,12 +99,12 @@
                     <tr>
                         <td><center><i><%=medicamentos.get(i).getProducto()%></i></center></td>
                         <td><center><i><%=medicamentos.get(i).getPrecio()%></i></center></td>
-                        <td><center><i><%=medicamentos.get(i).getCantidad()%></i></center></td>
                         <td>
                             
                             <input type="image" src="imgs/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(i).getIdproducto()%>,
-                                   <%=medicamentos.get(i).getCantidad()%>, <%=i%>)">
+                                   <%=medicamentos.get(i).getCantidad()%>,<%=i%>)">
                             <%
+                               
                                 int index=pedido.indexOf(medicamentos.get(i));
                                 if(index==-1){
                             %>        
@@ -139,8 +136,14 @@
                                 <td><center><i><%=pedido.get(i).getProducto()%></i></center></td>
                                 <td><center><i><%=pedido.get(i).getPrecio()%></i></center></td>
                                 <td><center><i>
-                                                <%int index=pedido.indexOf(medicamentos.get(i));%>   
-                                                <%=cantidades.get(index)%>
+                                        <%
+                                          int index=0;
+                                          for (int j=0; j<pedido.size(); j++){
+                                               if (pedido.get(j).getProducto().equals(medicamentos.get(i))) 
+                                                   index = j;
+                                          }
+                                        %>
+                                        <%=cantidades.get(i)%>
                                 </i></center></td>
                                 <td><center><input type="image" src="imgs/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
                                   </center></td>
