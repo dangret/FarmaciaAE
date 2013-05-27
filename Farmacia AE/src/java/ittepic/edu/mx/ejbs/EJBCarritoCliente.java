@@ -8,6 +8,7 @@ import ittepic.edu.mx.entidades.Detalleventa;
 import ittepic.edu.mx.entidades.Pedido;
 import ittepic.edu.mx.entidades.Producto;
 import ittepic.edu.mx.entidades.Usuario;
+import ittepic.edu.mx.entidades.Venta;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +73,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
                 cantidades.add(cantidad);// agrega la cantidad. 
                 pedido.add(p);
             }
+            
         } catch (Exception e) {
         }
         return pedido;
@@ -95,24 +97,40 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @Remove
     @Override
     public void terminarPedido() {
-        
-       
-        for(int i=0; i<pedido.size(); i++) {
-            
-            int index = medicamentos.indexOf(medicamentos.get(i));
-            Producto p = medicamentos.get(index);
-            p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));
-            //p.setCantidad(Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString()))));
-            em.merge(p); //Actualiza la cantidad en productos
-            
-            Detalleventa dv = new Detalleventa();
-            dv.setIdproducto(p);
-            //dv.setIdusuario(usuarios.get(0));
-            dv.setCantidad(Short.parseShort(String.valueOf(Integer.parseInt(cantidades.get(i).toString()))));
-            //dv.setHora(new Date());
-            //dv.setFechadetalleventa(new Date());
-            em.persist(dv); //Guarda en la tabla detalleventa                           
+        Venta v = new Venta();
+        v.setIdusuario(usuarios.get(0));
+        v.setHora(new Date());
+        v.setFechadetalleventa(new Date());
+        em.persist(v);//Se registra una nueva venta
+        for(int i=0; i<pedido.size(); i++)
+        {
+         int index = medicamentos.indexOf(medicamentos.get(i));
+         Producto p = medicamentos.get(index);
+         Detalleventa dv = new Detalleventa();
+         dv.setIdproducto(p);
+         dv.setIdventa(v);
+         dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+         em.persist(dv);//Se registra el detalle de la venta con la lista de los productos
+         
+         if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+         {
+          p.setCantidad(Short.parseShort("0"));
+          Pedido pe = new Pedido();
+          pe.setIdproducto(p);
+          pe.setIdventa(v);
+          pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+          //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
+          pe.setEstado(1);//estado del pedido
+          pe.setFechapedido(new Date());
+          em.merge(pe);//Se registra el pedido
          }
+         else
+         {
+           p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
+           
+         }
+         em.merge(p); //Actualiza la cantidad en productos despues de la venta realizada     
+        }
     }
 
     @Override
