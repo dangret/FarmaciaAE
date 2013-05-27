@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dangret
+ * @author MartinNTT
  */
 @Entity
 @Table(name = "producto")
@@ -102,26 +102,14 @@ public class Producto implements Serializable {
         return ruta;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
-    }
 
     @XmlTransient
     public List<Pedido> getPedidoList() {
         return pedidoList;
     }
 
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
-    }
-
-    @XmlTransient
-    public List<Detalleventa> getDetalleventaList() {
-        return detalleventaList;
-    }
-
-    public void setDetalleventaList(List<Detalleventa> detalleventaList) {
-        this.detalleventaList = detalleventaList;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
     @Override
