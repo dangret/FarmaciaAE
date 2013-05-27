@@ -49,7 +49,6 @@
        per=usr.getIdcliente();
        usr=ejb2.consultaPorNombre(nombreUsr);
        tipoUsr=usr.getTipousuario();
-       
        ejb2.eliminarEntidad(usr);
     }
 %>
