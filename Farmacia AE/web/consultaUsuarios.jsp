@@ -79,7 +79,7 @@
     <div align="center">
         <form action="consultaUsuarios.jsp" method="POST">
             OPCIONES DE FILTRO:
-            <input type="submit" id="buscar" value="BUSCAR"><BR>
+            <input type="submit" id="buscar" name="btnBuscar" value="BUSCAR"><BR>
             <input type="radio" name="group2" id="group2" value="1"> BUSQUEDA ADMINISTRADOR
             <input type="radio" name="group2" id="group2" value="2">BUSQUEDA CLIENTES 
             <input type="radio" name="group2" id="group2" value="3">BUSQUEDA PROVEEDORES <br><br>

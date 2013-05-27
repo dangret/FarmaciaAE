@@ -82,9 +82,9 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.EAGER)
     private List<Numtarjeta> numtarjetaList;
-    @OneToMany(mappedBy = "idcliente", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "idcliente", fetch = FetchType.EAGER)
     private List<Usuario> usuarioList;
 
     public Persona() {
