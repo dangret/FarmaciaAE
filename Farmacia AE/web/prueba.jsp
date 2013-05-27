@@ -22,18 +22,13 @@
     List <Producto> pedido= new ArrayList();
     pedido = carritoCliente.getPedido();
     cantidades = carritoCliente.getCantidades();
-    int totalProductos = new Integer(0);
+    //int totalProductos = new Integer(0);
+    int totalProductos = 0;
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <script>
-            function miFuncion()
-            {
-             windows.location = ("prueba.jsp");
-            }
-        </script>
     </head>
     <body>
         <table>
@@ -43,10 +38,8 @@
                           for(int i=0;i<pedido.size();i++)
                           {
                             totalProductos += Integer.parseInt(cantidades.get(i).toString());
-                          }
-                          System.out.println(totalProductos);
-                          
-                          
+                            
+                          }                          
                         %>
                         <%=totalProductos%>
                         

@@ -8,18 +8,20 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author sears
+ * @author MartinNTT
  */
 @Entity
 @Table(name = "producto")
@@ -49,6 +51,10 @@ public class Producto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "ruta")
     private String ruta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    private List<Pedido> pedidoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    private List<Detalleventa> detalleventaList;
 
     public Producto() {
     }
@@ -91,6 +97,15 @@ public class Producto implements Serializable {
 
     public String getRuta() {
         return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
     }
 
     public void setRuta(String ruta) {

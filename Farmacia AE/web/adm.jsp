@@ -4,6 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Farmacias !!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script>
+    function mandarLogin(variable)
+    {
+        document.getElementById('iframe1').src = variable;
+    }
+</script>
 </head>
 <body>
 <div id="wrap">
@@ -18,23 +24,8 @@
       <li><a href="#">Usuarios</a></li>
     </ul>
   </div>
-  <!-- /header -->
-  <div id="content"> <img src="images/img.jpg" alt="" class="img" />
-    <div class="side fr">
-      <div id="bm"> <img src="images/s.jpg" alt="" /> </div>
-    </div>
-    <div class="main fl">
-      <div id="text">
-        <h2>Datos de Adminstrador</h2>
-        <p> Modificaciones de productos, usuarios y consulta de pedidos <br/>
-          <br/>
-        
-      </div>
-      
-    
-    </div>
-    <!-- /content -->
-  </div>
+   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
+       <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="about:blank"></iframe>
   <div class="clearfix"></div>
   <div id="footer">
     <div id="ftinner">
