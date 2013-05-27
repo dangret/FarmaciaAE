@@ -17,14 +17,14 @@
 %>
 
 <%
-    String quitar = request.getParameter("quitar")==null?"0":request.getParameter("quitar");
+    //String quitar = request.getParameter("quitar")==null?"0":request.getParameter("quitar");
     carritoCliente = (EJBCarritoClienteLocal)session.getAttribute("carritoCliente");
+    
+    
     List cantidades =new ArrayList();
-    List <Producto> pedido= new ArrayList();
-    List<Producto> medicamentos =new ArrayList();
-    pedido = carritoCliente.getPedido();
+    List<Producto> pedidos = carritoCliente.getPedido();
     cantidades = carritoCliente.getCantidades();
-    medicamentos= carritoCliente.getMedicamentos();
+    List<Producto> medicamentos= carritoCliente.getMedicamentos();
     int totalProductos = new Integer(0);
 %>
 <html>
@@ -39,28 +39,14 @@
                 <%if(carritoCliente.getPedido().size()>0){%>
                 <td><h5>Cantidad: 
                         <%
-                          for(int i=0;i<pedido.size();i++)
+                          Integer cantidad = 0;
+                          if (cantidades != null){
+                          for(int i=0; i<cantidades.size();i++)
                           {
-                           int index=0;
-                           for(int j=0;j<pedido.size();j++)
-                           {
-                            if(pedido.get(j).getProducto().equals(medicamentos.get(i)))
-                            {
-                             index = j;
-                            }
-                           }
-                           if(Integer.parseInt(quitar)==1)
-                           {
-                            totalProductos = totalProductos-Integer.parseInt(cantidades.get(i).toString());
-                           }
-                           else
-                           {
-                            totalProductos += Integer.parseInt(cantidades.get(i).toString());
-                           }
-                          }
-                          
+                              cantidad = cantidad + (Integer) cantidades.get(i);
+                          }}
                         %>
-                        <%=totalProductos%>
+                        <%=cantidad%>
                         
                 </h5></td>
                 <td><h5>Total: $</h5></td>

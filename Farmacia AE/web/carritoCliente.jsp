@@ -76,7 +76,7 @@
             function removerMedicina (idproducto, index){
                 if(confirm("¿Seguro que deseas eliminar esta medicina de tu lista de pedido?")){
                    location.href="carritoCliente.jsp?remover="+idproducto+"&index="+index;
-                   top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp?quitar=1';     
+                   top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';     
                 }
             }
         function terminarPedido(){
