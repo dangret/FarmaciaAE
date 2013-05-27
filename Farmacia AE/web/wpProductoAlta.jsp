@@ -7,6 +7,8 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBProductosRemote"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+        
 <!DOCTYPE html>
 <%!
    boolean llenar; 
@@ -26,7 +28,15 @@
 %>
 <html>
     <head>
+        <script src="js/jquery-2.0.1.js"/>
+        <script src="js/jquery.maskedinput.js"/>
         <script>
+            
+            jQuery(function($){
+                $("#txtproducto").mask("***");
+                $("#txtcantidad").mask("999");
+            });
+            
             function jsReset(){
                 document.getElementById("txtproducto").value = "";
                 document.getElementById("txtcantidad").value = "";
