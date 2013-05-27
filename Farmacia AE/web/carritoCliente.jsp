@@ -51,6 +51,7 @@
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();
     medicamentos=carritoCliente.getMedicamentos();
+    session.setAttribute("carritoCliente", carritoCliente);
 %>
 <html>
     <head>
