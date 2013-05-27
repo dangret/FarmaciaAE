@@ -1,3 +1,4 @@
+<%@page import="ittepic.edu.mx.clases.Codificador"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="ittepic.edu.mx.entidades.CatTiposusuario"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBTipoUsuarioLocal"%>
@@ -36,7 +37,7 @@
 %>
 <%
     usuario u = new usuario();
-    String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre");
+    String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
 
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
@@ -47,14 +48,19 @@
 
     if ((!nombre.equals("")) || (!nickname.equals("")) || (!pass.equals(""))) {
         //TABLA PERSONA
-        String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat");
-        String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat");
+        String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat").toUpperCase();
+        String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat").toUpperCase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecnac = format.parse(request.getParameter("fecnac") == null ? "" : request.getParameter("fecnac"));
-        String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf");
+        String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf").toUpperCase();
         String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
-        String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion");
-        String email = request.getParameter("email") == null ? "" : request.getParameter("email");
+        String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
+        String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
+        
+        //codificar password
+        Codificador codec = new Codificador ();
+        pass = codec.encriptar(pass, "MD5");
+        
         per = new Persona();
         per.setNombre(nombre);
         per.setAppat(apepat);
@@ -81,6 +87,9 @@
         String fecCre1 = formato.format(fecha);
         System.out.println(fecCre1);
         Date fecCre2 = formato.parse(fecCre1);
+        
+        //codificar contraseña
+        password = codec.encriptar(password, "MD5");
 
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
