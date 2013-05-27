@@ -32,6 +32,9 @@
     }
 %>
 <%
+    if (session.getAttribute("usuario") == null){
+        response.sendRedirect("wpFaltaLogin.jsp");
+    }
     String [] itemsBorrar = 
             request.getParameterValues("chkBorrar") == null ? null : 
             request.getParameterValues("chkBorrar");
@@ -54,6 +57,11 @@
 %>
 <html>
     <head>
+        <script>
+            function lala(){
+                window.location = "index.jsp";
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
@@ -83,7 +91,7 @@
             <table>
                 <tr>
                     <td><input type="submit" value="Saldar Pedidos"></td>
-                    <td><input type="button" value="cancelar" onclick="function lala(){window.location = 'index.jsp'}"</td>
+                    <td><input type="button" value="cancelar" onclick="lala();"</td>
                 </tr>
             </table>
         </form>
