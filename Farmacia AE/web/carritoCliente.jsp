@@ -69,6 +69,8 @@
                 {
                     anterior = eval("document.getElementById('txtAnterior"+index+"').value");
                     location.href = "carritoCliente.jsp?idproducto="+idproducto+"&cantidad="+cantidad;
+                    top.frames['iframe2'].location.href = 'prueba.jsp';
+                    
                 }
             }
             function removerMedicina (idproducto, index){
@@ -112,6 +114,7 @@
                             <input type="text" disabled="true"  name="txtAnterior<%=i%>" id="txtAnterior<%=i%>" value="0">
                                 <%}else{%>
                                 <input type="text" disabled="true"  name="txtAnterior<%=i%>" id="txtAnterior<%=i%>" value="<%=cantidades.get(index)%>">
+                                
                                 <%}%>
                             
                         </td>
