@@ -4,6 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
+<script>
+    function mandarLogin(variable)
+    {
+        document.getElementById('iframe1').src = variable;
+    }
+</script>
 </head>
 <body>
 <div id="wrap">
@@ -15,15 +21,18 @@
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
       <li><a href="opProductos.jsp">Nuestros Productos</a></li>
-      <li><a href="opLogin.jsp">Login</a></li>
+      <li><a onclick="mandarLogin('opLogin.jsp');">Login</a></li>
       <li><a href="contacto.jsp">Contactanos</a></li>
     </ul>
   </div>
+  
   <!-- /header -->
   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
+      <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="about:blank">
     <div class="side fr">
       <div id="bm"> <img src="images/s.jpg" alt="" /> </div>
     </div>
+    
     <div class="main fl">
       <div id="text">
         <h2>Compra Tu Medicinas Al Mejor Precio</h2>
@@ -38,11 +47,11 @@
               <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
               <li> <a href="wpProductoConsulta.jsp">Consulta de Productos</a></li>  
               </ul>
-              <object data="prueba.jsp" width="200"></object>
       </div>
     </div>
     <!-- /content -->
   </div>
+  </iframe>
   <div class="clearfix"></div>
   <div id="footer">
     <div id="ftinner">
@@ -55,5 +64,6 @@
   </div>
   <!-- /footer -->
 </div>
+</div>  
 </body>
 </html>

@@ -45,6 +45,7 @@
   }
   if(nombre!=null)
   {
+   String rfc = request.getParameter("rfc");
    String appat = request.getParameter("appat");
    String apmat = request.getParameter("apmat");
    String fechnac = request.getParameter("fechnac");
@@ -56,6 +57,7 @@
    int idcliente = Integer.parseInt(request.getParameter("idcliente"));
    Persona p = new Persona();
    p.setNombre(nombre);
+   p.setRfc(rfc);
    p.setAppat(appat);
    p.setApmat(apmat);
    p.setFechnac(sdffechaguardar.parse(fechnac));
@@ -92,6 +94,7 @@
        <table border="1">
                <tr>
                    <th>Nombre</th>
+                   <th>RFC</th>
                    <th>Apellido Paterno</th>
                    <th>Apellido Materno</th>
                    <th>Fecha de Nacimiento</th>
@@ -108,6 +111,7 @@
                         <%out.print(personas.get(i).getNombre());%>
                    </a>
                </td>
+               <td><%out.print(personas.get(i).getRfc());%></td>
                <td><%out.print(personas.get(i).getAppat());%></td>
                <td><%out.print(personas.get(i).getApmat());%></td>
                <td><%out.print(sdffechamostrar.format(personas.get(i).getFechnac()));%></td>
