@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,24 +30,21 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author sears
+ * @author dangret
  */
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u order by u.idusuario"),
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
-    @NamedQuery(name = "Usuario.eliminar", query = "DELETE FROM Usuario u WHERE u.idusuario = :idusuario"),
-    @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.login like :login"),
     @NamedQuery(name = "Usuario.findByFechacreacion", query = "SELECT u FROM Usuario u WHERE u.fechacreacion = :fechacreacion")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_idusuario_seq")
-    @SequenceGenerator(name = "usuario_idusuario_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idusuario")
     private Integer idusuario;
@@ -65,12 +62,12 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona idcliente;
     @JoinColumn(name = "tipousuario", referencedColumnName = "idtipousuario")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CatTiposusuario tipousuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
     private List<Venta> ventaList;
 
     public Usuario() {

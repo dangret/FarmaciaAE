@@ -5,7 +5,9 @@
 package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,10 +20,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MartinNTT
+ * @author dangret
  */
 @Entity
 @Table(name = "producto")
@@ -108,8 +111,17 @@ public class Producto implements Serializable {
         return pedidoList;
     }
 
-    public void setRuta(String ruta) {
-        this.ruta = ruta;
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
+    }
+
+    @XmlTransient
+    public List<Detalleventa> getDetalleventaList() {
+        return detalleventaList;
+    }
+
+    public void setDetalleventaList(List<Detalleventa> detalleventaList) {
+        this.detalleventaList = detalleventaList;
     }
 
     @Override
