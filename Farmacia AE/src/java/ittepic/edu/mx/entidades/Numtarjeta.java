@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author sears
+ * @author dangret
  */
 @Entity
 @Table(name = "numtarjeta")
@@ -47,7 +48,7 @@ public class Numtarjeta implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechacaducidad;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Persona idcliente;
 
     public Numtarjeta() {

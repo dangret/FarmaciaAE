@@ -54,35 +54,38 @@
     </head>
     <body>
         <form name="formulario" action="ServletProducto" method="POST" >
-            <table>
+            <center>
+            <table align="center">           
+                
+
                     <%
                     int filasRenglones;
                     int filaColumnas=6;
                     int filaF=6;
-                    filasRenglones=(Math.round(productos.size()/6));
-                   if(productos.size()>(filasRenglones*6)){
-                      filaF=productos.size()-(filasRenglones*6);
+                    filasRenglones=(Math.round(productos.size()/10));
+                   if(productos.size()>(filasRenglones*10)){
+                      filaF=productos.size()-(filasRenglones*10);
                       filasRenglones++;                          
                    }else{
-                        filaF=6;
+                        filaF=productos.size();
                         }
                     int pos=0;
                     int pos1=0;
                     for (int i = 0; i<filasRenglones; i++ ){
                     %>
-                    <tr>    
+                    <tr align="center" valign="middle">    
                         <%
                         if(i==(filasRenglones-1)){
                         filaColumnas=filaF;
                         }
                         pos1=pos;
                         for (int j=0; j<filaColumnas;j++){%>
-                        <td><a href="<%=productos.get(pos).getRuta() %>" rel="lightbox"><img  src="<%=productos.get(pos).getRuta() %>"  width="178" height="180"></a></td>
+                        <td><a href="<%=productos.get(pos).getRuta() %>" rel="lightbox" ><img  src="<%=productos.get(pos).getRuta() %>"  width="75" height="75"></a></td>
                             <% pos++;
                         }pos=pos1; %>
                         
                         </tr>
-                        <tr> 
+                        <tr align="center" valign="middle" > 
                             
                             <%
                             pos1=pos;
@@ -92,7 +95,7 @@
                             pos=pos1;%>
                         </tr>
                         
-                         <tr>       
+                         <tr align="center" valign="middle">       
                              <%
                              pos1=pos;
                              for (int j=0; j<filaColumnas;j++){%>
@@ -101,7 +104,7 @@
                               pos=pos1; %>
                             
                         </tr>
-                        <tr>   
+                        <tr align="center" valign="middle">   
                             <%
                             pos1=pos;
                             for (int j=0; j<filaColumnas;j++){%>                         
@@ -111,8 +114,9 @@
                             %>
                         </tr>
                                 <%}%>
+                
                     </table>
-
+            </center>
         </form>
     </body>
 </html>

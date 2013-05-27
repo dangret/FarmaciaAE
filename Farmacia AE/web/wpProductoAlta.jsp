@@ -70,7 +70,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="http://localhost:8080/Farmacia_AE/ServletProducto" name="formularito" method="POST">
+        <form action="ServletProducto" name="formularito" method="POST" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td><b>Nombre del Producto:</b></td>
