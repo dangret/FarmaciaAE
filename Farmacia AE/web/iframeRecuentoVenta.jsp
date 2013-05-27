@@ -17,13 +17,15 @@
 %>
 
 <%
+    String quitar = request.getParameter("quitar")==null?"0":request.getParameter("quitar");
     carritoCliente = (EJBCarritoClienteLocal)session.getAttribute("carritoCliente");
     List cantidades =new ArrayList();
     List <Producto> pedido= new ArrayList();
+    List<Producto> medicamentos =new ArrayList();
     pedido = carritoCliente.getPedido();
     cantidades = carritoCliente.getCantidades();
-    //int totalProductos = new Integer(0);
-    int totalProductos = 0;
+    medicamentos= carritoCliente.getMedicamentos();
+    int totalProductos = new Integer(0);
 %>
 <html>
     <head>
@@ -31,21 +33,44 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%if(carritoCliente.getMedicamentos().size()>0){%>
         <table>
             <tr>
+                <%if(carritoCliente.getPedido().size()>0){%>
                 <td><h5>Cantidad: 
                         <%
                           for(int i=0;i<pedido.size();i++)
                           {
+                           int index=0;
+                           for(int j=0;j<pedido.size();j++)
+                           {
+                            if(pedido.get(j).getProducto().equals(medicamentos.get(i)))
+                            {
+                             index = j;
+                            }
+                           }
+                           if(Integer.parseInt(quitar)==1)
+                           {
+                            totalProductos = totalProductos-Integer.parseInt(cantidades.get(i).toString());
+                           }
+                           else
+                           {
                             totalProductos += Integer.parseInt(cantidades.get(i).toString());
-                            
-                          }                          
+                           }
+                          }
+                          
                         %>
                         <%=totalProductos%>
                         
                 </h5></td>
                 <td><h5>Total: $</h5></td>
+                <%}else{%>
+            <h3><center>  </center></h3>
+            <%}%>
             </tr>
         </table>
+        <%} else {%>
+            <h3><center>    </center></h3>
+            <%} %>
     </body>
 </html>
