@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +20,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author sears
+ * @author dangret
  */
 @Entity
 @Table(name = "venta")
@@ -41,8 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Venta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "venta_idventa_seq1")
-    @SequenceGenerator(name = "venta_idventa_seq1", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idventa")
     private Integer idventa;
@@ -52,12 +51,12 @@ public class Venta implements Serializable {
     @Column(name = "fechadetalleventa")
     @Temporal(TemporalType.DATE)
     private Date fechadetalleventa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.LAZY)
     private List<Pedido> pedidoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.LAZY)
     private List<Detalleventa> detalleventaList;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idusuario;
 
     public Venta() {

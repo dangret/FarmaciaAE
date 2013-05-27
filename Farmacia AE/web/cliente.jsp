@@ -14,7 +14,7 @@
 <body>
 <div id="wrap">
   <div id="header">
-      <iframe marginwidth="0" marginheight="0" width="200" height="40" scrolling="no" frameborder=0 id="iframe2" src="prueba.jsp" align="right"></iframe>
+      <iframe marginwidth="0" marginheight="0" width="200" height="40" scrolling="no" frameborder=0 id="iframe2" src="iframeRecuentoVenta.jsp" align="right"></iframe>
     <div id="logo">
       <h1>Medicinas con Iva+</h1>      
     </div>
