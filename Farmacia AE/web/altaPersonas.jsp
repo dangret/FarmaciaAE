@@ -30,11 +30,12 @@
 <%    
     int idcliente = request.getParameter("modificar")==null?0:Integer.parseInt(request.getParameter("modificar"));
     Persona p = null;
-    String nombre="", appat="", apmat="", fechnac="", telefono="", direccion="", email="", celular="";
+    String nombre="", rfc="", appat="", apmat="", fechnac="", telefono="", direccion="", email="", celular="";
     SimpleDateFormat sdffecha = new SimpleDateFormat("yyyy-MM-dd");
     if(idcliente!=0) {
         p = ejb.consultaPorId(idcliente);
         nombre=p.getNombre()==null?"":p.getNombre();
+        rfc=p.getRfc()==null?"":p.getRfc();
         appat=p.getAppat()==null?"":p.getAppat();
         apmat=p.getApmat()==null?"":p.getApmat();
         fechnac=sdffecha.format(p.getFechnac())==null?"":sdffecha.format(p.getFechnac());
@@ -58,9 +59,13 @@
         <h1>Alta/Modificacion de Personas</h1>
         <form method="POST" action="consultaPersonas.jsp?idcliente=<%=idcliente%>">
             <table>
-                 <tr>
+                <tr>
                     <td>Nombre</td>
                     <td><input type="text" name="nombre" value="<%=nombre%>"></td>
+                </tr>
+                <tr>
+                    <td>RFC (si no tiene deje el campo en blanco)</td>
+                    <td><input type="text" name="rfc" value="<%=rfc%>"></td>
                 </tr>
                 <tr>
                     <td>Apellido Paterno</td>

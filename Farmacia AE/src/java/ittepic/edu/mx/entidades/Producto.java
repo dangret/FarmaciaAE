@@ -5,26 +5,23 @@
 package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author sears
+ * @author MartinNTT
  */
 @Entity
 @Table(name = "producto")
@@ -34,12 +31,12 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Producto.findByIdproducto", query = "SELECT p FROM Producto p WHERE p.idproducto = :idproducto"),
     @NamedQuery(name = "Producto.findByProducto", query = "SELECT p FROM Producto p WHERE p.producto = :producto"),
     @NamedQuery(name = "Producto.findByCantidad", query = "SELECT p FROM Producto p WHERE p.cantidad = :cantidad"),
-    @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio")})
+    @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio"),
+    @NamedQuery(name = "Producto.findByRuta", query = "SELECT p FROM Producto p WHERE p.ruta = :ruta")})
 public class Producto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "producto_idproducto_seq")
-    @SequenceGenerator(name = "producto_idproducto_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idproducto")
     private Integer idproducto;
@@ -51,9 +48,12 @@ public class Producto implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "precio")
     private Double precio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto")
+    @Size(max = 2147483647)
+    @Column(name = "ruta")
+    private String ruta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
     private List<Pedido> pedidoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
     private List<Detalleventa> detalleventaList;
 
     public Producto() {
@@ -95,22 +95,21 @@ public class Producto implements Serializable {
         this.precio = precio;
     }
 
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
     @XmlTransient
     public List<Pedido> getPedidoList() {
         return pedidoList;
     }
 
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
-    }
-
-    @XmlTransient
-    public List<Detalleventa> getDetalleventaList() {
-        return detalleventaList;
-    }
-
-    public void setDetalleventaList(List<Detalleventa> detalleventaList) {
-        this.detalleventaList = detalleventaList;
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
     }
 
     @Override

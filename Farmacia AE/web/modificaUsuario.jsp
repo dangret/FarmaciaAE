@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                         <td>Fecha de Nacimiento: </td>
-                        <td><input type="date" name="fecnac" id="fecnac" value=""></td>
+                        <td><input type="date" name="fecnac" id="fecnac" value="<%=año+"-"+mes+"-"+dia%>"></td>
                     </tr>
                     <tr>
                         <td>Teléfono Fijo: </td>

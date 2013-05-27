@@ -38,7 +38,7 @@
 <%
     usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
-
+    String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
@@ -46,7 +46,7 @@
     Persona per;
     CatTiposusuario tipoUsr;
 
-    if ((!nombre.equals("")) || (!nickname.equals("")) || (!pass.equals(""))) {
+    if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("") || (!nombre.equals("")))) {
         //TABLA PERSONA
         String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat").toUpperCase();
         String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat").toUpperCase();
@@ -55,10 +55,10 @@
         String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf").toUpperCase();
         String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
         String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
-        String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
+
         
         //codificar password
-        Codificador codec = new Codificador ();
+        Codificador codec=new Codificador();
         pass = codec.encriptar(pass, "MD5");
         
         per = new Persona();
@@ -124,7 +124,7 @@
                         <th colspan="2">Datos Usuarios</th>
                     </tr>
                     <tr>
-                        <td>Nombre: </td>
+                        <td>* Nombre: </td>
                         <td><input type="text" name="nombre" id="nombre"></td>
                     </tr> 
                     <tr>
@@ -153,20 +153,21 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>E-Mail: </td>
+                        <td>* E-Mail: </td>
                         <td><input type="text" name="email" id="email"></td>
                     </tr>
 
                 </table><br>
                 <table border="1">
                     <tr>
-                        <td width="147">USER:</td>
+                        <td width="147">* USER:</td>
                         <td width="140"><input type="text" name="user"></td>
                     </tr>
                     <tr>
-                        <td>PASSWORD:</td>
+                        <td>* PASSWORD:</td>
                         <td><input type="password" name="password"></td>
                     </tr>
+                    <!--
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
@@ -175,6 +176,7 @@
                                 <OPTION VALUE="2">Usuario</OPTION>
                             </SELECT></td>
                     </tr>
+                    -->
 
                 </table>
 
