@@ -58,7 +58,7 @@
 
         
         //codificar password
-
+        Codificador codec=new Codificador();
         pass = codec.encriptar(pass, "MD5");
         
         per = new Persona();
