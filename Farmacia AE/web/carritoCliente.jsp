@@ -69,14 +69,14 @@
                 {
                     anterior = eval("document.getElementById('txtAnterior"+index+"').value");
                     location.href = "carritoCliente.jsp?idproducto="+idproducto+"&cantidad="+cantidad;
-                    top.frames['iframe2'].location.href = 'prueba.jsp';
+                    top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';
                     
                 }
             }
             function removerMedicina (idproducto, index){
                 if(confirm("¿Seguro que deseas eliminar esta medicina de tu lista de pedido?")){
-                   location.href="carritoCliente.jsp?remover="+
-                            idproducto+"&index="+index;
+                   location.href="carritoCliente.jsp?remover="+idproducto+"&index="+index;
+                   top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';     
                 }
             }
         function terminarPedido(){

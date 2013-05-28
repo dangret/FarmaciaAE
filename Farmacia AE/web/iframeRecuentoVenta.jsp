@@ -17,13 +17,15 @@
 %>
 
 <%
+    //String quitar = request.getParameter("quitar")==null?"0":request.getParameter("quitar");
     carritoCliente = (EJBCarritoClienteLocal)session.getAttribute("carritoCliente");
+    
+    
     List cantidades =new ArrayList();
-    List <Producto> pedido= new ArrayList();
-    pedido = carritoCliente.getPedido();
+    List<Producto> pedidos = carritoCliente.getPedido();
     cantidades = carritoCliente.getCantidades();
-    //int totalProductos = new Integer(0);
-    int totalProductos = 0;
+    List<Producto> medicamentos= carritoCliente.getMedicamentos();
+    int totalProductos = new Integer(0);
 %>
 <html>
     <head>
@@ -31,21 +33,30 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%if(carritoCliente.getMedicamentos().size()>0){%>
         <table>
             <tr>
+                <%if(carritoCliente.getPedido().size()>0){%>
                 <td><h5>Cantidad: 
                         <%
-                          for(int i=0;i<pedido.size();i++)
+                          Integer cantidad = 0;
+                          if (cantidades != null){
+                          for(int i=0; i<cantidades.size();i++)
                           {
-                            totalProductos += Integer.parseInt(cantidades.get(i).toString());
-                            
-                          }                          
+                              cantidad = cantidad + (Integer) cantidades.get(i);
+                          }}
                         %>
-                        <%=totalProductos%>
+                        <%=cantidad%>
                         
                 </h5></td>
                 <td><h5>Total: $</h5></td>
+                <%}else{%>
+            <h3><center>  </center></h3>
+            <%}%>
             </tr>
         </table>
+        <%} else {%>
+            <h3><center>    </center></h3>
+            <%} %>
     </body>
 </html>

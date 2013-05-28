@@ -34,6 +34,7 @@ public class EJBProductos implements EJBProductosRemote {
            return em.createNamedQuery("Producto.findAll")
                    .getResultList();
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }

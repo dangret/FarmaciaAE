@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,13 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author sears
+ * @author dangret
  */
 @Entity
 @Table(name = "detalleventa")
@@ -33,18 +33,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Detalleventa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-   @GeneratedValue(strategy = GenerationType.SEQUENCE,generator="detalleventa_iddetalleventa_seq")
-    @SequenceGenerator(name="detalleventa_iddetalleventa_seq", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "iddetalleventa")
     private Integer iddetalleventa;
     @Column(name = "cantidad")
     private Short cantidad;
     @JoinColumn(name = "idventa", referencedColumnName = "idventa")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Venta idventa;
     @JoinColumn(name = "idproducto", referencedColumnName = "idproducto")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Producto idproducto;
 
     public Detalleventa() {
