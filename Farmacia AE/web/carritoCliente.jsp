@@ -25,7 +25,8 @@
     }
 %>
 
-<%
+<% 
+    if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
     int terminar=request.getParameter("terminar")==null?0:Integer.parseInt(request.getParameter("terminar"));
@@ -76,7 +77,7 @@
             function removerMedicina (idproducto, index){
                 if(confirm("¿Seguro que deseas eliminar esta medicina de tu lista de pedido?")){
                    location.href="carritoCliente.jsp?remover="+idproducto+"&index="+index;
-                   top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp?quitar=1';     
+                   top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';     
                 }
             }
         function terminarPedido(){
