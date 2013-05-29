@@ -72,6 +72,22 @@ public class EJBPersonas implements EJBPersonasRemote {
     public void reemplazar(List<Persona> list_p) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public boolean buscarPorEMail(String email){
+        Persona persona = null;
+        try{
+            em = emf.createEntityManager();
+            
+            persona = (Persona) em.createQuery("Select p FROM Persona p where p.email = :email")
+                    .setParameter("email", email)
+                    .getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();;
+            if (persona != null) return true;
+            else return false;
+        }
+        return true;
+    }
 
     
 
