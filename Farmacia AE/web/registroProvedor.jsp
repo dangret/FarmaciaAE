@@ -67,7 +67,7 @@
         //ejb.alta_modificacion(per);
 
         //TIPO DE USUARIO
-        int tipo = 2;
+        int tipo = 3;
 
         // TABLA USUARIO
         usr = new Usuario();
