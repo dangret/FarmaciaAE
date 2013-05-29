@@ -42,8 +42,8 @@
     List<Usuario> users = new ArrayList<Usuario>();
     List<CatTiposusuario> tipousers = new ArrayList<CatTiposusuario>();
     users = ejb2.consultaGeneral();
+    int tam=users.size();
     
-
  DateFormat df =  DateFormat.getDateInstance();
     
     if(elimina!=null){
@@ -53,7 +53,7 @@
        usr=ejb2.consultaPorId(Integer.parseInt(elimina[i]));
        tipoUsr=usr.getTipousuario();
        ejb2.eliminarEntidad(usr);
-            }
+       }
     }
     
 %>
@@ -86,7 +86,7 @@
         </form>
     </div>
     
-    <form action="consultaUsuarios.jsp">
+    <form action="consultaUsuarios.jsp" method="POST" name="formulario">
     <table border="1">
         <tr>
             <th>ID USUARIO</th>
@@ -101,7 +101,7 @@
             <%if (bandera == 1) {%>
         <tr>
             <%if (users.get(i).getTipousuario().getIdtipousuario()==1){%>
-            <td><a href="modificaUsuario.jsp?idpersona=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
+            <td><a href="modificaUsuario.jsp?idusuario=<%=users.get(i).getIdusuario()+ ""%>"><%=users.get(i).getIdusuario() + ""%></td>
             <td><%out.print("ADMINISTRADOR");%></td>
             <td><%out.print(users.get(i).getLogin());%></td>
             <td><%out.print(df.format(users.get(i).getFechacreacion()));%></td>
@@ -116,7 +116,7 @@
             <%if (bandera == 2) {%>
         <tr>
             <%if (users.get(i).getTipousuario().getIdtipousuario()==2){%>
-            <td><a href="modificaUsuario.jsp?idpersona=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
+            <td><a href="modificaUsuario.jsp?idusuario=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
             <td><%out.print("CLIENTE");%></td>
             <td><%out.print(users.get(i).getLogin());%></td>
             <td><%out.print(df.format(users.get(i).getFechacreacion()));%></td>
@@ -131,7 +131,7 @@
             <%if (bandera == 3) {%>
         <tr>
             <%if (users.get(i).getTipousuario().getIdtipousuario()==3){%>
-            <td><a href="modificaProvedor.jsp?idpersona=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
+            <td><a href="modificaProvedor.jsp?idcliente=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
             <td><%out.print("PROVEEDOR");%></td>
             <td><%out.print(users.get(i).getLogin());%></td>
             <td><%out.print(df.format(users.get(i).getFechacreacion()));%></td>
@@ -143,7 +143,7 @@
     </table>
     <table>
         <tr>
-            <td><input type="submit" value="Eliminar" name="btEliminar" onclick="validar();"></td>
+            <td><input type="submit" value="Eliminar" name="btEliminar"  onclick="validar()"></td>
         </tr>
     </table>
     </form>
