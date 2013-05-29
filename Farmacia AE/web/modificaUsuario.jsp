@@ -4,6 +4,8 @@
     Author     : sears
 --%>
 
+<%@page import="beans.usuario"%>
+<%@page import="ittepic.edu.mx.clases.Codificador"%>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.Date"%>
@@ -42,18 +44,84 @@
     }
 %>
 <%
-    int idusuario = request.getParameter("idpersona") == null ? 0 : Integer.parseInt(request.getParameter("idpersona"));
-    Usuario usr = ejb2.consultaPorId(idusuario);
-    Persona per = ejb.consultaPorId(idusuario);
+    //PARTE DE LOS VALUES
+    int band=request.getParameter("band")==null?0:1;
+    int idcliente = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
+    Usuario usr = ejb2.consultaPorId(idcliente);
+    Persona per = ejb.consultaPorId(idcliente);
     Calendar calendario = GregorianCalendar.getInstance();
     
+    //PARTE DE MODIFICACION
+    //usuario u = new usuario();
+    String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
+    String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
+    String user = request.getParameter("user") == null ? "" : request.getParameter("user");
+    String password = request.getParameter("password") == null ? "" : request.getParameter("password");
+  
+    
+    //MUESTRO DATOS  
     Date fecha = usr.getFechacreacion();
-    SimpleDateFormat formato = new SimpleDateFormat("dd");
+    SimpleDateFormat formato1 = new SimpleDateFormat("dd");
         SimpleDateFormat formato2 = new SimpleDateFormat("MM");
             SimpleDateFormat formato3 = new SimpleDateFormat("yyyy");
-    String dia = formato.format(fecha);
+    String dia = formato1.format(fecha);
         String mes = formato2.format(fecha);
             String año = formato3.format(fecha);
+            
+    // GUARDO DATOS
+         if (band==1) {
+        //TABLA PERSONA
+        usr = ejb2.consultaPorId(idcliente);
+        per = ejb.consultaPorId(idcliente);
+        String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat").toUpperCase();
+        String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat").toUpperCase();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecnac = format.parse(request.getParameter("fecnac") == null ? "" : request.getParameter("fecnac"));
+        String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf").toUpperCase();
+        String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
+        String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
+
+        
+        //codificar password
+        Codificador codec=new Codificador();
+        
+        //per.setIdcliente(idcliente);
+        per.setNombre(nombre);
+        per.setAppat(apepat);
+        per.setApmat(apemat);
+        per.setFechnac(fecnac);
+        per.setTelefono(telf);
+        per.setCelular(celular);
+        per.setDireccion(direccion);
+        //per.setEmail(email);
+        //ejb.alta_modificacion(per);
+
+        //TIPO DE USUARIO
+        //int tipo = usr.getTipousuario().getIdtipousuario();
+
+        // TABLA USUARIO
+        //int tipoUsuario = tipo;
+        //int idcliente = u.ultimo();
+        //calendario = GregorianCalendar.getInstance();
+        //fecha = calendario.getTime();
+        //SimpleDateFormat formatox = new SimpleDateFormat("dd-MM-yyyy");
+        //String fecCre1 = formatox.format(fecha);
+        //Date fecCre2 = formatox.parse(fecCre1);
+        
+        //codificar contraseña
+        //password = codec.encriptar(password, "MD5");
+
+        //Setear Usuario
+        //usr.setIdusuario(idcliente);
+        //usr.setTipousuario(ejb3.obtenerPorID(tipo));
+        usr.setIdcliente(per);
+        usr.setLogin(user);
+        usr.setPassword(password);
+        //usr.setFechacreacion(fecCre2);
+        System.out.println(usr.getIdusuario()+"  "+usr.getTipousuario()+"  "+usr.getIdcliente()+"  "+usr.getLogin()+"  "+usr.getPassword());
+        ejb2.alta(usr);
+        response.sendRedirect("/Farmacia_AE/index.jsp");
+    }
 
 %>
 
@@ -65,6 +133,10 @@
             function cancelar1() {
                 window.location="opLogin.jsp";
             }
+            function termino(){
+                
+                
+            }
         </script>
     </head>
     <body>
@@ -72,7 +144,7 @@
             <H2>REGISTRO DE USUARIOS</H1>
         </div>
 
-        <form name="formulario" action="registroUsuario.jsp" method="POST">
+        <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST">
             <div align="left">
                 <table border="1">
                     <tr>
@@ -109,28 +181,19 @@
                     </tr>
                     <tr>
                         <td>E-Mail: </td>
-                        <td><input type="text" name="email" id="email" value="<%=per.getEmail()%>"></td>
+                        <td><input type="text" name="email" id="email" value="<%=per.getEmail()%>" disabled="true"></td>
                     </tr>
 
                 </table><br>
                 <table border="1">
                     <tr>
                         <td width="147">USER:</td>
-                        <td width="140"><input type="text" name="user"  value="<%=usr.getLogin()%>"></td>
+                        <td width="140"><input type="text" name="user"  value="<%=usr.getLogin()%>" disabled="true"></td>
                     </tr>
                     <tr>
                         <td>PASSWORD:</td>
                         <td><input type="password" name="password" value="<%=usr.getPassword()%>"></td>
                     </tr>
-                    <tr><td>TIPO: 
-                        </td>
-                        <td><SELECT NAME="combo" SIZE=1> 
-                                <option value="#">:: Seleccione ::</option>
-                                <OPTION VALUE="1">Administrador</OPTION>
-                                <OPTION VALUE="2">Usuario</OPTION>
-                            </SELECT></td>
-                    </tr>
-
                 </table>
 
                 <table border="1">
