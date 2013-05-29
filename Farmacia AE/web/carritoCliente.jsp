@@ -25,7 +25,8 @@
     }
 %>
 
-<%
+<% 
+    if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
     int terminar=request.getParameter("terminar")==null?0:Integer.parseInt(request.getParameter("terminar"));

@@ -42,7 +42,6 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @PostConstruct
     @Override
     public void inicializar() {
-         //throw new UnsupportedOperationException("Not supported yet.");
         pedido = new ArrayList();// Lista que tambien esta vacia.
         cantidades = new ArrayList();// lista vacia.
         medicamentos = em.createNamedQuery("Producto.findAll").getResultList();// lista de todas las medicinas 
