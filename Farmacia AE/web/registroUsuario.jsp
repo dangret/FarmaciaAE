@@ -45,24 +45,24 @@
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
-    int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
-    String tarjeta=request.getParameter("tarjeta")==null?"":request.getParameter("tarjeta");
-    int codigo=request.getParameter("codigo")==null?0:Integer.parseInt(request.getParameter("codigo"));
-    String fechaV=request.getParameter("fechaV")==null?"":request.getParameter("fechaV");
-    
-            
+    int combo = request.getParameter("combo") == null ? 0 : Integer.parseInt(request.getParameter("combo"));
+    String tarjeta = request.getParameter("tarjeta") == null ? "" : request.getParameter("tarjeta");
+    int codigo = request.getParameter("codigo") == null ? 0 : Integer.parseInt(request.getParameter("codigo"));
+    String fechaV = request.getParameter("fechaV") == null ? "" : request.getParameter("fechaV");
+
+
     Usuario usr;
     Persona per;
     CatTiposusuario tipoUsr;
 
-    if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("")) || (!nombre.equals("")) || (!tarjeta.equals("")) || (codigo!=0) || (!fechaV.equals(""))) {
+    if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("")) || (!nombre.equals("")) || (!tarjeta.equals("")) || (codigo != 0) || (!fechaV.equals(""))) {
         //TABLA PERSONA
         String apepat = request.getParameter("apepat") == null ? null : request.getParameter("apepat").toUpperCase();
         String apemat = request.getParameter("apemat") == null ? null : request.getParameter("apemat").toUpperCase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date fecnac = null;
-        if (request.getParameter("fecnac") != null){
-            if (request.getParameter("fecnac") != ""){
+        if (request.getParameter("fecnac") != null) {
+            if (request.getParameter("fecnac") != "") {
                 fecnac = format.parse(request.getParameter("fecnac") == null ? null : request.getParameter("fecnac"));
             }
         }
@@ -70,23 +70,40 @@
         String celular = request.getParameter("celular") == null ? null : request.getParameter("celular");
         String direccion = request.getParameter("direccion") == null ? null : request.getParameter("direccion").toUpperCase();
 
-        
+
         //codificar password
-        Codificador codec=new Codificador();
+        Codificador codec = new Codificador();
         pass = codec.encriptar(pass, "MD5");
-        
+
         per = new Persona();
         per.setNombre(nombre);
-        if (apepat != "")     per.setAppat(apepat);
-        if (apemat != "")     per.setApmat(apemat);
-        if (fecnac != null)     per.setFechnac(fecnac);
-        if (telf != "")       per.setTelefono(telf);
-        if (celular != "")    per.setCelular(celular);
-        if (direccion != "")  per.setDireccion(direccion);
-        per.setEmail(email); 
+        if (apepat != "") {
+            per.setAppat(apepat);
+        }
+        if (apemat != "") {
+            per.setApmat(apemat);
+        }
+        if (fecnac != null) {
+            per.setFechnac(fecnac);
+        }
+        if (telf != "") {
+            per.setTelefono(telf);
+        }
+        if (celular != "") {
+            per.setCelular(celular);
+        }
+        if (direccion != "") {
+            per.setDireccion(direccion);
+        }
+        per.setEmail(email);
 
         //TIPO DE USUARIO
-        int tipo = combo;
+        int tipo;
+        if(combo!=0){
+        tipo = combo;
+        }else{
+        tipo=2;
+        }
 
         // TABLA USUARIO
         usr = new Usuario();
@@ -100,10 +117,10 @@
         String fecCre1 = formato.format(fecha);
         System.out.println(fecCre1);
         Date fecCre2 = formato.parse(fecCre1);
-        
+
         //codificar contraseña
         password = codec.encriptar(password, "MD5");
-       
+
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
@@ -180,13 +197,13 @@
                     }
                     
                     if (!nombreReg.test(apemat)){
-                            errorValidacion = true;
+                        errorValidacion = true;
                         $("#apepat").after("<span class='error'>el apellido solo debe de llevar letras</span>");
                         $("#apepat").focus();
                     }
                     
                     if (!nombreReg.test(apepat)){
-                            errorValidacion = true;
+                        errorValidacion = true;
                         $("#apepat").after("<span class='error'>el apellido solo debe de llevar letras</span>");
                         $("#apepat").focus();
                     }
@@ -303,22 +320,22 @@
                         <td>* PASSWORD:</td>
                         <td><input type="password" id="pass" name="password"></td>
                     </tr>
-            
-                      
+
+                    <%if (sesionUser != null) {
+                            if (sesionUser.getTipousuario().getIdtipousuario() == 1) {
+                    %>    
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
                                 <option value="#">:: Seleccione ::</option>
-                                <%if(sesionUser!=null){ 
-                                if(sesionUser.getTipousuario().getIdtipousuario()==1){
-                                %>
                                 <OPTION VALUE="1">Administrador</OPTION>
-                                <%}}%>
                                 <OPTION VALUE="2">Usuario</OPTION>
                                 <OPTION VALUE="3">Distribuidor</OPTION>
                             </SELECT></td>
                     </tr>
-                    
+                    <%}
+                    }%>
+
 
                 </table>
 

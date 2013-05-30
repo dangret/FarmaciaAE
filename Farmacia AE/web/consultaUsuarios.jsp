@@ -131,7 +131,7 @@
             <%if (bandera == 3) {%>
         <tr>
             <%if (users.get(i).getTipousuario().getIdtipousuario()==3){%>
-            <td><a href="modificaProvedor.jsp?idcliente=<%=users.get(i).getIdcliente().getIdcliente() + ""%>"><%=users.get(i).getIdcliente().getIdcliente() + ""%></td>
+            <td><a href="modificaProvedor.jsp?idusuario=<%=users.get(i).getIdusuario() + ""%>"><%=users.get(i).getIdusuario() + ""%></td>
             <td><%out.print("PROVEEDOR");%></td>
             <td><%out.print(users.get(i).getLogin());%></td>
             <td><%out.print(df.format(users.get(i).getFechacreacion()));%></td>

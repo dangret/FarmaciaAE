@@ -35,31 +35,28 @@
         }
     }
 %>
-<%
+<% 
     usuario u = new usuario();
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
-            String email = request.getParameter("email") == null ? "" : request.getParameter("email");
+    String email = request.getParameter("email") == null ? "" : request.getParameter("email");
     Usuario usr;
     Persona per;
 
-    if ((!rfc.equals("")) || (!nickname.equals("")) || (!pass.equals("") || (!email.equals("")))) {
+    if ((!rfc.equals("")) || (!nickname.equals("")) || (!pass.equals("") || (!email.equals("")) || (!nombre.equals("")))) {
         //TABLA PERSONA
         String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf");
         String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
         String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
 
-        String apepat=null;
-        String apemat=null;
-        Date fecnac=null;
+        String apepat = null;
+        String apemat = null;
+        Date fecnac = null;
         per = new Persona();
         per.setRfc(rfc);
         per.setNombre(nombre);
-        per.setAppat(apepat);
-        per.setApmat(apemat);
-        per.setFechnac(fecnac);
         per.setTelefono(telf);
         per.setCelular(celular);
         per.setDireccion(direccion);
@@ -71,8 +68,6 @@
 
         // TABLA USUARIO
         usr = new Usuario();
-        int tipoUsuario = 2;
-        int idcliente = u.ultimo() + 1;
         String user = request.getParameter("user");
         String password = request.getParameter("password");
         Calendar calendario = GregorianCalendar.getInstance();
@@ -82,9 +77,9 @@
         Date fecCre2 = formato.parse(fecCre1);
 
         //Codifico Password
-        Codificador codec = new Codificador ();
-        password=codec.encriptar(password, "MD5");
-        
+        Codificador codec = new Codificador();
+        password = codec.encriptar(password, "MD5");
+
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
