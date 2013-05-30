@@ -39,6 +39,7 @@
     }
 %>
 <%
+    
     usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
@@ -83,7 +84,6 @@
         if (celular != "")    per.setCelular(celular);
         if (direccion != "")  per.setDireccion(direccion);
         per.setEmail(email); 
-       //ejb.alta_modificacion(per);
 
         //TIPO DE USUARIO
         int tipo = 2;
@@ -103,10 +103,7 @@
         
         //codificar contraseña
         password = codec.encriptar(password, "MD5");
-        
-
-        
-
+       
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
@@ -287,18 +284,6 @@
                         <td>* E-Mail: </td>
                         <td><input type="text" id="jmail" name="email" id="email"></td>
                     </tr>
-                    <tr>
-                        <td>* Numero de Tarjeta: </td>
-                        <td><input type="text" name="tarjeta"></td>
-                    </tr>
-                    <tr>
-                        <td>* Codigo de Seguridad: </td>
-                        <td><input type="text" name="codigo"></td>
-                    </tr>
-                                        <tr>
-                        <td>* Fecha Caducidad: </td>
-                        <td><input type="date" name="fechaV"></td>
-                    </tr>
 
                 </table><br>
                 <table border="1">
@@ -317,6 +302,7 @@
                                 <option value="#">:: Seleccione ::</option>
                                 <OPTION VALUE="1">Administrador</OPTION>
                                 <OPTION VALUE="2">Usuario</OPTION>
+                                <OPTION VALUE="2">Distribuidor</OPTION>
                             </SELECT></td>
                     </tr>
                     -->
