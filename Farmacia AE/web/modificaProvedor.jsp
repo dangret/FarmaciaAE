@@ -49,14 +49,15 @@
     Persona per = usr.getIdcliente();
 
     if ((!rfc.equals("")) || (!email.equals("")) || (!nombre.equals(""))) {
+        usr = ejb2.consultaPorId(idusuario);
+        per = usr.getIdcliente();
         //TABLA PERSONA
-        per = new Persona();
         per.setRfc(rfc);
         per.setNombre(nombre);
         per.setTelefono(telf);
         per.setCelular(celular);
         per.setDireccion(direccion);
-        per.setEmail(email);
+        //per.setEmail(email);
         //ejb.alta_modificacion(per);
 
         // TABLA USUARIO
@@ -71,9 +72,10 @@
         //usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
         //usr.setLogin(user);
-
         //usr.setFechacreacion(fecCre2);
         ejb2.alta(usr);
+        ejb.alta_modificacion(per);
+        response.sendRedirect("/Farmacia_AE/index.jsp");
     }
 %>
 <html>
@@ -91,7 +93,7 @@
             <H2>REGISTRO DE PROOVEDORES</H1>
         </div>
 
-        <form name="formulario" action="registroProvedor.jsp" method="POST">
+        <form name="formulario" action="modificaProvedor.jsp?idusuario=<%=idusuario%>" method="POST">
             <div align="left">
                 <table border="1">
                     <tr>
@@ -115,12 +117,12 @@
                     </tr>
                     <tr>
                         <td>Direccion:<br>
-                        <td>   <textarea name="direccion" cols="20" rows="2" value="<%=per.getCelular()%>"></textarea></td>
+                        <td>   <textarea name="direccion" cols="20" rows="2"><%=per.getDireccion()%></textarea></td>
                         </td>
                     </tr>
                     <tr>
                         <td>* E-Mail: </td>
-                        <td><input type="text" name="email" id="email" disabled="true" value="<%=per.getDireccion()%>"></td>
+                        <td><input type="text" name="email" id="email" disabled="true" value="<%=per.getEmail()%>"></td>
                     </tr>
 
                 </table><br>
