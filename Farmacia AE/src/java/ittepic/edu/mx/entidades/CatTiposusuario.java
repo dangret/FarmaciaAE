@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,7 +21,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dangret
+ * @author sears
  */
 @Entity
 @Table(name = "cat_tiposusuario")
@@ -41,7 +40,7 @@ public class CatTiposusuario implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(mappedBy = "tipousuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tipousuario")
     private List<Usuario> usuarioList;
 
     public CatTiposusuario() {
