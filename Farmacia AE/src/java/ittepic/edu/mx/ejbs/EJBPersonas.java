@@ -5,7 +5,6 @@
 package ittepic.edu.mx.ejbs;
 
 import ittepic.edu.mx.entidades.Persona;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Remote;
 import javax.ejb.Stateful;
@@ -73,7 +72,7 @@ public class EJBPersonas implements EJBPersonasRemote {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    public boolean buscarPorEMail(String email){
+    public Boolean buscarPorEMail(String email){
         Persona persona = null;
         try{
             em = emf.createEntityManager();
