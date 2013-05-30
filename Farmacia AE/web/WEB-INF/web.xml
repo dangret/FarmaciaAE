@@ -9,6 +9,14 @@
         <servlet-class>ittepic.edu.mx.servlets.ServletProducto</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>ServletUser</servlet-name>
+        <url-pattern>/ServletUser</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ServletUser</servlet-name>
+        <servlet-class>ittepic.edu.mx.servlets.ServletUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
     </servlet-mapping>

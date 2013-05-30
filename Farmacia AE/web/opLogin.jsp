@@ -3,18 +3,24 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Farmacias!!!</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-<table align="right">
-    <tr>
+    <table >
+        <tr align="center">
         <td>
-            <div>
-                <iframe marginwidth="0" marginheight="0" width="250" height="180" scrolling="yes" frameborder=0 src="login.jsp" align="right"></iframe>
+            <div align="left">
+                <iframe  width="250" height="180" scrolling="yes" frameborder=0 src="login.jsp" align="top"></iframe>
             </div>
         </td>
-        <td>
-            <div>
-            <iframe marginwidth="0" marginheight="0" width="400" height="350" scrolling="yes" frameborder=0 src="registroUsuario.jsp" align="right"></iframe>
+            <td>
+                <div>
+                       ..............................              
+                </div>
+            </td>
+        <td align="right">
+            <div align="right" valign="right">
+            <iframe width="400" height="350" scrolling="yes" frameborder=0 src="registroUsuario.jsp" align="right"></iframe>
             </div>
         </td>
     </tr>

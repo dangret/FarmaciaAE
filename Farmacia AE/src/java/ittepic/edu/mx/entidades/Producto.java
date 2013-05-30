@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-//yea
+
 /**
  *
  * @author dangret
@@ -54,9 +54,9 @@ public class Producto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "ruta")
     private String ruta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.EAGER)
     private List<Pedido> pedidoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.EAGER)
     private List<Detalleventa> detalleventaList;
 
     public Producto() {

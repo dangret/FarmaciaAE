@@ -47,39 +47,54 @@
 %>
 <html>
     <head>
+        <script src="js/jquery-2.0.1.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script>
+             jQuery(function($){
+                $("#jnombre").mask("aaaaaa",{placeholder:" "});
+                //$("#jrfc").mask("AAAAAAAAAAAAAAA",{placeholder:" "});
+                //$("#jappat").mask("AAA?AAAAAAAAA",{placeholder: " "});
+                //$("#japmat").mask("AAA?AAAAAAAAA",{placeholder: " "});
+                //$("#jfechnac").mask("99/99/9999",{placeholder: " "});
+                //$("#jtel").mask("(999) 999-9999",{placeholder: " "});
+                //$("#jappat").mask("AAA?AAAAAAAAA",{placeholder: " "});
+                //$("#jappat").mask("AAA?AAAAAAAAA",{placeholder: " "});
+                
+            });
+            
+            function cancelar() {
+                window.location="portal.jsp";
+            }
+         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>FARMACIA SAN CAZOLA - EDITAR</title>
-        <script>
-              function cancelar() {
-                  window.location="portal.jsp";
-              }
-        </script>
+        
     </head>
     <body>
         <h1>Alta/Modificacion de Personas</h1>
-        <form method="POST" action="consultaPersonas.jsp?idcliente=<%=idcliente%>">
+        <form method="POST" id="jform" action="consultaPersonas.jsp?idcliente=<%=idcliente%>">
             <table>
                 <tr>
                     <td>Nombre</td>
-                    <td><input type="text" name="nombre" value="<%=nombre%>"></td>
+                    <td><input type="text" id="jnombre" name="nombre" value="<%=nombre%>"></td>
                 </tr>
                 <tr>
                     <td>RFC (si no tiene deje el campo en blanco)</td>
-                    <td><input type="text" name="rfc" value="<%=rfc%>"></td>
+                    <td><input type="text" id="jrfc" name="rfc" value="<%=rfc%>"></td>
                 </tr>
                 <tr>
                     <td>Apellido Paterno</td>
-                    <td><input type="text" name="appat" value="<%=appat%>"></td>
+                    <td><input type="text" id="jappat" name="appat" value="<%=appat%>"></td>
                 </tr>
                 <tr>
                     <td>Apellido Materno</td>
-                    <td><input type="text" name="apmat" value="<%=apmat%>"></td>
+                    <td><input type="text" id="japmat" name="apmat" value="<%=apmat%>"></td>
                 </tr>
                 <td>Fecha de Nacimiento: </td>
-                <td><input type="date" name="fechnac" id="fechnac" value="<%=fechnac%>"></td>
+                <td><input type="date" name="fechnac" id="jfechnac" id="fechnac" value="<%=fechnac%>"></td>
                 <tr>
                     <td>Telefono</td>
-                    <td><input type="text" name="telefono" value="<%=telefono%>"></td>
+                    <td><input type="text" id="jtel" name="telefono" value="<%=telefono%>"></td>
                 </tr>
                 <tr>
                     <td>Direccion</td>
@@ -96,7 +111,7 @@
             </table>
             <table>
                 <tr>
-                    <td><input type="submit" value="Guardar" name="btnGuardar"></td>
+                    <td><input type="submit" value="Guardar" id="btn-submit" name="btnGuardar"></td>
                     <td><input type="button" value="Cancelar" name="btnCancelar" onclick="cancelar();"</td>
                 </tr>
             </table>

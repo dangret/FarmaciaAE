@@ -41,7 +41,7 @@ public class CatTiposusuario implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(mappedBy = "tipousuario", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "tipousuario", fetch = FetchType.EAGER)
     private List<Usuario> usuarioList;
 
     public CatTiposusuario() {
