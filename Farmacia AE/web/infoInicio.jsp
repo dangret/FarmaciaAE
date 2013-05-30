@@ -31,8 +31,8 @@
               <ul>
               <li><a href="carritoCliente.jsp">Mi Compra</a></li>  
               <li> <a href="login.jsp">Login</a></li>  
-              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>  
-              <li> <a href="eliminarUsuario.jsp">Eliminar un Usuario</a></li>  
+              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>
+              <li> <a onclick="miFuncion();"> Eliminar un Usuario</a></li>  
               <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
               <li><button onclick="abrirVent();">venga</button></li>  
               </ul>

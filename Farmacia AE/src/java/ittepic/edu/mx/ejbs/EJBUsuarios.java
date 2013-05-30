@@ -18,7 +18,7 @@ import javax.persistence.PersistenceUnit;
  *
  * @author sears
  */
-@Stateful (name = "EJBUsuarios")
+@Stateful
 @Remote (EJBUsuariosRemote.class)
 public class EJBUsuarios implements EJBUsuariosRemote {
     @PersistenceContext
@@ -85,6 +85,11 @@ public class EJBUsuarios implements EJBUsuariosRemote {
         public Usuario consultaPorId(int idusuario) {
         em = emf.createEntityManager();
         return (Usuario)em.createNamedQuery("Usuario.findByIdusuario").setParameter("idusuario",idusuario ).getSingleResult();
+    }
+        
+                public Usuario consultaPorIdCliente(int idcliente) {
+        em = emf.createEntityManager();
+        return (Usuario)em.createNamedQuery("Usuario.findByIdcliente").setParameter("idcliente",idcliente ).getSingleResult();
     }
 
     
