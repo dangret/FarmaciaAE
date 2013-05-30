@@ -82,7 +82,7 @@
     if (band == 1) {
         //TABLA PERSONA
         usr = ejb2.consultaPorId(idcliente);
-        per = ejb.consultaPorId(idcliente);
+        per = usr.getIdcliente();
         String apepat = request.getParameter("apepat") == null ? "" : request.getParameter("apepat").toUpperCase();
         String apemat = request.getParameter("apemat") == null ? "" : request.getParameter("apemat").toUpperCase();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
