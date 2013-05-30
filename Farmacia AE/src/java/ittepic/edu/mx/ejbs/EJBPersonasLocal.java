@@ -19,4 +19,5 @@ public interface EJBPersonasLocal {
     public int alta_modificacion (Persona p);
     public Persona consultaPorId(int idcliente );
     public int eliminar(int idcliente);
+    public boolean buscarPorEMail(String email);
 }

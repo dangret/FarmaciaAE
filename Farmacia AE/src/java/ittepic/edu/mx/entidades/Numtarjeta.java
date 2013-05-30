@@ -48,7 +48,7 @@ public class Numtarjeta implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechacaducidad;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Persona idcliente;
 
     public Numtarjeta() {

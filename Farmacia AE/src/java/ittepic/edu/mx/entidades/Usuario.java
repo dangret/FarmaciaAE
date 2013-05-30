@@ -62,12 +62,12 @@ public class Usuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Persona idcliente;
     @JoinColumn(name = "tipousuario", referencedColumnName = "idtipousuario")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CatTiposusuario tipousuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.EAGER)
     private List<Venta> ventaList;
 
     public Usuario() {

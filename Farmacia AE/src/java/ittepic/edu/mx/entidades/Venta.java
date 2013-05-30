@@ -51,12 +51,12 @@ public class Venta implements Serializable {
     @Column(name = "fechadetalleventa")
     @Temporal(TemporalType.DATE)
     private Date fechadetalleventa;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.EAGER)
     private List<Pedido> pedidoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idventa", fetch = FetchType.EAGER)
     private List<Detalleventa> detalleventaList;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idusuario;
 
     public Venta() {
