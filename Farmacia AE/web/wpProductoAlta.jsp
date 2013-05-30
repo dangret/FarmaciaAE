@@ -28,13 +28,15 @@
 %>
 <html>
     <head>
-        <script src="js/jquery-2.0.1.js"/>
-        <script src="js/jquery.maskedinput.js"/>
+        <script src="js/jquery-2.0.1.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
         <script>
             
             jQuery(function($){
-                $("#txtproducto").mask("***");
-                $("#txtcantidad").mask("999");
+                $("#txtproducto").mask("aaa?*************",{placeholder:" "});
+                $("#txtcantidad").mask("9?9999",{placeholder:" "});
+                $("#txtprecio").maskMoney({showSymbol:false,decimal:'.',precision:2});
             });
             
             function jsReset(){

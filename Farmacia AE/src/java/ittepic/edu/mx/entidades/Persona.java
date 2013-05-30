@@ -5,12 +5,13 @@
 package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MartinNTT
+ * @author dangret
  */
 @Entity
 @Table(name = "persona")
@@ -81,10 +82,10 @@ public class Persona implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente")
-    private Collection<Numtarjeta> numtarjetaCollection;
-    @OneToMany(mappedBy = "idcliente")
-    private Collection<Usuario> usuarioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idcliente", fetch = FetchType.EAGER)
+    private List<Numtarjeta> numtarjetaList;
+    @OneToMany(mappedBy = "idcliente", fetch = FetchType.EAGER)
+    private List<Usuario> usuarioList;
 
     public Persona() {
     }
@@ -179,21 +180,21 @@ public class Persona implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Numtarjeta> getNumtarjetaCollection() {
-        return numtarjetaCollection;
+    public List<Numtarjeta> getNumtarjetaList() {
+        return numtarjetaList;
     }
 
-    public void setNumtarjetaCollection(Collection<Numtarjeta> numtarjetaCollection) {
-        this.numtarjetaCollection = numtarjetaCollection;
+    public void setNumtarjetaList(List<Numtarjeta> numtarjetaList) {
+        this.numtarjetaList = numtarjetaList;
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

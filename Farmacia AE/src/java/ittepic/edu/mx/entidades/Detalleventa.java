@@ -40,10 +40,10 @@ public class Detalleventa implements Serializable {
     @Column(name = "cantidad")
     private Short cantidad;
     @JoinColumn(name = "idventa", referencedColumnName = "idventa")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Venta idventa;
     @JoinColumn(name = "idproducto", referencedColumnName = "idproducto")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Producto idproducto;
 
     public Detalleventa() {

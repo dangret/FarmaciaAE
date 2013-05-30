@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author MartinNTT
+ * @author dangret
  */
 @Entity
 @Table(name = "producto")
@@ -54,9 +54,9 @@ public class Producto implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "ruta")
     private String ruta;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.EAGER)
     private List<Pedido> pedidoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idproducto", fetch = FetchType.EAGER)
     private List<Detalleventa> detalleventaList;
 
     public Producto() {

@@ -5,29 +5,29 @@
 <title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script>
-    function mandarLogin(variable)
+    function cargarCarrito(cc)
     {
-        document.getElementById('iframe1').src = variable;
+        document.getElementById('iframe1').src=cc;
     }
 </script>
 </head>
 <body>
 <div id="wrap">
   <div id="header">
-      <iframe marginwidth="0" marginheight="0" width="200" height="40" scrolling="no" frameborder=0 id="iframe2" src="iframeRecuentoVenta.jsp" align="right"></iframe>
+      <iframe marginwidth="0" marginheight="0" width="200" height="40" scrolling="no" frameborder=0 id="iframe2" src="" align="right"></iframe>
     <div id="logo">
       <h1>Medicinas con Iva+</h1>      
     </div>
     <ul id="nav">
       <li><a href="#">Mi Perfil</a></li>
       <li><a href="#"> Nuestros Productos</a></li>
-      <li><a href="#">Mi Compra</a></li>
+      <li><a href="#" onclick="cargarCarrito('carritoCliente.jsp');">Mi Compra</a></li>
       <li><a href="#">Historial Compras</a></li>
     </ul>
   </div>
   <!-- /header -->
    <div id="content"> <img src="images/img.jpg" alt="" class="img" />
-       <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="carritoCliente.jsp"></iframe>
+       <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src=""></iframe>
     <!-- /content -->
   </div>
   <div class="clearfix"></div>
