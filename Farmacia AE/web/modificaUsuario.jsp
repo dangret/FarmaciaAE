@@ -47,6 +47,8 @@
     }
 %>
 <%
+    //obtenemos el usuario que inició sesion 
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     //PARTE DE LOS VALUES
     int band = request.getParameter("band") == null ? 0 : 1;
     int idcliente = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
@@ -202,6 +204,19 @@
                         <td>Password Nuevo:</td>
                         <td><input type="password" name="password"></td>
                     </tr>
+                    <% if (sesionUser != null){
+                        if (sesionUser.getTipousuario().getIdtipousuario() == 1){%>
+                    <tr><td>TIPO: 
+                        </td>
+                        <td><SELECT NAME="combo" SIZE=1> 
+                                <option value="#">:: Seleccione ::</option>
+                                <OPTION VALUE="1">Administrador</OPTION>
+                                <OPTION VALUE="2">Usuario</OPTION>
+                                <OPTION VALUE="3">Distribuidor</OPTION>
+                            </SELECT></td>
+                    </tr>
+                    <%}
+                    }%>
                 </table>
 
                 <table border="1">

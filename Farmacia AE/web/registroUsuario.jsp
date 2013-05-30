@@ -39,7 +39,7 @@
     }
 %>
 <%
-    
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
@@ -295,17 +295,19 @@
                         <td>* PASSWORD:</td>
                         <td><input type="password" id="pass" name="password"></td>
                     </tr>
-                    <!--
+                    <% if (sesionUser != null){
+                        if (sesionUser.getTipousuario().getIdtipousuario() == 1){%>
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
                                 <option value="#">:: Seleccione ::</option>
                                 <OPTION VALUE="1">Administrador</OPTION>
                                 <OPTION VALUE="2">Usuario</OPTION>
-                                <OPTION VALUE="2">Distribuidor</OPTION>
+                                <OPTION VALUE="3">Distribuidor</OPTION>
                             </SELECT></td>
                     </tr>
-                    -->
+                    <%}
+                    }%>
 
                 </table>
 
