@@ -119,7 +119,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de alumnos</title>
-        <script src="js/jquery-2.0.1.js" type="text/javascript"></script>
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
         <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
         <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
         <link href="style.css" type="text/css">
@@ -217,12 +217,8 @@
                         }
                         
                     }*/
-        
-                    $.post('ServletUser',{mail: email},function(responseText) { 
-                        //var error = responseText.valido;
-                        alert(responseText);
-                        //errorValidacion = true;
-                    });
+                    
+                    
                     
                     
                     
@@ -232,6 +228,18 @@
                 
                 $("#celular").mask("(999) 999-9999",{placeholder: " "});
                 $("#telf").mask("999-99-99",{placeholder: " "});
+                
+                $("#btn-servlet").click(function(){
+                    $(".error").hide();
+                    var email = $("#jmail").val();
+                    $.post("ServletUser",{mail: email},function(data) { 
+                        alert(data.valido);
+                        var valido = data.valido;
+                        if (valido){
+                            $("#jmail").after("<div class='error'>ese email ya fue usado</div>");
+                        }
+                    });
+                });
                 
             });
         
@@ -317,6 +325,7 @@
                     <input type="submit" id="btn-submit" name="guardar" value="Guardar">
 
                     <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
+                    <input type="button" name="servlet" value="servlet" id="btn-servlet">
                     </tr>
                 </table>
             </div>
