@@ -5,6 +5,7 @@
 <title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script>
+
     function mandarLogin(variable)
     {
         document.getElementById('iframe1').src = variable;
@@ -20,8 +21,8 @@
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
       <li><a onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
-      <li><a onclick="mandarLogin('opLogin.jsp');">Login</a></li>
-      <li><a href="contacto.jsp">Contactanos</a></li>
+      <li><a href="login.jsp">Login</a></li>
+      <li><a onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
     </ul>
       <br></br>
           <br></br>
@@ -35,7 +36,7 @@
             
             </p></br>
         <center>
-        <iframe width="775" align="middle" height="370" scrolling="yes" frameborder=0 id="iframe1" src="infoInicio.jsp" >    
+        <iframe width="800" align="middle" height="370" scrolling="yes" frameborder=0 id="iframe1" src="infoInicio.jsp" >    
   </iframe></center>
   </div>
    <div class="clearfix"></div>
@@ -46,6 +47,8 @@
   </div>
   <!-- /footer -->
 </div>
-</div>  
+</div>  >
+  <!-- /footer -->
+</div
 </body>
 </html>
