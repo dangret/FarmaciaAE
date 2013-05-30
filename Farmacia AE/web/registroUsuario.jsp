@@ -90,8 +90,8 @@
 
         // TABLA USUARIO
         usr = new Usuario();
-        int tipoUsuario = combo;
-        int idcliente = u.ultimo() + 1;
+        //int tipoUsuario = combo;
+        //int idcliente = u.ultimo() + 1;
         String user = request.getParameter("user");
         String password = request.getParameter("password");
         Calendar calendario = GregorianCalendar.getInstance();
