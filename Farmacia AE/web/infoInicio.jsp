@@ -11,6 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
+        <script>
+            function miFuncion()
+            {
+                parent.document.refresh();
+            }
+        </script>
     </head>
     <body>
         <div class="side fr">
@@ -25,10 +31,10 @@
               <ul>
               <li><a href="carritoCliente.jsp">Mi Compra</a></li>  
               <li> <a href="login.jsp">Login</a></li>  
-              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>  
-              <li> <a href="eliminarUsuario.jsp">Eliminar un Usuario</a></li>  
+              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>
+              <li> <a onclick="miFuncion();"> Eliminar un Usuario</a></li>  
               <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
-              <li> <a href="wpProductoConsulta.jsp">Consulta de Productos</a></li>  
+              <li> <a href="wpProductoConsulta.jsp">Consulta de Productos</a></li> 
               </ul>
     </div>
     <!-- /content -->
