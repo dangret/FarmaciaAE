@@ -86,7 +86,7 @@
         per.setEmail(email); 
 
         //TIPO DE USUARIO
-        int tipo = 2;
+        int tipo = combo;
 
         // TABLA USUARIO
         usr = new Usuario();
