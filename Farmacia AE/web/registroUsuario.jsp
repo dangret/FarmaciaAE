@@ -1,3 +1,6 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="ittepic.edu.mx.entidades.Numtarjeta"%>
 <%@page import="ittepic.edu.mx.clases.Codificador"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="ittepic.edu.mx.entidades.CatTiposusuario"%>
@@ -42,11 +45,16 @@
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
+    String tarjeta=request.getParameter("tarjeta")==null?"":request.getParameter("tarjeta");
+    int codigo=request.getParameter("codigo")==null?0:Integer.parseInt(request.getParameter("codigo"));
+    String fechaV=request.getParameter("fechaV")==null?"":request.getParameter("fechaV");
+    
+            
     Usuario usr;
     Persona per;
     CatTiposusuario tipoUsr;
 
-    if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("") || (!nombre.equals("")))) {
+    if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("")) || (!nombre.equals("")) || (!tarjeta.equals("")) || (codigo!=0) || (!fechaV.equals(""))) {
         //TABLA PERSONA
         String apepat = request.getParameter("apepat") == null ? null : request.getParameter("apepat").toUpperCase();
         String apemat = request.getParameter("apemat") == null ? null : request.getParameter("apemat").toUpperCase();
@@ -82,8 +90,8 @@
 
         // TABLA USUARIO
         usr = new Usuario();
-        int tipoUsuario = combo;
-        int idcliente = u.ultimo() + 1;
+        //int tipoUsuario = combo;
+        //int idcliente = u.ultimo() + 1;
         String user = request.getParameter("user");
         String password = request.getParameter("password");
         Calendar calendario = GregorianCalendar.getInstance();
@@ -95,6 +103,9 @@
         
         //codificar contraseña
         password = codec.encriptar(password, "MD5");
+        
+
+        
 
         //Setear Usuario
         usr.setTipousuario(ejb3.obtenerPorID(tipo));
@@ -275,6 +286,18 @@
                     <tr>
                         <td>* E-Mail: </td>
                         <td><input type="text" id="jmail" name="email" id="email"></td>
+                    </tr>
+                    <tr>
+                        <td>* Numero de Tarjeta: </td>
+                        <td><input type="text" name="tarjeta"></td>
+                    </tr>
+                    <tr>
+                        <td>* Codigo de Seguridad: </td>
+                        <td><input type="text" name="codigo"></td>
+                    </tr>
+                                        <tr>
+                        <td>* Fecha Caducidad: </td>
+                        <td><input type="date" name="fechaV"></td>
                     </tr>
 
                 </table><br>
