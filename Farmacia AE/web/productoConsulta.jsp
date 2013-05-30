@@ -53,7 +53,7 @@
 
     </head>
     <body>
-        <form name="formulario" action="ServletProducto" method="POST" >
+        <form name="formulario" action="" method="POST" >
             <center>
             <table align="center">           
                 
@@ -84,8 +84,8 @@
                             <% pos++;
                         }pos=pos1; %>
                         
-                        </tr>
-                        <tr align="center" valign="middle" > 
+                     </tr>
+                     <tr align="center" valign="middle" > 
                             
                             <%
                             pos1=pos;
@@ -93,9 +93,9 @@
                             <td><%=productos.get(pos).getProducto() %></td>
                             <% pos++;}
                             pos=pos1;%>
-                        </tr>
+                     </tr>
                         
-                         <tr align="center" valign="middle">       
+                     <tr align="center" valign="middle">       
                              <%
                              pos1=pos;
                              for (int j=0; j<filaColumnas;j++){%>
@@ -103,8 +103,8 @@
                             <% pos++; }
                               pos=pos1; %>
                             
-                        </tr>
-                        <tr align="center" valign="middle">   
+                     </tr>
+                     <tr align="center" valign="middle">   
                             <%
                             pos1=pos;
                             for (int j=0; j<filaColumnas;j++){%>                         
@@ -113,7 +113,7 @@
                             }
                             %>
                         </tr>
-                                <%}%>
+                     <%}%>
                 
                     </table>
             </center>

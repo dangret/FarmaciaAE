@@ -58,6 +58,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catalogo de Medicinas</title>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <script src="js/lightbox.js"></script>
+        <link href="lightbox.css" rel="stylesheet" />
         
         <script>
             function agregarMedicina(idproducto, disponibles, index) {
@@ -91,35 +94,76 @@
     <center>
         <%if(carritoCliente.getMedicamentos().size()>0) {%>
             <h2>Lista de Medicinas Disponibles</h2>
-            <table border="6" align="center">
-                <tr>
-                    <td><center><b>Nombre del Medicamento</b></center></td>
-                    <td><center><b>Precio</b></center></td>
-                    <td><center><b>Agregar</b></center></td>
-                </tr>
+            <table align="center">
                 <%
-                    for(int i=0; i<medicamentos.size(); i++) {
-                 %>
-                    <tr>
-                        <td><center><i><%=medicamentos.get(i).getProducto()%></i></center></td>
-                        <td><center><i><%=medicamentos.get(i).getPrecio()%></i></center></td>
-                        <td>
+                    int filasRenglones;
+                    int filaColumnas=10;
+                    int filaF=10;
+                    filasRenglones=(Math.round(medicamentos.size()/10));
+                   if(medicamentos.size()>(filasRenglones*10)){
+                      filaF=medicamentos.size()-(filasRenglones*10);
+                      filasRenglones++;                          
+                   }else{
+                        filaF=medicamentos.size();
+                        }
+                    int pos=0;
+                    int pos1=0;
+                    for (int i = 0; i<filasRenglones; i++ ){
+                    %>
+                    
+                    <tr align="center" valign="middle">    
+                        <%
+                        if(i==(filasRenglones-1)){
+                        filaColumnas=filaF;
+                        }
+                        pos1=pos;
+                        for (int j=0; j<filaColumnas;j++){%>
+                        <td><a href="<%=medicamentos.get(pos).getRuta() %>" rel="lightbox" ><img  src="<%=medicamentos.get(pos).getRuta() %>"  width="75" height="75"></a></td>
+                            <% pos++;
+                        }pos=pos1; %>
+                    </tr>
+                    
+                    <tr align="center" valign="middle" > 
                             
-                            <input type="image" src="imgs/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(i).getIdproducto()%>,
-                                   <%=medicamentos.get(i).getCantidad()%>,<%=i%>)">
+                            <%
+                            pos1=pos;
+                            for (int j=0; j<filaColumnas;j++){%>
+                            <td><%=medicamentos.get(pos).getProducto() %></td>
+                            <% pos++;}
+                            pos=pos1;%>
+                    </tr>
+                    
+                    <tr align="center" valign="middle">   
+                            <%
+                            pos1=pos;
+                            for (int j=0; j<filaColumnas;j++){%>                         
+                            <td>$<%=medicamentos.get(pos).getPrecio() %></td>
+                            <% pos++;}
+                            pos=pos1;%>
+                     </tr>
+                    
+                     <tr align="center" valign="middle">
+                            <%
+                            pos1=pos;
+                            for(int j=0; j<filaColumnas;j++){%>
+                            <td>
+                                <input type="image" src="imgs/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
+                                       <%=medicamentos.get(pos).getCantidad()%>,<%=pos%>)">
                             <%
                                
-                                int index=pedido.indexOf(medicamentos.get(i));
+                                int index=pedido.indexOf(medicamentos.get(pos));
                                 if(index==-1){
                             %>        
-                            <input type="text" disabled="true"  name="txtAnterior<%=i%>" id="txtAnterior<%=i%>" value="0">
+                            <input type="hidden" disabled="true"  name="txtAnterior<%=pos%>" id="txtAnterior<%=pos%>" value="0">
                                 <%}else{%>
-                                <input type="text" disabled="true"  name="txtAnterior<%=i%>" id="txtAnterior<%=i%>" value="<%=cantidades.get(index)%>">
+                                <input type="hidden" disabled="true"  name="txtAnterior<%=pos%>" id="txtAnterior<%=pos%>" value="<%=cantidades.get(index)%>">
                                 
                                 <%}%>
                             
-                        </td>
-                    </tr>
+                            </td>
+                            <%pos++;%>
+                            <%}%>
+                     </tr>
                 <% }%>
             </table>
             
