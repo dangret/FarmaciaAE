@@ -303,19 +303,22 @@
                         <td>* PASSWORD:</td>
                         <td><input type="password" id="pass" name="password"></td>
                     </tr>
-                    <% if (sesionUser != null){
-                        if (sesionUser.getTipousuario().getIdtipousuario() == 1){%>
+            
+                      
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
                                 <option value="#">:: Seleccione ::</option>
+                                <%if(sesionUser!=null){ 
+                                if(sesionUser.getTipousuario().getIdtipousuario()==1){
+                                %>
                                 <OPTION VALUE="1">Administrador</OPTION>
+                                <%}}%>
                                 <OPTION VALUE="2">Usuario</OPTION>
                                 <OPTION VALUE="3">Distribuidor</OPTION>
                             </SELECT></td>
                     </tr>
-                    <%}
-                    }%>
+                    
 
                 </table>
 
