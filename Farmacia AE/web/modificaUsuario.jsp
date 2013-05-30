@@ -4,6 +4,9 @@
     Author     : sears
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="ittepic.edu.mx.entidades.Numtarjeta"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBTarjetaLocal"%>
 <%@page import="beans.usuario"%>
 <%@page import="ittepic.edu.mx.clases.Codificador"%>
 <%@page import="java.util.GregorianCalendar"%>
@@ -23,7 +26,7 @@
 <!DOCTYPE html>
 <%! EJBPersonasRemote ejb = null;
     EJBUsuariosRemote ejb2 = null;
-    EJBTipoUsuarioLocal ejb3 = null;
+    EJBTarjetaLocal ejb3 = null;
 
     public void jspInit() {
         try {
@@ -34,7 +37,7 @@
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
 
             InitialContext ic3 = new InitialContext();
-            ejb3 = (EJBTipoUsuarioLocal) ic3.lookup(EJBTipoUsuarioLocal.class.getName());
+            ejb3 = (EJBTarjetaLocal) ic3.lookup(EJBTarjetaLocal.class.getName());
 
             System.out.println("Bean cargado");
         } catch (Exception ex) {
@@ -44,32 +47,34 @@
     }
 %>
 <%
+    //obtenemos el usuario que inició sesion 
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     //PARTE DE LOS VALUES
-    int band=request.getParameter("band")==null?0:1;
+    int band = request.getParameter("band") == null ? 0 : 1;
     int idcliente = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
     Usuario usr = ejb2.consultaPorId(idcliente);
-    Persona per = ejb.consultaPorId(idcliente);
-    Calendar calendario = GregorianCalendar.getInstance();
-    
+    Persona per = usr.getIdcliente();
+    //Numtarjeta x = tarj.get();
+
     //PARTE DE MODIFICACION
     //usuario u = new usuario();
+    Calendar calendario = GregorianCalendar.getInstance();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
     String user = request.getParameter("user") == null ? "" : request.getParameter("user");
     String password = request.getParameter("password") == null ? "" : request.getParameter("password");
-  
-    
+
     //MUESTRO DATOS  
     Date fecha = usr.getFechacreacion();
     SimpleDateFormat formato1 = new SimpleDateFormat("dd");
-        SimpleDateFormat formato2 = new SimpleDateFormat("MM");
-            SimpleDateFormat formato3 = new SimpleDateFormat("yyyy");
+    SimpleDateFormat formato2 = new SimpleDateFormat("MM");
+    SimpleDateFormat formato3 = new SimpleDateFormat("yyyy");
     String dia = formato1.format(fecha);
-        String mes = formato2.format(fecha);
-            String año = formato3.format(fecha);
-            
+    String mes = formato2.format(fecha);
+    String año = formato3.format(fecha);
+
     // GUARDO DATOS
-         if (band==1) {
+    if (band == 1) {
         //TABLA PERSONA
         usr = ejb2.consultaPorId(idcliente);
         per = ejb.consultaPorId(idcliente);
@@ -81,11 +86,10 @@
         String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
         String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
 
-        
         //codificar password
-        Codificador codec=new Codificador();
-        
-        //per.setIdcliente(idcliente);
+        Codificador codec = new Codificador();
+
+
         per.setNombre(nombre);
         per.setAppat(apepat);
         per.setApmat(apemat);
@@ -93,6 +97,7 @@
         per.setTelefono(telf);
         per.setCelular(celular);
         per.setDireccion(direccion);
+
         //per.setEmail(email);
         //ejb.alta_modificacion(per);
 
@@ -107,19 +112,23 @@
         //SimpleDateFormat formatox = new SimpleDateFormat("dd-MM-yyyy");
         //String fecCre1 = formatox.format(fecha);
         //Date fecCre2 = formatox.parse(fecCre1);
-        
+
         //codificar contraseña
-        //password = codec.encriptar(password, "MD5");
+        //
 
         //Setear Usuario
         //usr.setIdusuario(idcliente);
         //usr.setTipousuario(ejb3.obtenerPorID(tipo));
         usr.setIdcliente(per);
-        usr.setLogin(user);
+        //usr.setLogin(user);
+        if(!password.equals("")){
+        password = codec.encriptar(password, "MD5");
         usr.setPassword(password);
-        //usr.setFechacreacion(fecCre2);
-        System.out.println(usr.getIdusuario()+"  "+usr.getTipousuario()+"  "+usr.getIdcliente()+"  "+usr.getLogin()+"  "+usr.getPassword());
+        }
+        //usr.setFechacreacion(fecCre2)
         ejb2.alta(usr);
+        ejb.alta_modificacion(per);
+
         response.sendRedirect("/Farmacia_AE/index.jsp");
     }
 
@@ -131,7 +140,7 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="opLogin.jsp";
+                window.location="index.jsp";
             }
             function termino(){
                 
@@ -164,7 +173,7 @@
                     </tr>
                     <tr>
                         <td>Fecha de Nacimiento: </td>
-                        <td><input type="date" name="fecnac" id="fecnac" value="<%=año+"-"+mes+"-"+dia%>"></td>
+                        <td><input type="date" name="fecnac" id="fecnac" value="<%=año + "-" + mes + "-" + dia%>"></td>
                     </tr>
                     <tr>
                         <td>Teléfono Fijo: </td>
@@ -184,6 +193,7 @@
                         <td><input type="text" name="email" id="email" value="<%=per.getEmail()%>" disabled="true"></td>
                     </tr>
 
+
                 </table><br>
                 <table border="1">
                     <tr>
@@ -191,9 +201,22 @@
                         <td width="140"><input type="text" name="user"  value="<%=usr.getLogin()%>" disabled="true"></td>
                     </tr>
                     <tr>
-                        <td>PASSWORD:</td>
-                        <td><input type="password" name="password" value="<%=usr.getPassword()%>"></td>
+                        <td>Password Nuevo:</td>
+                        <td><input type="password" name="password"></td>
                     </tr>
+                    <% if (sesionUser != null){
+                        if (sesionUser.getTipousuario().getIdtipousuario() == 1){%>
+                    <tr><td>TIPO: 
+                        </td>
+                        <td><SELECT NAME="combo" SIZE=1> 
+                                <option value="#">:: Seleccione ::</option>
+                                <OPTION VALUE="1">Administrador</OPTION>
+                                <OPTION VALUE="2">Usuario</OPTION>
+                                <OPTION VALUE="3">Distribuidor</OPTION>
+                            </SELECT></td>
+                    </tr>
+                    <%}
+                    }%>
                 </table>
 
                 <table border="1">

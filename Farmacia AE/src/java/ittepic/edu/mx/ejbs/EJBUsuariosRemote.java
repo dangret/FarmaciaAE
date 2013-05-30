@@ -32,4 +32,5 @@ public interface EJBUsuariosRemote {
     public int eliminarEntidad(Usuario usr);
 
     public Usuario consultaPorId(int idusuario);
+                public Usuario consultaPorIdCliente(int idcliente);
 }
