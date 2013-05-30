@@ -27,6 +27,7 @@
 <%! EJBPersonasRemote ejb = null;
     EJBUsuariosRemote ejb2 = null;
     EJBTarjetaLocal ejb3 = null;
+    EJBTipoUsuarioLocal ejb4=null;
 
     public void jspInit() {
         try {
@@ -38,6 +39,9 @@
 
             InitialContext ic3 = new InitialContext();
             ejb3 = (EJBTarjetaLocal) ic3.lookup(EJBTarjetaLocal.class.getName());
+            
+                        InitialContext ic4 = new InitialContext();
+            ejb4 = (EJBTipoUsuarioLocal) ic4.lookup(EJBTipoUsuarioLocal.class.getName());
 
             System.out.println("Bean cargado");
         } catch (Exception ex) {
@@ -63,6 +67,7 @@
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
     String user = request.getParameter("user") == null ? "" : request.getParameter("user");
     String password = request.getParameter("password") == null ? "" : request.getParameter("password");
+    int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
 
     //MUESTRO DATOS  
     Date fecha = usr.getFechacreacion();
@@ -102,7 +107,7 @@
         //ejb.alta_modificacion(per);
 
         //TIPO DE USUARIO
-        //int tipo = usr.getTipousuario().getIdtipousuario();
+        int tipo = combo;
 
         // TABLA USUARIO
         //int tipoUsuario = tipo;
@@ -118,12 +123,12 @@
 
         //Setear Usuario
         //usr.setIdusuario(idcliente);
-        //usr.setTipousuario(ejb3.obtenerPorID(tipo));
+        usr.setTipousuario(ejb4.obtenerPorID(tipo));
         usr.setIdcliente(per);
         //usr.setLogin(user);
-        if(!password.equals("")){
-        password = codec.encriptar(password, "MD5");
-        usr.setPassword(password);
+        if (!password.equals("")) {
+            password = codec.encriptar(password, "MD5");
+            usr.setPassword(password);
         }
         //usr.setFechacreacion(fecCre2)
         ejb2.alta(usr);
@@ -204,8 +209,8 @@
                         <td>Password Nuevo:</td>
                         <td><input type="password" name="password"></td>
                     </tr>
-                    <% if (sesionUser != null){
-                        if (sesionUser.getTipousuario().getIdtipousuario() == 1){%>
+                    <% if (sesionUser != null) {
+                            if (sesionUser.getTipousuario().getIdtipousuario() == 1) {%>
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
@@ -216,7 +221,7 @@
                             </SELECT></td>
                     </tr>
                     <%}
-                    }%>
+                        }%>
                 </table>
 
                 <table border="1">
