@@ -46,7 +46,7 @@
     cuenta = ejb.consultaPorTarjeta(tarjeta);
     }
     
-    List<Numtarjeta> tarjetas = ejb.consultaId(2);
+    List<Numtarjeta> tarjetas = ejb.consultaId(1);
     String dia = "", mes = "", año = "";
 
     if (combo != -1) {
