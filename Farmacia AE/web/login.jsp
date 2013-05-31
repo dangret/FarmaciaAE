@@ -58,10 +58,16 @@
     }else{
         response.sendRedirect("index.jsp");
     }
+    //response.sendRedirect("portal.jsp");
 
 %>
 <html>
     <head>
+        <script>
+            function mandarLogin(cc){
+                document.getElementById('iframe1').src=cc;
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css" />
         <title>Login</title>
@@ -74,9 +80,9 @@
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
-      <li><a onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
+      <li><a href="#" onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
       <li><a href="login.jsp">Login</a></li>
-      <li><a onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
+      <li><a href="#" onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
     </ul>
       <br></br>
           <br></br>

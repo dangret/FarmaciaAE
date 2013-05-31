@@ -37,8 +37,9 @@
         
     </head>
     <body>
+        <div align="center">
         <h1>Se ha Cerrado la Session</h1>
         <div id="timeout" ></div>
-        
+        </div>
     </body>
 </html>

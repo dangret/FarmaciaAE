@@ -22,15 +22,21 @@
       <h1>Medicinas con Iva+</h1>
     </div>
     <ul id="nav">
-      <li><a href="#" onclick="cargarPagina('miCuenta.jsp')">Mi Perfil</a></li>
+        <li><a href="#">Mi Cuenta</a>
+            <ul>
+                <li><a href="#" onclick="cargarPagina('modificaUsuario.jsp')">Datos Personales</a></li>
+                <li><a href="#" onclick="cargarPagina('modificaTarjetas.jsp')">Administrar Tarjetas</a></li>
+            </ul>
+        </li>
       <li><a href="#" onclick="cargarPagina('wpProductoConsulta.jsp')"> Productos</a></li>
       <li><a href="#" onclick="cargarPagina('wpPedidos.jsp')">Pedidos</a></li>
       <li><a href="#" onclick="cargarPagina('consultaUsuarios.jsp')">Usuarios</a></li>
-      <li><a href="salir.jsp">Cerrar Sesion</a></li>
+      <li><a href="salir.jsp">Salir</a></li>
     </ul>
   </div>
-   <div id="content"> <img src="images/img.jpg" alt="" class="img" />
-       <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="about:blank"></iframe>
+    <div id="content" align="center"> 
+        <img src="images/img.jpg" alt="" class="img" />
+        <iframe marginwidth="0" align="center" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="about:blank"></iframe>
   <div class="clearfix"></div>
   <div id="footer">
     <div id="ftinner">

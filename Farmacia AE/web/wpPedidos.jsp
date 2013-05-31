@@ -67,6 +67,7 @@
     </head>
     <body>
         <form action="wpPedidos.jsp" method="POST">
+            <div align="center">
             <table>
                 <tr>
                     <th>Producto</th>
@@ -94,6 +95,7 @@
                     <td><input type="button" value="cancelar" onclick="lala();"</td>
                 </tr>
             </table>
+            </div>
         </form>
     </body>
 </html>

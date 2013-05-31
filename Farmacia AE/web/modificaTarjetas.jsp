@@ -89,6 +89,7 @@
     </head>
     <body>
         <form action="modificaTarjetas.jsp" method="POST">
+            <div align="center">
             <table border="1">
                 <%if (combo < 0){%>
                 <tr><td>TARJETAS: 
@@ -117,7 +118,7 @@
                     <td><input type="date" name="fechaV" value="<%=año + "-" + mes + "-" + dia%>"></td>
                 </tr>
             </table>
-
+                
             <%}%>
             <table border="1">
                 <br>
@@ -127,6 +128,7 @@
                 <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                 </tr>
             </table>
+            </div>
         </form>
     </body>
 </html>

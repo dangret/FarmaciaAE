@@ -26,7 +26,6 @@
 <!DOCTYPE html>
 <%! EJBPersonasRemote ejb = null;
     EJBUsuariosRemote ejb2 = null;
-    EJBTarjetaLocal ejb3 = null;
     EJBTipoUsuarioLocal ejb4=null;
 
     public void jspInit() {
@@ -36,11 +35,8 @@
 
             InitialContext ic2 = new InitialContext();
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
-
-            InitialContext ic3 = new InitialContext();
-            ejb3 = (EJBTarjetaLocal) ic3.lookup(EJBTarjetaLocal.class.getName());
             
-                        InitialContext ic4 = new InitialContext();
+            InitialContext ic4 = new InitialContext();
             ejb4 = (EJBTipoUsuarioLocal) ic4.lookup(EJBTipoUsuarioLocal.class.getName());
 
             System.out.println("Bean cargado");
@@ -50,12 +46,27 @@
         }
     }
 %>
+
 <%
+    
     //obtenemos el usuario que inició sesion 
+    
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    
     //PARTE DE LOS VALUES
     int band = request.getParameter("band") == null ? 0 : 1;
-    int idcliente = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
+    
+    int idcliente = 0;
+    if (request.getParameter("idusuario") != null ){
+        if (!request.getParameter("idusuario").equals("")){
+            idcliente = Integer.parseInt(request.getParameter("idusuario"));
+        }else{
+            idcliente = sesionUser.getIdusuario();
+        }
+    }else{
+       idcliente = sesionUser.getIdusuario(); 
+    }
+    
     Usuario usr = ejb2.consultaPorId(idcliente);
     Persona per = usr.getIdcliente();
     //Numtarjeta x = tarj.get();
@@ -67,7 +78,7 @@
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
     String user = request.getParameter("user") == null ? "" : request.getParameter("user");
     String password = request.getParameter("password") == null ? "" : request.getParameter("password");
-    int combo = request.getParameter("combo") == null ? 1 : Integer.parseInt(request.getParameter("combo"));
+    int combo = request.getParameter("combo") == null ? sesionUser.getTipousuario().getIdtipousuario() : Integer.parseInt(request.getParameter("combo"));
 
     //MUESTRO DATOS  
     Date fecha = usr.getFechacreacion();
@@ -145,7 +156,7 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="consultaUsuarios.jsp";
             }
             function termino(){
                 
@@ -154,12 +165,12 @@
         </script>
     </head>
     <body>
-        <div align="left">
+        <div align="center">
             <H2>REGISTRO DE USUARIOS</H1>
         </div>
 
         <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST">
-            <div align="left">
+            <div align="center">
                 <table border="1">
                     <tr>
                         <th colspan="2">Datos Usuarios</th>

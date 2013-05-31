@@ -83,6 +83,7 @@
     </head>
     <body>
         <form action="ServletProducto" name="formularito" method="POST" enctype="multipart/form-data">
+            <div align="center">
             <table>
                 <tr>
                     <td><b>Nombre del Producto:</b></td>
@@ -117,6 +118,7 @@
                     <td><input type="button" name="btnCancelar" value="Cancelar" onclick="jsCancel()"></td>
                 </tr>
             </table>
+                </div>
         </form>
     </body>
 </html>
