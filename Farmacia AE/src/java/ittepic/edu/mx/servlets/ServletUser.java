@@ -4,7 +4,8 @@
  */
 package ittepic.edu.mx.servlets;
 
-import ittepic.edu.mx.ejbs.EJBPersonasLocal;
+
+import ittepic.edu.mx.ejbs.EJBPersonasRemote;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -13,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 /**
  *
@@ -22,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ServletUser extends HttpServlet {
 
     @EJB
-    EJBPersonasLocal ejb;
+    EJBPersonasRemote ejb;
     
     /**
      * Processes requests for both HTTP
@@ -36,21 +39,18 @@ public class ServletUser extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        Boolean esEncontrado;
+        String email = request.getParameter("mail");
+        
+        esEncontrado = ejb.buscarPorEMail(email);
+        
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
-        try {
-            if (ejb.buscarPorEMail(request.getParameter("mail"))){
-                out.println("{valido:");  out.println("true}");
-            }else{
-                out.println("{valido:");  out.println("false}");
-            }
-            /* TODO output your page here. You may use following sample code. */
-            
-            
-            
-        } finally {            
-            out.close();
-        }
+        JSONObject obj = new JSONObject();
+        obj.put("valido", esEncontrado);
+        out.print(obj);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

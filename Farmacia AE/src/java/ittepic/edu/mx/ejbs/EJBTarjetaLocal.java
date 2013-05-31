@@ -18,4 +18,7 @@ import javax.ejb.Remote;
 public interface EJBTarjetaLocal {
     public Numtarjeta buscarPorId(int idcliente);
         public int alta(Numtarjeta n);
+        public int modificar(Numtarjeta n);
+        public List<Numtarjeta> consultaId(int id);
+        public Numtarjeta consultaPorTarjeta(String numtarjeta);
 }

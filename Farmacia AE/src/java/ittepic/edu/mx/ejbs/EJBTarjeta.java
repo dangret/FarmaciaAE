@@ -47,5 +47,34 @@ public class EJBTarjeta implements EJBTarjetaLocal {
         }
         return 0;
     }
+    
+
+    @Override
+    public List<Numtarjeta> consultaId(int idcliente) {
+        em = emf.createEntityManager();
+        return em.createQuery("SELECT n FROM Numtarjeta n WHERE n.idcliente.idcliente = :idcliente order by n.notarjeta")
+                .setParameter("idcliente",idcliente )
+                .getResultList();
+    }
+
+    @Override
+    public int modificar(Numtarjeta n) {
+        try {
+            em = emf.createEntityManager();
+            em.merge(n);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Numtarjeta consultaPorTarjeta(String numtarjeta) {
+         em = emf.createEntityManager();
+        return (Numtarjeta)em.createQuery("SELECT n FROM Numtarjeta n WHERE n.notarjeta like :numtarjeta")
+                .setParameter("numtarjeta","%"+numtarjeta+"%" )
+                .getSingleResult();
+                }
 
 }
