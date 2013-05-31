@@ -63,8 +63,13 @@
         <link href="lightbox.css" rel="stylesheet" />
         
         <script>
+            window.onload = function(){
+                    top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';
+            }
             function agregarMedicina(idproducto, disponibles, index) {
+                
                 var cantidad = prompt("Introduzca la cantidad de productos",0);
+                
                 if(cantidad==null)
                 {
                     location.href = "carritoCliente.jsp";
@@ -83,11 +88,11 @@
                    top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';     
                 }
             }
-        function terminarPedido(){
-            if(confirm("¿Seguro que quieres dar por finalizado tu pedido?")){
-                location.href="carritoCliente.jsp?terminar=1";
+            function terminarPedido(){
+                if(confirm("¿Seguro que quieres dar por finalizado tu pedido?")){
+                    location.href="carritoCliente.jsp?terminar=1";
+                }
             }
-        }
         </script>    
     </head>
     <body background="imgs/fondo.jpg">
@@ -147,7 +152,7 @@
                             pos1=pos;
                             for(int j=0; j<filaColumnas;j++){%>
                             <td>
-                                <input type="image" src="imgs/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
+                                <input type="image" src="images/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
                                        <%=medicamentos.get(pos).getCantidad()%>,<%=pos%>)">
                             <%
                                
@@ -194,13 +199,8 @@
                                         %>
                                         <%=cantidades.get(i)%>
                                 </i></center></td>
-                                <td><center><input type="image" src="imgs/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
+                                <td><center><input type="image" src="images/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
                                   </center></td>
-                             <%--   <td>
-                                    <input type="image" src="imgs/delete.jpg" onclick="removerProducto(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
-                                    
-                                </td>
-                                --%>
                             </tr>
                         <%}%>
                         </table>
@@ -209,7 +209,7 @@
                         <br>
                         <table border="0">
                             <tr>
-                                <td><img src="imgs/terminarpedido.png" width="100" height="100"></td>
+                                <td><img src="images/terminarpedido.png" width="100" height="100"></td>
                             </tr>
                             <tr>
                                 <td><center><input type="button" value="Terminar Pedido" onclick="terminarPedido(); "></center></td>

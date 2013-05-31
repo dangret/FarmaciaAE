@@ -20,8 +20,8 @@
     </div>
     <ul id="nav">
       <li><a href="#">Mi Perfil</a></li>
-      <li><a href="#"> Nuestros Productos</a></li>
-      <li><a href="#" onclick="cargarCarrito('carritoCliente.jsp');">Mi Compra</a></li>
+      <li><a href="#" onclick="cargarCarrito('carritoCliente.jsp');"> Nuestros Productos</a></li>
+      <li><a href="#" onclick="cargarCarrito('compraActual.jsp');">Mi Compra</a></li>
       <li><a href="#">Historial Compras</a></li>
     </ul>
   </div>
