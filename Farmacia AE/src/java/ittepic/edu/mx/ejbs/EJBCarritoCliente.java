@@ -35,17 +35,19 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @PersistenceContext
     EntityManager em;
     private List<Producto> medicamentos = null;// lista todas las medicinas.
-    private List<Usuario> usuarios = null; //Lista todos los usuarios
     private List<Producto> pedido = null;//
     private List cantidades = null;// almacenar cuantas medicinas pide de cada una lista sin tipo de objetos.
+    private List<Venta> ventas = null;
+    private List<Detalleventa> detalleventa = null;
     
     @PostConstruct
     @Override
     public void inicializar() {
         pedido = new ArrayList();// Lista que tambien esta vacia.
         cantidades = new ArrayList();// lista vacia.
-        medicamentos = em.createNamedQuery("Producto.findAll").getResultList();// lista de todas las medicinas 
-        usuarios = em.createNamedQuery("Usuario.findAll").getResultList();
+        medicamentos = em.createNamedQuery("Producto.findAll").getResultList();// lista de todas las medicinas
+        ventas = em.createNamedQuery("Venta.findAll").getResultList();
+        detalleventa = em.createNamedQuery("Detalleventa.findAll").getResultList();
     }
 
     @Override
@@ -93,11 +95,19 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         return cantidades;
     }
 
+    @Override
+    public void liberarObjetos() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    // Add business logic below. (Right-click in editor and choose
+    // "Insert Code > Add Business Method")
+    
     @Remove
     @Override
     public void terminarPedido() {
-        Venta v = new Venta();
-        v.setIdusuario(usuarios.get(0));
+       Venta v = new Venta();
+        //v.setIdusuario();
         v.setHora(new Date());
         v.setFechadetalleventa(new Date());
         em.persist(v);//Se registra una nueva venta
@@ -133,11 +143,13 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     }
 
     @Override
-    public void liberarObjetos() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<Venta> getVentas() {
+        return ventas;
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    @Override
+    public List<Detalleventa> getDetalleventa() {
+        return detalleventa;
+    }
 
 }

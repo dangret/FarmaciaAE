@@ -4,6 +4,13 @@
     Author     : JESUS
 --%>
 
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
+<%@page import="ittepic.edu.mx.entidades.Pedido"%>
+<%@page import="ittepic.edu.mx.entidades.Detalleventa"%>
+<%@page import="java.util.Date"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
+<%@page import="ittepic.edu.mx.entidades.Venta"%>
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
 <%@page import="java.util.ArrayList"%>
@@ -12,18 +19,27 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%!
-    public EJBCarritoClienteLocal carritoCliente = null;
-            
+    EJBCarritoClienteLocal carritoCliente = null;
+    EJBPersonasRemote ejb = null;
+    EJBUsuariosRemote ejb2 = null;
+    
     public void jspInit() {
         try {
             InitialContext ic = new InitialContext();
             carritoCliente = (EJBCarritoClienteLocal) ic.lookup(EJBCarritoClienteLocal.class.getName());
+            
+            InitialContext ic1 = new InitialContext();
+            ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
+            
+            InitialContext ic2 = new InitialContext();
+            ejb2 = (EJBUsuariosRemote) ic.lookup(EJBUsuariosRemote.class.getName());
         } catch (Exception e){
             e.printStackTrace();
         }
     }
 %>
 <%
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
@@ -42,9 +58,7 @@
             jspInit();
             session.setAttribute("carritoCliente", carritoCliente);
             response.sendRedirect("carritoCliente.jsp");
-            
-            
-         }
+        }
     }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();

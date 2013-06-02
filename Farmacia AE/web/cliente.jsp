@@ -22,7 +22,7 @@
       <li><a href="#" onclick="cargarCarrito('miCuenta.jsp');">Mi Cuenta</a></li>
       <li><a href="#" onclick="cargarCarrito('carritoCliente.jsp');">Productos</a></li>
       <li><a href="#" onclick="cargarCarrito('compraActual.jsp');">Mi Compra</a></li>
-      <li><a href="#" onclick="cargarCarrito('underConstruction.jsp');">Historial Compras</a></li>
+      <li><a href="#" onclick="cargarCarrito('historialCompras.jsp');">Historial Compras</a></li>
       <li><a href="salir.jsp">Cerrar Sesion</a></li>
     </ul>
   </div>
