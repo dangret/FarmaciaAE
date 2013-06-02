@@ -19,7 +19,12 @@
       <h1>Medicinas con Iva+</h1>      
     </div>
     <ul id="nav">
-      <li><a href="#" onclick="cargarCarrito('miCuenta.jsp');">Mi Cuenta</a></li>
+      <li><a href="#">Mi Cuenta</a>
+            <ul>
+                <li><a href="#" onclick="cargarCarrito('modificaUsuario.jsp')">Datos Personales</a></li>
+                <li><a href="#" onclick="cargarCarrito('modificaTarjetas.jsp')">Administrar Tarjetas</a></li>
+            </ul>
+      </li>
       <li><a href="#" onclick="cargarCarrito('carritoCliente.jsp');">Productos</a></li>
       <li><a href="#" onclick="cargarCarrito('compraActual.jsp');">Mi Compra</a></li>
       <li><a href="#" onclick="cargarCarrito('historialCompras.jsp');">Historial Compras</a></li>

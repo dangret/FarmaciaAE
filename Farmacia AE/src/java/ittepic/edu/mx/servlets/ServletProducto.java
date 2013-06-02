@@ -100,7 +100,7 @@ public class ServletProducto extends HttpServlet {
                     cantidad = Short.parseShort(item.getString());
                 }
                 if (item.getFieldName().equals("txtPrecio")){
-                    precio = Short.parseShort(item.getString());
+                    precio = Double.parseDouble(item.getString());
                 }
             }
         }

@@ -83,12 +83,17 @@
         <title>Alta de Tarjetas</title>
         <script>
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="carritoCliente.jsp";
+            }
+            
+            function nuevo1() {
+                window.location="altaTarjetas.jsp";
             }
         </script>
     </head>
     <body>
         <form action="modificaTarjetas.jsp" method="POST">
+            <div align="center">
             <table border="1">
                 <%if (combo < 0){%>
                 <tr><td>TARJETAS: 
@@ -117,16 +122,17 @@
                     <td><input type="date" name="fechaV" value="<%=año + "-" + mes + "-" + dia%>"></td>
                 </tr>
             </table>
-
+                
             <%}%>
             <table border="1">
                 <br>
                 <tr align="center">
                 <input type="submit" id="btn-submit" name="modificar">
-
                 <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
+                <input type="button" name="nuevo" value="Nuevo" onclick="nuevo1();">
                 </tr>
             </table>
+            </div>
         </form>
     </body>
 </html>

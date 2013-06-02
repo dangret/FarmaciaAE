@@ -16,7 +16,8 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBTarjetaLocal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!    EJBTarjetaLocal ejb = null;
+<%!    
+    EJBTarjetaLocal ejb = null;
     EJBPersonasRemote ejb2 = null;
 
     public void jspInit() {
@@ -63,7 +64,49 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de Tarjetas</title>
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
         <script>
+            jQuery(function($){
+               
+               $("#btn-submit").click(function(){
+                
+                var numTarjReg=/[[\d]{16}|[\d]{18}]/;
+                var regPing = /[\d]{3,4}/;
+                var tarjeta = $("#ntarjeta").val();
+                var pin = $("#pin").val();
+               
+        
+                $(".error").hide();
+                var valido = true;   
+                
+                if (!pin == ""){
+                    if (!regPing.test(pin)){
+                        $("#pin").after("<span class='error'>deben ser 3 o 4 digitos</span>")
+                        valido=false;
+                    }
+                }else{
+                    $("#pin").after("<span class='error'>falta codigo</span>")
+                    valido=false;
+                }
+                
+                if (!tarjeta == ""){
+                    if (!regPing.test(pin)){
+                        $("#pin").after("<span class='error'>contener 16 digitos como minimo</span>")
+                        valido=false;
+                    }
+                }else{
+                    $("#pin").after("<span class='error'>Falta No de tarjeta</span>")
+                    valido=false;
+                }
+                
+                if (!valido) return false;
+                else return true;
+               });
+               
+            });
+            
             function cancelar1() {
                 window.location="index.jsp";
             }
@@ -71,14 +114,15 @@
     </head>
     <body>
         <form action="altaTarjetas.jsp" method="POST">
+            <div align="center">
             <table border="1"> 
             <tr>
                 <td>* Numero de Tarjeta: </td>
-                <td><input type="text" name="tarjeta"></td>
+                <td><input type="text" id="ntarjeta" name="tarjeta"></td>
             </tr>
             <tr>
                 <td>* Codigo de Seguridad: </td>
-                <td><input type="text" name="codigo"></td>
+                <td><input type="text" id="pin" name="codigo"></td>
             </tr>
             <tr>
                 <td>* Fecha Caducidad: </td>
@@ -93,6 +137,7 @@
                 <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                 </tr>
             </table>
+            </div>
         </form>
     </body>
 </html>
