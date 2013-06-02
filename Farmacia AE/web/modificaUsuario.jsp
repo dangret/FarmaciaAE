@@ -145,7 +145,7 @@
         ejb2.alta(usr);
         ejb.alta_modificacion(per);
 
-        response.sendRedirect("/Farmacia_AE/index.jsp");
+        response.sendRedirect("modificaUsuario.jsp");
     }
 
 %>
@@ -154,7 +154,131 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alta de alumnos</title>
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
         <script>
+            
+            jQuery(function($){
+                $("#btn-submit").click(function(){
+                    $(".error").hide();
+                    var errorValidacion = false;
+                    
+                    var email = $("#jmail").val();
+                    var nombre = $("#nombre").val();
+                    var apepat = $("#apepat").val();
+                    var apemat = $("#apemat").val();
+                    var user = $("#user").val();
+                    var pass = $("#pass").val();
+                    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                    var nombreReg = /[a-zA-Z]*/;
+                    var passReg = /[\w\W]{6}[\w\W]*/;
+                    var userReg = /[a-z][\w]*/;
+                    
+                    
+                    
+                    if (pass == ""){
+                        errorValidacion = true;
+                        $("#pass").after("<span class='error'>debe introducir password</span>");
+                        $("#pass").focus();
+                    }else{
+                        if (!passReg.test(pass)){
+                            errorValidacion = true;
+                            $("#pass").after("<span class='error'>debe de medir contener minimo 6 caracteres</span>");
+                            $("#pass").focus();
+                        }
+                    }
+                    
+                    if (user == ""){
+                        errorValidacion = true;
+                        $("#user").after("<span class='error'>debe introducir un nombre de usuario</span>");
+                        $("#user").focus();
+                    }else{
+                        if (!userReg.test(user)){
+                            errorValidacion = true;
+                            $("#user").after("<span class='error'>debe empeazar con una letra</span>");
+                            $("#user").focus();
+                        }
+                    }
+                    
+                    if (email == ""){
+                        errorValidacion = true;
+                        $("#jmail").after("<span class='error'>introduzca un e-mail</span>");
+                        $("#jmail").focus();
+                    }else{
+                        if(!emailReg.test(email)){
+                            errorValidacion = true;
+                            $("#jmail").after("<span class='error'>email no valido</span>");
+                            $("#jmail").focus();
+                        } 
+                    }
+                    
+                    if (!nombreReg.test(apemat)){
+                        errorValidacion = true;
+                        $("#apepat").after("<span class='error'>el apellido solo debe de llevar letras</span>");
+                        $("#apepat").focus();
+                    }
+                    
+                    if (!nombreReg.test(apepat)){
+                        errorValidacion = true;
+                        $("#apepat").after("<span class='error'>el apellido solo debe de llevar letras</span>");
+                        $("#apepat").focus();
+                    }
+                    
+                    
+                    
+                    if (nombre == ""){
+                        errorValidacion = true;
+                        $("#nombre").after("<span class='error'>debe introducir un nombre</span>");
+                        $("#nombre").focus();
+                    }else{
+                        if (!nombreReg.test(nombre)){
+                            errorValidacion = true;
+                            $("#nombre").after("<span class='error'>el nombre solo debe llevar letras</span>");
+                            $("#nombre").focus();
+                        }
+                    }
+                    
+                    /*if ($("#apepat").val() == ""){
+                        errorValidacion = true;
+                        $("#apepat").after("<span class='error'>debe introducir un apellido</span>");
+                        $("#apepat").focus();
+                    }else{
+                        if (nombreReg.test($("#apepat").val())){
+                            errorValidacion = true;
+                        $("#apepat").after("<span class='error'>el apellido solo debe de llevar letras</span>");
+                        $("#apepat").focus();
+                        }
+                        
+                    }*/
+                    
+                    
+                    
+                    
+                    
+                    if (errorValidacion == true) {return false;}
+                    
+                });
+                
+                $("#celular").mask("(999) 999-9999",{placeholder: " "});
+                $("#telf").mask("999-99-99",{placeholder: " "});
+                
+                $("#btn-servlet").click(function(){
+                    $(".error").hide();
+                    var email = $("#jmail").val();
+                    
+                    $.post("ServletUser",{mail: email},function(data) { 
+                        alert(data.valido);
+                        var valido = data.valido;
+                        alert(valido);
+                        if (!valido){
+                            $("#jmail").after("<div class='error'>ese email ya fue usado</div>");
+                        }
+                    });
+                });
+                
+            });
+            
             function cancelar1() {
                 window.location="consultaUsuarios.jsp";
             }
@@ -206,7 +330,7 @@
                     </tr>
                     <tr>
                         <td>E-Mail: </td>
-                        <td><input type="text" name="email" id="email" value="<%=per.getEmail()%>" disabled="true"></td>
+                        <td><input type="text" name="email" id="jemail" value="<%=per.getEmail()%>" disabled="true"></td>
                     </tr>
 
 
@@ -214,21 +338,21 @@
                 <table border="1">
                     <tr>
                         <td width="147">USER:</td>
-                        <td width="140"><input type="text" name="user"  value="<%=usr.getLogin()%>" disabled="true"></td>
+                        <td width="140"><input type="text" name="user" id="user"  value="<%=usr.getLogin()%>" disabled="true"></td>
                     </tr>
                     <tr>
                         <td>Password Nuevo:</td>
-                        <td><input type="password" name="password"></td>
+                        <td><input type="password" id="pass" name="password"></td>
                     </tr>
                     <% if (sesionUser != null) {
                             if (sesionUser.getTipousuario().getIdtipousuario() == 1) {%>
                     <tr><td>TIPO: 
                         </td>
                         <td><SELECT NAME="combo" SIZE=1> 
-                                <option value="#">:: Seleccione ::</option>
-                                <OPTION VALUE="1">Administrador</OPTION>
-                                <OPTION VALUE="2">Usuario</OPTION>
-                                <OPTION VALUE="3">Distribuidor</OPTION>
+                                <OPTION value="#">:: Seleccione ::</option>
+                                <OPTION VALUE="1"<% if(usr.getTipousuario().getIdtipousuario() == 1){ %>selected<%}%>>Administrador</OPTION>
+                                <OPTION VALUE="2"<% if(usr.getTipousuario().getIdtipousuario() == 2){ %>selected<%}%>>Usuario</OPTION>
+                                <OPTION VALUE="3"<% if(usr.getTipousuario().getIdtipousuario() == 3){ %>selected<%}%>>Distribuidor</OPTION>
                             </SELECT></td>
                     </tr>
                     <%}

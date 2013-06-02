@@ -83,7 +83,11 @@
         <title>Alta de Tarjetas</title>
         <script>
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="carritoCliente.jsp";
+            }
+            
+            function nuevo1() {
+                window.location="altaTarjetas.jsp";
             }
         </script>
     </head>
@@ -124,8 +128,8 @@
                 <br>
                 <tr align="center">
                 <input type="submit" id="btn-submit" name="modificar">
-
                 <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
+                <input type="button" name="nuevo" value="Nuevo" onclick="nuevo1();">
                 </tr>
             </table>
             </div>
