@@ -34,6 +34,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     public  EntityManagerFactory emf;
     @PersistenceContext
     EntityManager em;
+    private List<Usuario> usuarios = null;
     private List<Producto> medicamentos = null;// lista todas las medicinas.
     private List<Producto> pedido = null;//
     private List cantidades = null;// almacenar cuantas medicinas pide de cada una lista sin tipo de objetos.
@@ -48,6 +49,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         medicamentos = em.createNamedQuery("Producto.findAll").getResultList();// lista de todas las medicinas
         ventas = em.createNamedQuery("Venta.findAll").getResultList();
         detalleventa = em.createNamedQuery("Detalleventa.findAll").getResultList();
+        usuarios = em.createNamedQuery("Usuario.findAll").getResultList();
     }
 
     @Override
@@ -150,6 +152,33 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     @Override
     public List<Detalleventa> getDetalleventa() {
         return detalleventa;
+    }
+
+    @Override
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    @Override
+    public Venta registrarVenta(Venta v) {
+        em.persist(v);
+        return v;
+    }
+
+    @Override
+    public Detalleventa registrarDetalleVenta(Detalleventa dv) {
+        em.persist(dv);
+        return dv;
+    }
+
+    @Override
+    public void registrarPedido(Pedido pe) {
+        em.merge(pe);
+    }
+
+    @Override
+    public void actualizarStock(Producto p) {
+        em.merge(p);
     }
 
 }

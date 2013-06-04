@@ -31,7 +31,12 @@ public interface EJBCarritoClienteLocal {
     List<Producto> agregar(int idproducto, int cantidad);
     Producto getMedicamentoById(int idproducto);
     List<Producto> getPedido();
+    List<Usuario> getUsuarios();
     List getCantidades();
+    Venta registrarVenta(Venta v);
+    Detalleventa registrarDetalleVenta(Detalleventa dv);
+    public void registrarPedido(Pedido pe);
+    public void actualizarStock(Producto p);
     @Remove
     public void terminarPedido();
     @PreDestroy

@@ -48,21 +48,66 @@
     List cantidades =new ArrayList();
     List <Producto> pedido= new ArrayList();    
     List<Producto> medicamentos =new ArrayList();
+    List<Usuario> usuarios = new ArrayList();
+    List<Venta> ventas = new ArrayList();
+    
+    cantidades=carritoCliente.getCantidades();
+    pedido = carritoCliente.getPedido();
+    medicamentos=carritoCliente.getMedicamentos();
+    usuarios = carritoCliente.getUsuarios();
+    ventas = carritoCliente.getVentas();
+    
     if(remover>0)
     {
      int index=Integer.parseInt(request.getParameter("index"));
      carritoCliente.removerMedicamento(index);
     }else{ 
         if(terminar==1){
-            carritoCliente.terminarPedido();
+            Venta v = new Venta();
+            v.setIdusuario(sesionUser);
+            v.setHora(new Date());
+            v.setFechadetalleventa(new Date());
+            v = carritoCliente.registrarVenta(v);//Se registra una nueva venta
+         
+            for(int i=0; i<pedido.size(); i++)
+            {
+            int index = pedido.indexOf(pedido.get(i));
+            Producto p = pedido.get(index);
+            Detalleventa dv = new Detalleventa();
+            dv.setIdproducto(p);
+            dv.setIdventa(v);
+            dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+            dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
+          
+            if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+            {
+                p.setCantidad(Short.parseShort("0"));
+                Pedido pe = new Pedido();
+                pe.setIdproducto(p);
+                pe.setIdventa(v);
+                pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+                //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
+                pe.setEstado(1);//estado del pedido
+                pe.setFechapedido(new Date());
+                carritoCliente.registrarPedido(pe);//Se registra el pedido
+            }
+            else
+            {
+                p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
+            }
+            carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada 
+            }
+            terminar = 0;
             jspInit();
-            session.setAttribute("carritoCliente", carritoCliente);
             response.sendRedirect("carritoCliente.jsp");
         }
     }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();
     medicamentos=carritoCliente.getMedicamentos();
+    usuarios = carritoCliente.getUsuarios();
+    ventas = carritoCliente.getVentas();
+    session.setAttribute("carritoCliente", carritoCliente);
 
 %>
 <html>
