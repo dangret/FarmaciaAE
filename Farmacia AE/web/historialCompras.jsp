@@ -4,6 +4,7 @@
     Author     : dangret
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="ittepic.edu.mx.entidades.Detalleventa"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
@@ -32,6 +33,7 @@
     }
 %>
 <%
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     List<Detalleventa> detallesventas = new ArrayList();
     List<Venta> ventasTotales = new ArrayList();
     List<Producto> medicamentos = new ArrayList();
@@ -60,7 +62,7 @@
                         </tr>
                         <%for (int i=0; i<ventasTotales.size(); i++) {%>
                             <tr>
-                                <%if(ventasTotales.get(i).getIdusuario().getIdusuario()==1){%>
+                                <%if(ventasTotales.get(i).getIdusuario().equals(sesionUser)){%>
                                 <td><center><i><%out.println(sdf.format(ventasTotales.get(i).getFechadetalleventa()));%></i></center></td>
                                 <td><center>
                                     <%

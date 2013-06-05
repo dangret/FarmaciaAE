@@ -72,32 +72,41 @@
          
          for(int i=0; i<pedido.size(); i++)
          {
-          int index = pedido.indexOf(pedido.get(i));
-          Producto p = pedido.get(index);
-          Detalleventa dv = new Detalleventa();
-          dv.setIdproducto(p);
-          dv.setIdventa(v);
-          dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
-          dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
-          
-          if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+          int index = pedido.get(i).getIdproducto();
+          for(int j=0;j<medicamentos.size();j++)
           {
-           
-           p.setCantidad(Short.parseShort("0"));
-           Pedido pe = new Pedido();
-           pe.setIdproducto(p);
-           pe.setIdventa(v);
-           pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
-           //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
-           pe.setEstado(1);//estado del pedido
-           pe.setFechapedido(new Date());
-           carritoCliente.registrarPedido(pe);//Se registra el pedido
-          }
-          else
-          {
-            p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
-          }
-          carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada 
+              if(index==medicamentos.get(j).getIdproducto())
+              {
+               System.out.println(index);
+               System.out.println(medicamentos.get(j).getIdproducto());
+               System.out.println(medicamentos.get(j).getProducto());
+               Producto p = medicamentos.get(j);
+               Detalleventa dv = new Detalleventa();
+               dv.setIdproducto(p);
+               dv.setIdventa(v);
+               dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+               dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
+               if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+               {
+                p.setCantidad(Short.parseShort("0"));
+                Pedido pe = new Pedido();
+                pe.setIdproducto(p);
+                pe.setIdventa(v);
+                pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+                //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
+                pe.setEstado(1);//estado del pedido
+                pe.setFechapedido(new Date());
+                carritoCliente.registrarPedido(pe);//Se registra el pedido
+               }
+               else
+               {
+                p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
+               
+               }
+               carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada
+               j=medicamentos.size();
+              } 
+          } 
          }
          terminar = 0;
          jspInit();
