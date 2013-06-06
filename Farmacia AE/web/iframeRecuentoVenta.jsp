@@ -4,6 +4,7 @@
     Author     : JESUS
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
@@ -13,8 +14,17 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-     EJBCarritoClienteLocal  carritoCliente = (EJBCarritoClienteLocal)session.getAttribute("carritoCliente");
-     List cantidades =new ArrayList();
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 2)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{ 
+    EJBCarritoClienteLocal  carritoCliente = (EJBCarritoClienteLocal)session.getAttribute("carritoCliente");
+     List cantidades = new ArrayList();
      List <Producto> pedido= new ArrayList();
      List<Producto> medicamentos =new ArrayList();
      pedido = carritoCliente.getPedido();
@@ -48,7 +58,7 @@
                         
                 </h5></td>
                 <td><h5>Total: $<%=totalCosto%></h5></td>
-               <%}%>
+               <%}}%>
             </tr>
         </table>
 

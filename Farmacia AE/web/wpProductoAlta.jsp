@@ -4,6 +4,7 @@
     Author     : Daniel
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBProductosRemote"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,6 +16,15 @@
    Producto producto;
 %>
 <%
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+     boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     EJBProductosRemote ejb = (EJBProductosRemote) session.getAttribute("ejb");
     try {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -104,7 +114,7 @@
                     <%if (llenar){%>
                     <td><input type="text" id="txtprecio" name="txtPrecio" value="<%out.print(producto.getPrecio());%>"></td>
                     <%}else{%>
-                    <td><input type="text" id="txtprecio" name="txtPrecio"></td><%}%>
+                    <td><input type="text" id="txtprecio" name="txtPrecio"></td><%}}%>
                 </tr>
                 <tr>
                     <td><b>Imagen:</b></td>

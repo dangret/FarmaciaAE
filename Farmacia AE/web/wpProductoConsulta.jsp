@@ -4,6 +4,7 @@
     Author     : Daniel
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="org.apache.taglibs.standard.tag.common.core.RedirectSupport"%>
 <%@page import="javax.ws.rs.core.Response"%>
 <%@page import="java.util.List"%>
@@ -38,6 +39,15 @@
     }
 %>
 <%
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+     boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     try{
         request.removeAttribute("productoObject");
     }catch(Exception e){
@@ -84,6 +94,7 @@
                             <td><input type="checkbox" value="<%=productos.get(i).getIdproducto()%>" name="chkBorrar"></td>
                         </tr>
                     <%}%>
+                <%}%>
                 
             </table>
             <table>

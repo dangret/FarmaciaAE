@@ -6,7 +6,7 @@
     boolean userValido = false;
     if (user != null)
         if (user.getEstado())
-            if (user.getTipousuario().getIdtipousuario() == 1)
+            if (user.getTipousuario().getIdtipousuario() == 2)
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");

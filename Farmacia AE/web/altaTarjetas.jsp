@@ -60,11 +60,11 @@
 
             //CUANDO ESTE LISTA LA SESSION
             //Persona per=ejb2.consultaPorId(user.getIdcliente().getIdcliente());
-            Persona per=new Persona();
-            per.setIdcliente(2);
+            
+            
 
             cuenta.setNotarjeta(tarjeta);
-            cuenta.setIdcliente(per);
+            cuenta.setIdcliente(user.getIdcliente());
             cuenta.setCodigoseguridad(codigo);
             cuenta.setFechacaducidad(fechaV);
             ejb.alta(cuenta);
