@@ -63,63 +63,7 @@ public class ServletProducto extends HttpServlet {
         
         String [] listBorrar = request.getParameterValues("chkBorrar");
         
-        String producto = "";
-        short cantidad = 0;
-        double precio = 0;
-        Integer id = null;
-        String imagen = null;
-
-        try{
-            id = (Integer) request.getSession().getAttribute("idproducto");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-
-        String archivo_path = "";
-        for(FileItem item : items){
-            /*FileItem representa un archivo en memoria que puede ser pasado al disco duro*/
-            /*item.isFormField() false=input file; true=text field*/
-
-            if (!item.isFormField()){
-                /*cual sera la ruta al archivo en el servidor*/
-                archivo_path = "imagenesProductos/" + item.getName();
-                File archivo_server = new File(getServletContext().getRealPath("/") + archivo_path );
-                try {
-                    /*y lo escribimos en el servido*/
-                    item.write(archivo_server);
-                } catch (Exception ex) {
-                    Logger.getLogger(ServletProducto.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }else{
-                if (item.getFieldName().equals("txtProducto")){
-                    producto = item.getString().toUpperCase();
-                }
-                if (item.getFieldName().equals("txtCantidad")){
-                    cantidad = Short.parseShort(item.getString());
-                }
-                if (item.getFieldName().equals("txtPrecio")){
-                    precio = Double.parseDouble(item.getString());
-                }
-            }
-        }
-        Producto p;
-        //Aqui guardar
-        p = new Producto ();
-
-        p.setProducto(producto);
-        if (id != null) p.setIdproducto(id);
-        p.setCantidad(cantidad);
-        p.setPrecio(precio);
-        p.setRuta(archivo_path);
-        
-
-        if ( ejb.ProductoGuardar(p) == 1 ){}     //bien
-        else{}                         
-          
-        
-        
+        Producto p = new Producto ();
         
         if (listBorrar != null){
             //Aqui borrar
@@ -132,6 +76,62 @@ public class ServletProducto extends HttpServlet {
                 else{}                  
             }
             
+        }else{
+            String producto = "";
+            short cantidad = 0;
+            double precio = 0;
+            Integer id = null;
+            String imagen = null;
+
+            try{
+                id = (Integer) request.getSession().getAttribute("idproducto");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+            String archivo_path = "";
+            for(FileItem item : items){
+                /*FileItem representa un archivo en memoria que puede ser pasado al disco duro*/
+                /*item.isFormField() false=input file; true=text field*/
+
+                if (!item.isFormField()){
+                    /*cual sera la ruta al archivo en el servidor*/
+                    archivo_path = "imagenesProductos/" + item.getName();
+                    File archivo_server = new File(getServletContext().getRealPath("/") + archivo_path );
+                    try {
+                        /*y lo escribimos en el servido*/
+                        item.write(archivo_server);
+                    } catch (Exception ex) {
+                        Logger.getLogger(ServletProducto.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }else{
+                    if (item.getFieldName().equals("txtProducto")){
+                        producto = item.getString().toUpperCase();
+                    }
+                    if (item.getFieldName().equals("txtCantidad")){
+                        cantidad = Short.parseShort(item.getString());
+                    }
+                    if (item.getFieldName().equals("txtPrecio")){
+                        precio = Double.parseDouble(item.getString());
+                    }
+                }
+            }
+
+            p.setProducto(producto);
+            if (id != null) p.setIdproducto(id);
+            p.setCantidad(cantidad);
+            p.setPrecio(precio);
+            p.setRuta(archivo_path);
+
+
+            if ( ejb.ProductoGuardar(p) == 1 ){}     //bien
+            else{}                         
+
+
+
+
         }
         
         response.sendRedirect("wpProductoConsulta.jsp");

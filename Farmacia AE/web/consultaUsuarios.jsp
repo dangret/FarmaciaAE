@@ -4,6 +4,9 @@
     Author     : sears
 --%>
 
+<%@page import="ittepic.edu.mx.ejbs.EJBTarjetaLocal"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
+<%@page import="ittepic.edu.mx.entidades.Numtarjeta"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -17,13 +20,22 @@
 <%@page import="javax.naming.InitialContext"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!    EJBUsuariosRemote ejb2 = null;
+<%!    
+    EJBUsuariosRemote ejb2 = null;
+    EJBPersonasRemote ejb = null;
+    EJBTarjetaLocal ejbTarjeta = null;
 
     public void jspInit() {
         try {
 
             InitialContext ic2 = new InitialContext();
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
+            
+            InitialContext ic3 = new InitialContext();
+            ejbTarjeta = (EJBTarjetaLocal) ic3.lookup(EJBTarjetaLocal.class.getName());
+            
+            InitialContext ic = new InitialContext();
+            ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
 
             System.out.println("Bean cargado");
         } catch (Exception ex) {
@@ -33,7 +45,15 @@
     }
 %>
 <%
-
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     Usuario usr;
     Persona per;
     CatTiposusuario tipoUsr;
@@ -44,15 +64,20 @@
     users = ejb2.consultaGeneral();
     int tam=users.size();
     
- DateFormat df =  DateFormat.getDateInstance();
+    DateFormat df =  DateFormat.getDateInstance();
     
     if(elimina!=null){
-      for(int i=0; i<elimina.length;i++) {
-       usr=new Usuario();
-       per=usr.getIdcliente();
-       usr=ejb2.consultaPorId(Integer.parseInt(elimina[i]));
-       tipoUsr=usr.getTipousuario();
-       ejb2.eliminarEntidad(usr);
+        for(int i=0; i<elimina.length;i++) {
+            usr = new Usuario();
+            usr = ejb2.consultaPorId(Integer.parseInt(elimina[i]));
+            per = usr.getIdcliente();
+            ejbTarjeta.borrarTarjetas(per.getNumtarjetaList());
+            ejb2.eliminarEntidad(usr);
+            
+            per.setUsuarioList(new ArrayList<Usuario>());
+            per.setNumtarjetaList(new ArrayList<Numtarjeta>());
+            ejb.eliminar(per);
+            
        }
     }
     
@@ -139,11 +164,11 @@
         </tr>
             <%}%>    
             <%}%>
-            <%}%>
+            <%}}%>
     </table>
     <table>
         <tr>
-            <td><input type="submit" value="Eliminar" name="btEliminar"  onclick="validar()"></td>
+            <td><input type="submit" value="Eliminar" name="btEliminar" ></td>
         </tr>
     </table>
     </div>

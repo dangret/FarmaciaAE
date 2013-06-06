@@ -14,12 +14,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%!
-    EJBUsuariosRemote ejb = null;
+    EJBUsuariosRemote ejb2 = null;
 
     public void jspInit() {
         try {
-            InitialContext ic = new InitialContext();
-            ejb = (EJBUsuariosRemote) ic.lookup(EJBUsuariosRemote.class.getName());
+            InitialContext ic2 = new InitialContext();
+            ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
             System.out.println("Bean cargado");
         } catch (Exception ex) {
             System.out.println("Error:"
@@ -38,9 +38,9 @@
         if ( !usuario.equals("") && !password.equals("") ){
             Codificador codec = new Codificador ();
             password = codec.encriptar(password, "MD5");
-            user = ejb.obtenerUsuario(usuario, password);
+            user = ejb2.obtenerUsuario(usuario, password);
             
-            if (user != null){
+            if ((user != null) && (user.getEstado())){
                 session.setAttribute("usuario", user);
                 int tipoUsr= user.getTipousuario().getIdtipousuario();
                 if(tipoUsr==1){

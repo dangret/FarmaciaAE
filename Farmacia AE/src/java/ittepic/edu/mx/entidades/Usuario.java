@@ -6,12 +6,9 @@ package ittepic.edu.mx.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,18 +16,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author dangret
+ * @author sears
  */
 @Entity
 @Table(name = "usuario")
@@ -38,8 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
+    @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
+    @NamedQuery(name = "Usuario.elimina", query = "DELETE FROM Persona p where p.idcliente=:idcliente"),
+    @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado"),
     @NamedQuery(name = "Usuario.findByFechacreacion", query = "SELECT u FROM Usuario u WHERE u.fechacreacion = :fechacreacion")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -61,14 +59,14 @@ public class Usuario implements Serializable {
     @Column(name = "fechacreacion")
     @Temporal(TemporalType.DATE)
     private Date fechacreacion;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Persona idcliente;
     @JoinColumn(name = "tipousuario", referencedColumnName = "idtipousuario")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private CatTiposusuario tipousuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.EAGER)
-    private List<Venta> ventaList;
 
     public Usuario() {
     }
@@ -115,6 +113,14 @@ public class Usuario implements Serializable {
         this.fechacreacion = fechacreacion;
     }
 
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
     public Persona getIdcliente() {
         return idcliente;
     }
@@ -129,15 +135,6 @@ public class Usuario implements Serializable {
 
     public void setTipousuario(CatTiposusuario tipousuario) {
         this.tipousuario = tipousuario;
-    }
-
-    @XmlTransient
-    public List<Venta> getVentaList() {
-        return ventaList;
-    }
-
-    public void setVentaList(List<Venta> ventaList) {
-        this.ventaList = ventaList;
     }
 
     @Override

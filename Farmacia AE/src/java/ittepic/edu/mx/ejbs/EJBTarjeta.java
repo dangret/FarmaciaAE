@@ -77,4 +77,17 @@ public class EJBTarjeta implements EJBTarjetaLocal {
                 .getSingleResult();
                 }
 
+    @Override
+    public int borrarTarjetas(List<Numtarjeta> tarjetas) {
+        try{
+            for (int i=0; i<tarjetas.size(); i++){
+                em.remove(em.merge(tarjetas.get(i)));
+            }
+            return 1;
+        }catch(Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
 }

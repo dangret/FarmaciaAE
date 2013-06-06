@@ -4,22 +4,23 @@
     Author     : JESUS
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="ittepic.edu.mx.entidades.Persona"%>
 <%@page import="javax.naming.InitialContext"%>
-<%@page import="ittepic.edu.mx.ejbs.EJBPersonasLocal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <%! 
-    EJBPersonasLocal ejb=null;
+    EJBPersonasRemote ejb=null;
     public void jspInit(){
         try{
             InitialContext ic= new InitialContext();
-            ejb =(EJBPersonasLocal) ic.lookup(EJBPersonasLocal.class.getName());
+            ejb =(EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
             System.out.println("Bean cargado");
         }catch (Exception ex) {
             System.out.println("Error:"+ ex.getMessage());
@@ -29,6 +30,14 @@
 %>
 
 <%
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
   jspInit();
   List<Persona> personas = null;
   SimpleDateFormat sdffechaguardar = new SimpleDateFormat("yyyy-MM-dd");
@@ -40,7 +49,8 @@
    for(int i=0; i<borrar.length; i++)
    {
     System.out.println("Borrar["+i+"]="+borrar[i]);
-    ejb.eliminar(Integer.parseInt(borrar[i]));
+    Persona persona = ejb.consultaPorId(Integer.parseInt(borrar[i]));
+    ejb.eliminar(persona);
    }
   }
   if(nombre!=null)
@@ -134,7 +144,7 @@
                         </td>
                     </tr>
                     </table>
-               <%}%>
+               <%}}%>
            </table>          
      </form>
  </body>

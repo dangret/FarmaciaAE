@@ -37,6 +37,13 @@
 %>
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     int combo = request.getParameter("combo") == null ? -1 : Integer.parseInt(request.getParameter("combo"));
     String tarjeta = request.getParameter("tarjeta") == null ? "" : request.getParameter("tarjeta");
     int codigo = request.getParameter("codigo") == null ? 0 : Integer.parseInt(request.getParameter("codigo"));
@@ -46,7 +53,7 @@
     cuenta = ejb.consultaPorTarjeta(tarjeta);
     }
     
-    List<Numtarjeta> tarjetas = ejb.consultaId(1);
+    List<Numtarjeta> tarjetas = ejb.consultaId(user.getIdcliente().getIdcliente());
     String dia = "", mes = "", año = "";
 
     if (combo != -1) {
@@ -123,13 +130,15 @@
                 </tr>
             </table>
                 
-            <%}%>
+            <%}}%>
             <table border="1">
                 <br>
                 <tr align="center">
                 <input type="submit" id="btn-submit" name="modificar">
                 <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                 <input type="button" name="nuevo" value="Nuevo" onclick="nuevo1();">
+                <input type="button" name="eliminar" value="Eliminar">
+                
                 </tr>
             </table>
             </div>

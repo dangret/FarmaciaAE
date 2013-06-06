@@ -4,6 +4,7 @@
     Author     : dangret
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBProductosRemote"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBPedidoRemote"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
@@ -32,9 +33,16 @@
     }
 %>
 <%
-    if (session.getAttribute("usuario") == null){
-        response.sendRedirect("wpFaltaLogin.jsp");
-    }
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+     boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
+   
     String [] itemsBorrar = 
             request.getParameterValues("chkBorrar") == null ? null : 
             request.getParameterValues("chkBorrar");
@@ -87,7 +95,7 @@
                     <td><input type="checkbox" value="<%=pedidos.get(i).getIdpedido()%>" name="chkBorrar"></td>
                 </tr>
                 <%}
-                }%>
+                }}%>
             </table>
             <table>
                 <tr>

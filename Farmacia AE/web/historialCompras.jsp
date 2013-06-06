@@ -35,6 +35,16 @@
 %>
 <%
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    Usuario user = sesionUser;
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 2)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
+    
     List<Detalleventa> detallesventas = new ArrayList();
     List<Venta> ventasTotales = new ArrayList();
     List<Producto> medicamentos = new ArrayList();
@@ -112,7 +122,7 @@
                         
         <%} else {%>
             <h1><center>Sin Historial</center></h1>
-            <%} %>
+            <%}} %>
            
     </center>
     </body>

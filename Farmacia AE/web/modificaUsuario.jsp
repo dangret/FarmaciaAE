@@ -52,7 +52,15 @@
     //obtenemos el usuario que inició sesion 
     
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    Usuario user = sesionUser;
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            //if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
     
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     //PARTE DE LOS VALUES
     int band = request.getParameter("band") == null ? 0 : 1;
     
@@ -76,7 +84,6 @@
     Calendar calendario = GregorianCalendar.getInstance();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
     String email = request.getParameter("email") == null ? "" : request.getParameter("email").toLowerCase();
-    String user = request.getParameter("user") == null ? "" : request.getParameter("user");
     String password = request.getParameter("password") == null ? "" : request.getParameter("password");
     int combo = request.getParameter("combo") == null ? sesionUser.getTipousuario().getIdtipousuario() : Integer.parseInt(request.getParameter("combo"));
 
@@ -356,7 +363,7 @@
                             </SELECT></td>
                     </tr>
                     <%}
-                        }%>
+                        }}%>
                 </table>
 
                 <table border="1">

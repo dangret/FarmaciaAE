@@ -36,6 +36,15 @@
     }
 %>
 <% 
+    Usuario usera = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (usera != null)
+        if (usera.getEstado())
+            if (usera.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     usuario u = new usuario();
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
@@ -87,6 +96,7 @@
         usr.setPassword(password);
         usr.setFechacreacion(fecCre2);
         ejb2.alta(usr);
+    }
     }
 %>
 <html>

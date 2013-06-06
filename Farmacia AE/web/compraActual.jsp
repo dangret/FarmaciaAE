@@ -39,8 +39,16 @@
     }
 %>
 <%
-    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    Usuario user = sesionUser;
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
@@ -187,7 +195,7 @@
                         
         <%} else {%>
             <h1><center>No Hay Productos Disponibles</center></h1>
-            <%} %>
+            <%} }%>
            
     </center>
     </body>
