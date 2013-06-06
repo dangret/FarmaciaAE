@@ -34,6 +34,7 @@
     }
 %>
 <%
+    
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     Usuario user = sesionUser;
     boolean userValido = false;
@@ -42,8 +43,8 @@
             if (user.getTipousuario().getIdtipousuario() == 2)
                 userValido = true;
     
-    if (!userValido) response.sendRedirect("index.jsp");
-    else{
+    if (!userValido) 
+        response.sendRedirect("index.jsp");
     
     List<Detalleventa> detallesventas = new ArrayList();
     List<Venta> ventasTotales = new ArrayList();
@@ -58,7 +59,6 @@
     double montoparcial = 0, montototal = 0;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DecimalFormat df = new DecimalFormat("#.##");
-    
 %>
 <html>
     <head>
@@ -122,7 +122,7 @@
                         
         <%} else {%>
             <h1><center>Sin Historial</center></h1>
-            <%}} %>
+            <%} %>
            
     </center>
     </body>

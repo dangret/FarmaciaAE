@@ -32,6 +32,7 @@
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"));
     int idventa=request.getParameter("idventa")==null?0:Integer.parseInt(request.getParameter("idventa"));
+    System.out.println(idventa);
     int bandera = 0;
     List<Producto> medicamentos = new ArrayList();
     List<Detalleventa> detallesventas = new ArrayList();
@@ -46,6 +47,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script>
+            function verReporte(idventa)
+            {
+                location.href = "reporte.jsp?idventa="+idventa;
+            }
+        </script>
     </head>
     <body>
     <center>
@@ -90,7 +97,11 @@
        <%}else{%>
             <h1><center>No existen productos en esta venta</center></h1>
        <%}%>
-       <a href = "reporte.jsp">Generar Reporte</a>
+       <table>
+           <tr>
+               <td><center><input type="image" src="images/reporteimagen.png" name="btnReporte" onclick="verReporte(<%=idventa%>)"></center></td>
+           </tr>
+       </table>
     </center>
     </body>
 </html>

@@ -15,23 +15,8 @@
 <%@page import="java.sql.Connection"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!
-    public EJBCarritoClienteLocal carritoCliente = null;
-            
-    public void jspInit() {
-        try {
-            InitialContext ic = new InitialContext();
-            carritoCliente = (EJBCarritoClienteLocal) ic.lookup(EJBCarritoClienteLocal.class.getName());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-%>
 <%
-    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
-    if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"));
     int idventa=request.getParameter("idventa")==null?0:Integer.parseInt(request.getParameter("idventa"));
-
     try{
     Connection conexion;
     Class.forName("org.postgresql.Driver");
@@ -57,6 +42,9 @@
         <title>Reporte</title>
     </head>
     <body>
+    <center>
+        
+    </center>
         
     </body>
 </html>
