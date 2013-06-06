@@ -29,36 +29,45 @@
 %>
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean invalido = false;
     if (user == null){
         
         String usuario = request.getParameter("txtNombre") == null ? "" : request.getParameter("txtNombre");
         String password = request.getParameter("txtPasswd") == null ? "" : request.getParameter("txtPasswd");
-
+        
         if ( !usuario.equals("") && !password.equals("") ){
             Codificador codec = new Codificador ();
             password = codec.encriptar(password, "MD5");
             user = ejb.obtenerUsuario(usuario, password);
-            int tipoUsr= user.getTipousuario().getIdtipousuario();
-
+            
             if (user != null){
                 session.setAttribute("usuario", user);
-                 if(tipoUsr==1){
+                int tipoUsr= user.getTipousuario().getIdtipousuario();
+                if(tipoUsr==1){
                     response.sendRedirect("adm.jsp");
                 }else{
                     if(tipoUsr==2){
                     response.sendRedirect("cliente.jsp");
+                    }
                 }
-                }
+            }else{
+                invalido=true;
             }
 
         }
     }else{
         response.sendRedirect("index.jsp");
     }
+    //response.sendRedirect("portal.jsp");
 
 %>
 <html>
     <head>
+        <script>
+            function mandarLogin(cc){
+                document.getElementById('iframe1').src=cc;
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css" />
         <title>Login</title>
@@ -71,9 +80,9 @@
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>
-      <li><a onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
+      <li><a href="#" onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
       <li><a href="login.jsp">Login</a></li>
-      <li><a onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
+      <li><a href="#" onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
     </ul>
       <br></br>
           <br></br>
@@ -96,8 +105,9 @@
                 <tr>
                     <td>Password:</td><td><input type="password" name="txtPasswd"></td>
                 </tr>
-                <tr><td><input type="submit" name="btnEnviar" ></td></tr>
+                <tr><td><input type="submit" name="btnEnviar" id="btnenviar" ></td></tr>
             </table>
+            <%if (invalido){%><div id="div">login o contraseña incorrectos</div><%}%>
              
         </form>
             </div>

@@ -65,6 +65,7 @@
     </head>
     <body>
         <form name="formulario" action="http://localhost:8080/Farmacia_AE/ServletProducto" method="POST" >
+            <div align="center">
             <table>
                 <tr>
                     <th>Imagen</th>
@@ -91,6 +92,7 @@
                     <td><input type="button" onclick="jBorrar()" name="btnBorrar" value="Borrar Seleccionados"></td>
                 </tr>
             </table>
+            </div>
         </form>
     </body>
 </html>

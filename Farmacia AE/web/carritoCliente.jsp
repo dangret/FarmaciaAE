@@ -4,6 +4,14 @@
     Author     : JESUS
 --%>
 
+<%@page import="ittepic.edu.mx.entidades.Pedido"%>
+<%@page import="ittepic.edu.mx.entidades.Detalleventa"%>
+<%@page import="javax.persistence.EntityManager"%>
+<%@page import="javax.persistence.Persistence"%>
+<%@page import="javax.persistence.EntityManagerFactory"%>
+<%@page import="java.util.Date"%>
+<%@page import="ittepic.edu.mx.entidades.Venta"%>
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="ittepic.edu.mx.entidades.Producto"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -26,6 +34,8 @@
 %>
 
 <% 
+    Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    
     if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
@@ -34,6 +44,15 @@
     List cantidades =new ArrayList();
     List <Producto> pedido= new ArrayList();    
     List<Producto> medicamentos =new ArrayList();
+    List<Usuario> usuarios = new ArrayList();
+    List<Venta> ventas = new ArrayList();
+    
+    cantidades=carritoCliente.getCantidades();
+    pedido = carritoCliente.getPedido();
+    medicamentos=carritoCliente.getMedicamentos();
+    usuarios = carritoCliente.getUsuarios();
+    ventas = carritoCliente.getVentas();
+    
     
     if(idproducto>0){
         int cant=Integer.parseInt(request.getParameter("cantidad"));
@@ -45,13 +64,59 @@
            carritoCliente.removerMedicamento(index);
            
        }else if(terminar==1){
-         carritoCliente.terminarPedido();
+         Venta v = new Venta();
+         v.setIdusuario(sesionUser);
+         v.setHora(new Date());
+         v.setFechadetalleventa(new Date());
+         v = carritoCliente.registrarVenta(v);//Se registra una nueva venta
+         
+         for(int i=0; i<pedido.size(); i++)
+         {
+          int index = pedido.get(i).getIdproducto();
+          for(int j=0;j<medicamentos.size();j++)
+          {
+              if(index==medicamentos.get(j).getIdproducto())
+              {
+               System.out.println(index);
+               System.out.println(medicamentos.get(j).getIdproducto());
+               System.out.println(medicamentos.get(j).getProducto());
+               Producto p = medicamentos.get(j);
+               Detalleventa dv = new Detalleventa();
+               dv.setIdproducto(p);
+               dv.setIdventa(v);
+               dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+               dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
+               if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+               {
+                p.setCantidad(Short.parseShort("0"));
+                Pedido pe = new Pedido();
+                pe.setIdproducto(p);
+                pe.setIdventa(v);
+                pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+                //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
+                pe.setEstado(1);//estado del pedido
+                pe.setFechapedido(new Date());
+                carritoCliente.registrarPedido(pe);//Se registra el pedido
+               }
+               else
+               {
+                p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
+               
+               }
+               carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada
+               j=medicamentos.size();
+              } 
+          } 
+         }
+         terminar = 0;
          jspInit();
          response.sendRedirect("carritoCliente.jsp");
        }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();
     medicamentos=carritoCliente.getMedicamentos();
+    usuarios = carritoCliente.getUsuarios();
+    ventas = carritoCliente.getVentas();
     session.setAttribute("carritoCliente", carritoCliente);
 %>
 <html>
@@ -63,8 +128,13 @@
         <link href="lightbox.css" rel="stylesheet" />
         
         <script>
+            window.onload = function(){
+                    top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';
+            }
             function agregarMedicina(idproducto, disponibles, index) {
+                
                 var cantidad = prompt("Introduzca la cantidad de productos",0);
+                
                 if(cantidad==null)
                 {
                     location.href = "carritoCliente.jsp";
@@ -83,11 +153,11 @@
                    top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';     
                 }
             }
-        function terminarPedido(){
-            if(confirm("¿Seguro que quieres dar por finalizado tu pedido?")){
-                location.href="carritoCliente.jsp?terminar=1";
+            function terminarPedido(){
+                if(confirm("¿Seguro que quieres dar por finalizado tu pedido?")){
+                    location.href="carritoCliente.jsp?terminar=1";
+                }
             }
-        }
         </script>    
     </head>
     <body background="imgs/fondo.jpg">
@@ -147,7 +217,7 @@
                             pos1=pos;
                             for(int j=0; j<filaColumnas;j++){%>
                             <td>
-                                <input type="image" src="imgs/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
+                                <input type="image" src="images/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
                                        <%=medicamentos.get(pos).getCantidad()%>,<%=pos%>)">
                             <%
                                
@@ -194,13 +264,8 @@
                                         %>
                                         <%=cantidades.get(i)%>
                                 </i></center></td>
-                                <td><center><input type="image" src="imgs/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
+                                <td><center><input type="image" src="images/delete.jpg" onclick="removerMedicina(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
                                   </center></td>
-                             <%--   <td>
-                                    <input type="image" src="imgs/delete.jpg" onclick="removerProducto(<%=pedido.get(i).getIdproducto()%>,<%=i%>);"/>
-                                    
-                                </td>
-                                --%>
                             </tr>
                         <%}%>
                         </table>
@@ -209,7 +274,7 @@
                         <br>
                         <table border="0">
                             <tr>
-                                <td><img src="imgs/terminarpedido.png" width="100" height="100"></td>
+                                <td><img src="images/terminarpedido.png" width="100" height="100"></td>
                             </tr>
                             <tr>
                                 <td><center><input type="button" value="Terminar Pedido" onclick="terminarPedido(); "></center></td>

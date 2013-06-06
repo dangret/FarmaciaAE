@@ -13,18 +13,22 @@ public class Codificador {
     /** * Clase con mÃ©todos estÃ¡ticos de cifrado * */
     public String encriptar(String texto, String algoritmo) {
          String output="";
+         StringBuffer sb = new StringBuffer();
         try {
            
             byte[] textBytes = texto.getBytes();
             MessageDigest md = MessageDigest.getInstance(algoritmo);
             md.update(textBytes);
             byte[] codigo = md.digest();            
-            output = new String(codigo);
+            for (byte b : codigo) {
+                    sb.append(Integer.toHexString((int) (b & 0xff)));
+            }
             
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Codificador.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return output;
+        
+        return sb.toString();
  
     }
     

@@ -92,9 +92,9 @@ EJBPersonasRemote ejb=null;
             <input type="radio" name="group2" id="group2" value="2">BUSQUEDA CLIENTES 
             <input type="radio" name="group2" id="group2" value="3">BUSQUEDA PROVEEDORES <br><br>
         </form>
-    </div>
     
     <form action="consultaUsuarios.jsp" method="POST" name="formulario">
+    
     <table border="1">
         <tr>
             <th>ID USUARIO</th>
@@ -154,6 +154,7 @@ EJBPersonasRemote ejb=null;
             <td><input type="submit" value="Eliminar" name="btEliminar" ></td>
         </tr>
     </table>
+    </div>
     </form>
 </body>
 </html>
