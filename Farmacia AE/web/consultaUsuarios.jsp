@@ -4,6 +4,8 @@
     Author     : sears
 --%>
 
+<%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
+<%@page import="ittepic.edu.mx.entidades.Numtarjeta"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -18,12 +20,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%!    EJBUsuariosRemote ejb2 = null;
+EJBPersonasRemote ejb=null;
 
     public void jspInit() {
         try {
 
             InitialContext ic2 = new InitialContext();
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
+            
+                        InitialContext ic = new InitialContext();
+            ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
 
             System.out.println("Bean cargado");
         } catch (Exception ex) {
@@ -50,9 +56,11 @@
       for(int i=0; i<elimina.length;i++) {
        usr=new Usuario();
        per=usr.getIdcliente();
+       int idcliente=usr.getIdcliente().getIdcliente();
        usr=ejb2.consultaPorId(Integer.parseInt(elimina[i]));
        tipoUsr=usr.getTipousuario();
        ejb2.eliminarEntidad(usr);
+       ejb.eliminar(idcliente);
        }
     }
     
@@ -143,7 +151,7 @@
     </table>
     <table>
         <tr>
-            <td><input type="submit" value="Eliminar" name="btEliminar"  onclick="validar()"></td>
+            <td><input type="submit" value="Eliminar" name="btEliminar" ></td>
         </tr>
     </table>
     </form>
