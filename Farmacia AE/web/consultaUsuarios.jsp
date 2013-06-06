@@ -58,8 +58,8 @@
     
     DateFormat df =  DateFormat.getDateInstance();
     
-        if(elimina!=null){
-            for(int i=0; i<elimina.length;i++) {
+    if(elimina!=null){
+        for(int i=0; i<elimina.length;i++) {
             usr = new Usuario();
             usr = ejb2.consultaPorId(Integer.parseInt(elimina[i]));
             per = usr.getIdcliente();
