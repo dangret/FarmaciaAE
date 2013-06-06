@@ -16,10 +16,10 @@
     try{
     Connection conexion;
     Class.forName("org.postgresql.Driver");
-    conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/tienda","postgres","postgres");
-    File reportFile = new File(application.getRealPath("Reportes/miReporte.jasper"));
+    conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Farmacia","postgres","postgres");
+    File reportFile = new File(application.getRealPath("reportes/reporteFSC.jasper"));
     Map parameters = new HashMap();
-    parameters.put("idventa",1);
+    parameters.put("idventa",6);
     byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters,conexion);
 
     response.setContentType("application/pdf");
@@ -35,7 +35,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Reporte</title>
     </head>
     <body>
         
