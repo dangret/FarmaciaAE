@@ -129,7 +129,7 @@
         usr.setLogin(user);
         usr.setPassword(password);
         usr.setFechacreacion(fecCre2);
-
+        usr.setEstado(false);
         ejb2.alta(usr);
         
         Mail m=new Mail();

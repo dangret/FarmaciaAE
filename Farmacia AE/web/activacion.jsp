@@ -34,7 +34,7 @@
     try{
     String des=m.desencriptar(login);
     usr = ejb.consultaPorNombre(des);
-    if(usr.getEstado()){
+    if(usr.getEstado()==true){
         band=true;
         //response.sendRedirect("index.jsp");
     }else{
