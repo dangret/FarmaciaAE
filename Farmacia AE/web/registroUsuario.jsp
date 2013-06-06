@@ -40,6 +40,7 @@
     }
 %>
 <%
+        
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     usuario u = new usuario();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
@@ -130,8 +131,10 @@
         usr.setFechacreacion(fecCre2);
 
         ejb2.alta(usr);
+        
         Mail m=new Mail();
-        int i=m.enviarMail(user,email);
+        String clave=m.encriptar(user);
+        int i=m.enviarMail(clave,email);
         if(i==1){
         System.out.println(i);
         }else{

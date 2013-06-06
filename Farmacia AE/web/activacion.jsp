@@ -4,6 +4,7 @@
     Author     : sears
 --%>
 
+<%@page import="ittepic.edu.mx.clases.Mail"%>
 <%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
 <%@page import="javax.naming.InitialContext"%>
@@ -25,9 +26,12 @@
 %>
 <%
     String login = request.getParameter("r") == null ? "" : request.getParameter("r");
+    Mail m=new Mail();
     Usuario usr=null;
     if(!login.equals("")){
-    usr = ejb.consultaPorNombre(login);//==null?null:ejb.consultaPorNombre(login);
+    String des=m.desencriptar(login);
+    System.out.println(des);
+    usr = ejb.consultaPorNombre(des);//==null?null:ejb.consultaPorNombre(login);
         if(usr!=null){
             usr.setEstado(true);
             ejb.alta(usr);
@@ -50,6 +54,7 @@
         <%}else{%>
         <table border="1">
             <h3>Usuario No existente</h3>
+            <a href="index.jsp">Regresar al Menu Principal</a>
         </table>
         <%}%>
     </body>
