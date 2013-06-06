@@ -14,6 +14,7 @@
 <%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="javax.naming.InitialContext"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
+<%@page import="ittepic.edu.mx.clases.Mail"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%! EJBPersonasRemote ejb = null;
@@ -129,6 +130,15 @@
         usr.setFechacreacion(fecCre2);
 
         ejb2.alta(usr);
+        Mail m=new Mail();
+        int i=m.enviarMail(user,email);
+        if(i==1){
+        System.out.println(i);
+        }else{
+        System.out.println("NO SE CREO CORRECTAMENTE EL CORREO - ERROR");        
+        }
+        
+        
     }
 
 %>
