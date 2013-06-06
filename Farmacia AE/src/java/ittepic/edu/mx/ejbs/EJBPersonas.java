@@ -51,17 +51,15 @@ public class EJBPersonas implements EJBPersonasRemote {
     }
 
     @Override
-    public int eliminar(int idcliente) {
-        try
-        {
-         em = emf.createEntityManager();
-         
-         em.createNamedQuery("Persona.eliminar").setParameter("idcliente", idcliente).executeUpdate();
-        }catch(Exception e)
-        {
-         return -1;
+    public int eliminar(Persona persona) {
+        try{
+            em = emf.createEntityManager();
+            em.remove(em.merge(persona));
+            return 1;
+        }catch(Exception e){
+            return -1;
         }
-        return 1;
+        
     }
 
     // Add business logic below. (Right-click in editor and choose
