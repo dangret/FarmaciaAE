@@ -26,16 +26,22 @@
 %>
 <%
     String login = request.getParameter("r") == null ? "" : request.getParameter("r");
+    boolean band=false;
     Mail m=new Mail();
     Usuario usr=null;
-    if(!login.equals("")){
+    if(!login.equals("") && (login.length()==24)){
     String des=m.desencriptar(login);
     System.out.println(des);
     usr = ejb.consultaPorNombre(des);//==null?null:ejb.consultaPorNombre(login);
+    if(usr.getEstado()){
+        band=true;
+        //response.sendRedirect("index.jsp");
+    }else{
         if(usr!=null){
             usr.setEstado(true);
             ejb.alta(usr);
         }
+    }
     }
     
 %>
@@ -45,6 +51,7 @@
         <title>CUENTA ACTIVADA</title>
     </head>
     <body>
+        <%if (!band){%>
         <% if ((!login.equals("")) && (usr!=null)){%>
         <table border="1">
             Tu Cuenta ha sido Creada Exitosamente:<b><%=usr.getLogin()%></b><br>
@@ -53,7 +60,13 @@
         </table>
         <%}else{%>
         <table border="1">
-            <h3>Usuario No existente</h3>
+            <h3>La Pagina que usted solicito, No existe...</h3>
+            <a href="index.jsp">Regresar al Menu Principal</a>
+        </table>
+        <%}%>
+        <%}else{%>
+        <table border="1">
+            <h3>El Usuario ya se encuentra Registrado...</h3>
             <a href="index.jsp">Regresar al Menu Principal</a>
         </table>
         <%}%>
