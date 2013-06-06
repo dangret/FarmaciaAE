@@ -146,7 +146,7 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
 
     @Override
     public List<Venta> getVentas() {
-        return ventas;
+        return ventas; 
     }
 
     @Override

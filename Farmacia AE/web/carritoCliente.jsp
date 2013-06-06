@@ -36,7 +36,7 @@
 <% 
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     
-    if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
+    if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"));
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
     int terminar=request.getParameter("terminar")==null?0:Integer.parseInt(request.getParameter("terminar"));
@@ -135,7 +135,7 @@
                 
                 var cantidad = prompt("Introduzca la cantidad de productos",0);
                 
-                if(cantidad==null)
+                if(cantidad==null || cantidad < 1)
                 {
                     location.href = "carritoCliente.jsp";
                 }
