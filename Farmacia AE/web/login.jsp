@@ -38,9 +38,9 @@
         if ( !usuario.equals("") && !password.equals("") ){
             Codificador codec = new Codificador ();
             password = codec.encriptar(password, "MD5");
-            user = ejb.obtenerUsuario(usuario, password);
+            user = ejb2.obtenerUsuario(usuario, password);
             
-            if (user != null){
+            if ((user != null) && (user.getEstado())){
                 session.setAttribute("usuario", user);
                 int tipoUsr= user.getTipousuario().getIdtipousuario();
                 if(tipoUsr==1){
