@@ -18,7 +18,7 @@ public interface EJBPersonasRemote {
     public List<Persona> consultaPersonas();
     public int alta_modificacion (Persona p);
     public Persona consultaPorId(int idcliente );
-    public int eliminar(int idcliente);
+    public int eliminar(Persona persona);
     public void reemplazar(List<Persona> list_p);
     public Boolean buscarPorEMail(String email);
 }

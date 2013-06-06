@@ -64,7 +64,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form name="formulario" action="http://localhost:8080/Farmacia_AE/ServletProducto" method="POST" >
+        <form name="formulario" action="ServletProducto" method="POST" >
             <div align="center">
             <table>
                 <tr>
@@ -77,7 +77,7 @@
                 
                     <%for (int i = 0; i<productos.size(); i++ ){%>
                         <tr>
-                            <td><%=productos.get(i).getRuta() %></td>
+                            <td><input type="image" src="<%=productos.get(i).getRuta() %>" style="width:75px;" ></td>
                             <td><a href="wpProductoAlta.jsp?id=<%=productos.get(i).getIdproducto()%>"><%=productos.get(i).getProducto() %></a></td>
                             <td><%=productos.get(i).getCantidad() %></td>
                             <td><%=productos.get(i).getPrecio() %></td>

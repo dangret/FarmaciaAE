@@ -4,6 +4,7 @@
     Author     : sears
 --%>
 
+<%@page import="ittepic.edu.mx.ejbs.EJBTarjetaLocal"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="ittepic.edu.mx.entidades.Numtarjeta"%>
 <%@page import="java.text.DateFormat"%>
@@ -19,8 +20,10 @@
 <%@page import="javax.naming.InitialContext"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!    EJBUsuariosRemote ejb2 = null;
-EJBPersonasRemote ejb=null;
+<%!    
+    EJBUsuariosRemote ejb2 = null;
+    EJBPersonasRemote ejb = null;
+    EJBTarjetaLocal ejbTarjeta = null;
 
     public void jspInit() {
         try {
@@ -28,7 +31,10 @@ EJBPersonasRemote ejb=null;
             InitialContext ic2 = new InitialContext();
             ejb2 = (EJBUsuariosRemote) ic2.lookup(EJBUsuariosRemote.class.getName());
             
-                        InitialContext ic = new InitialContext();
+            InitialContext ic3 = new InitialContext();
+            ejbTarjeta = (EJBTarjetaLocal) ic3.lookup(EJBTarjetaLocal.class.getName());
+            
+            InitialContext ic = new InitialContext();
             ejb = (EJBPersonasRemote) ic.lookup(EJBPersonasRemote.class.getName());
 
             System.out.println("Bean cargado");
@@ -50,17 +56,20 @@ EJBPersonasRemote ejb=null;
     users = ejb2.consultaGeneral();
     int tam=users.size();
     
- DateFormat df =  DateFormat.getDateInstance();
+    DateFormat df =  DateFormat.getDateInstance();
     
-    if(elimina!=null){
-      for(int i=0; i<elimina.length;i++) {
-       usr=new Usuario();
-       per=usr.getIdcliente();
-       int idcliente=usr.getIdcliente().getIdcliente();
-       usr=ejb2.consultaPorId(Integer.parseInt(elimina[i]));
-       tipoUsr=usr.getTipousuario();
-       ejb2.eliminarEntidad(usr);
-       ejb.eliminar(idcliente);
+        if(elimina!=null){
+            for(int i=0; i<elimina.length;i++) {
+            usr = new Usuario();
+            usr = ejb2.consultaPorId(Integer.parseInt(elimina[i]));
+            per = usr.getIdcliente();
+            ejbTarjeta.borrarTarjetas(per.getNumtarjetaList());
+            ejb2.eliminarEntidad(usr);
+            
+            per.setUsuarioList(new ArrayList<Usuario>());
+            per.setNumtarjetaList(new ArrayList<Numtarjeta>());
+            ejb.eliminar(per);
+            
        }
     }
     
