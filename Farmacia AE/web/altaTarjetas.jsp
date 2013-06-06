@@ -68,6 +68,7 @@
             cuenta.setCodigoseguridad(codigo);
             cuenta.setFechacaducidad(fechaV);
             ejb.alta(cuenta);
+            response.sendRedirect("modificaTarjetas.jsp");
         }
     }
 
@@ -112,6 +113,7 @@
                     $("#pin").after("<span class='error'>Falta No de tarjeta</span>")
                     valido=false;
                 }
+                
                 
                 if (!valido) return false;
                 else return true;
