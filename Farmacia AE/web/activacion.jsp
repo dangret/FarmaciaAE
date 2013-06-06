@@ -26,13 +26,14 @@
 %>
 <%
     String login = request.getParameter("r") == null ? "" : request.getParameter("r");
+    login=login.replaceAll(" ", "+");
     boolean band=false;
     Mail m=new Mail();
     Usuario usr=null;
-    if(!login.equals("") && (login.length()==24)){
+    if(!login.equals("")){
+    try{
     String des=m.desencriptar(login);
-    System.out.println(des);
-    usr = ejb.consultaPorNombre(des);//==null?null:ejb.consultaPorNombre(login);
+    usr = ejb.consultaPorNombre(des);
     if(usr.getEstado()){
         band=true;
         //response.sendRedirect("index.jsp");
@@ -42,7 +43,11 @@
             ejb.alta(usr);
         }
     }
+    }catch(Exception e){
+     band=false;   
     }
+    }
+       
     
 %>
 <html>
