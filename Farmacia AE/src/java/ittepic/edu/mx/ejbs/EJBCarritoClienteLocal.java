@@ -4,7 +4,11 @@
  */
 package ittepic.edu.mx.ejbs;
 
+import ittepic.edu.mx.entidades.Detalleventa;
+import ittepic.edu.mx.entidades.Pedido;
 import ittepic.edu.mx.entidades.Producto;
+import ittepic.edu.mx.entidades.Usuario;
+import ittepic.edu.mx.entidades.Venta;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -20,12 +24,19 @@ import javax.ejb.Remove;
 public interface EJBCarritoClienteLocal {
     @PostConstruct
     public void inicializar();
+    List<Venta> getVentas();
+    List<Detalleventa> getDetalleventa();
     List<Producto> getMedicamentos();
     List<Producto> removerMedicamento(int index) ;
     List<Producto> agregar(int idproducto, int cantidad);
     Producto getMedicamentoById(int idproducto);
     List<Producto> getPedido();
+    List<Usuario> getUsuarios();
     List getCantidades();
+    Venta registrarVenta(Venta v);
+    Detalleventa registrarDetalleVenta(Detalleventa dv);
+    public void registrarPedido(Pedido pe);
+    public void actualizarStock(Producto p);
     @Remove
     public void terminarPedido();
     @PreDestroy
