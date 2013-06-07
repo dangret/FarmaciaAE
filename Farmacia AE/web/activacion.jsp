@@ -13,6 +13,7 @@
 <%!    EJBUsuariosRemote ejb = null;
 
     public void jspInit() {
+        
         try {
             InitialContext ic = new InitialContext();
             ejb = (EJBUsuariosRemote) ic.lookup(EJBUsuariosRemote.class.getName());

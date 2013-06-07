@@ -3,7 +3,7 @@
 ﻿<!DOCTYPE html>
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
-    boolean userValido = false;
+    boolean userValido = false;//
     if (user != null)
         if (user.getEstado())
             if (user.getTipousuario().getIdtipousuario() == 1)
