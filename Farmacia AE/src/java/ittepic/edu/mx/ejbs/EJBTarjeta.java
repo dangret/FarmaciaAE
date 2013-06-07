@@ -89,5 +89,16 @@ public class EJBTarjeta implements EJBTarjetaLocal {
             return -1;
         }
     }
+    @Override
+    public int borrarTarjeta(Numtarjeta tarjeta){
+         try {
+            em = emf.createEntityManager();
+            em.remove(em.merge(tarjeta));
+        } catch(Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
 
 }

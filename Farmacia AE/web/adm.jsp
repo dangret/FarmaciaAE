@@ -46,8 +46,9 @@
       <li><a href="salir.jsp">Salir</a></li>
     </ul>
   </div>
+    <img src="images/img.jpg" alt="" class="img" />
     <div id="content" align="center"> 
-        <img src="images/img.jpg" alt="" class="img" />
+        
         <iframe marginwidth="0" align="center" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="principal.jsp"></iframe>
   <div class="clearfix"></div>
   <div id="footer">
