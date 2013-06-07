@@ -8,9 +8,10 @@
             response.sendRedirect("adm.jsp");
         else
             response.sendRedirect("cliente.jsp");
-    }
+    }//
 %>
 <head>
+    
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
