@@ -100,7 +100,7 @@
             <table>
                 <tr>
                     <td><input type="submit" value="Saldar Pedidos"></td>
-                    <td><input type="button" value="cancelar" onclick="lala();"</td>
+                    
                 </tr>
             </table>
             </div>

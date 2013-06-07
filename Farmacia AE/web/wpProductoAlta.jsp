@@ -32,7 +32,7 @@
         producto = ejb.productoObtenerPorID(id);
     }catch(Exception e){
         llenar = false;
-        out.println("<h3>Nuevo Producto</h3>");
+        out.println("<div align='center'><h3>Nuevo Producto</h3></div>");
     }
     if (producto != null) llenar = true;
 %>
@@ -83,8 +83,8 @@
             }
             
             function jsImagen(){
-                alert("entro");
                 var file = document.getElementById("bitimagen").value;
+                //alert(file);
                 
             }
         </script>

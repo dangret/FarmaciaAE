@@ -46,7 +46,7 @@ background:url(images/bg.jpg);
 	padding-left:100px
 }
 #nav { position:absolute; top:35px; left:420px; background:url(images/nav.jpg); width:451px;height:30px; line-height:30px; padding:0 0 0 20px  }
-#nav li {float:left;  font-weight:700; width:80px; padding:0 5px }
+#nav li {float:left;  font-weight:700; width:80px; padding:0 5px; }
 #nav a {text-decoration:none; display:block; text-align:center; color:#fff}
 #nav a:hover {background: #AA4479; color:#000000}
 /* content */

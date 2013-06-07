@@ -38,9 +38,9 @@
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     boolean userValido = false;
-    if (user != null)
-        if (user.getEstado())
-            if (user.getTipousuario().getIdtipousuario() == 1)
+    if (user != null) {
+        if (user.getEstado()) {
+            if (user.getTipousuario().getIdtipousuario() == 1) {
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");
@@ -76,16 +76,52 @@
             password = codec.encriptar(password, "MD5");
             usr.setPassword(password);
         }
-        //Setear Usuario
-        //usr.setTipousuario(ejb3.obtenerPorID(tipo));
-        usr.setIdcliente(per);
-        //usr.setLogin(user);
-        //usr.setFechacreacion(fecCre2);
-        ejb2.alta(usr);
-        ejb.alta_modificacion(per);
-        response.sendRedirect("consultaUsuarios.jsp");
-    
     }
+    int idusuario;
+    if (!userValido)
+        response.sendRedirect("index.jsp");
+    else {
+        idusuario = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
+        String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
+        String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
+        String email = request.getParameter("email") == null ? "" : request.getParameter("email");
+        String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf");
+        String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
+        String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
+
+        Usuario usr = ejb2.consultaPorId(idusuario);
+        Persona per = usr.getIdcliente();
+
+        if ((!rfc.equals("")) || (!email.equals("")) || (!nombre.equals(""))) {
+            usr = ejb2.consultaPorId(idusuario);
+            per = usr.getIdcliente();
+            //TABLA PERSONA
+            per.setRfc(rfc);
+            per.setNombre(nombre);
+            per.setTelefono(telf);
+            per.setCelular(celular);
+            per.setDireccion(direccion);
+            //per.setEmail(email);
+            //ejb.alta_modificacion(per);
+
+            // TABLA USUARIO
+            String password = request.getParameter("password");
+            //Codifico Password
+            if (!password.equals("")) {
+                Codificador codec = new Codificador();
+                password = codec.encriptar(password, "MD5");
+                usr.setPassword(password);
+            }
+            //Setear Usuario
+            //usr.setTipousuario(ejb3.obtenerPorID(tipo));
+            usr.setIdcliente(per);
+            //usr.setLogin(user);
+            //usr.setFechacreacion(fecCre2);
+            ejb2.alta(usr);
+            ejb.alta_modificacion(per);
+            response.sendRedirect("consultaUsuarios.jsp");
+        }
+
 %>
 <html>
     <head>
@@ -107,12 +143,11 @@
         </script>
     </head>
     <body>
-        <div align="left">
+        <div align="center">
             <H2>REGISTRO DE PROOVEDORES</H1>
         </div>
-
-        <form name="formulario" action="modificaProvedor.jsp?idusuario=<%=idusuario%>" method="POST">
-            <div align="left">
+        <form name="formulario" action='modificaProvedor.jsp?idusuario=<%=idusuario%>' method="POST">
+            <div align="center">
                 <table border="1">
                     <tr>
                         <th colspan="2">Datos Proveedor</th>
@@ -134,9 +169,8 @@
                         <td><input type="text" name="celular" id="celular" value="<%=per.getCelular()%>"></td>
                     </tr>
                     <tr>
-                        <td>Direccion:<br>
+                        <td>Direccion:</td>>
                         <td>   <textarea name="direccion" cols="20" rows="2"><%=per.getDireccion()%></textarea></td>
-                        </td>
                     </tr>
                     <tr>
                         <td>* E-Mail: </td>
@@ -166,5 +200,6 @@
                 </table>
             </div>
         </form>
+        <%}%>
     </body>
 </html>
