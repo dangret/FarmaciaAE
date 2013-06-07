@@ -39,12 +39,6 @@
 <% 
     Usuario usera = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     boolean userValido = false;
-    if (usera != null)
-        if (usera.getEstado())
-                userValido = true;
-    
-    if (!userValido) response.sendRedirect("index.jsp");
-    else{
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
@@ -103,7 +97,7 @@
         System.out.println("NO SE CREO CORRECTAMENTE EL CORREO - ERROR");        
         }
     }
-    }
+  
 %>
 <html>
     <head>

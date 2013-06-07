@@ -10,6 +10,18 @@ body {font:13px/1.231 arial,helvetica,clean,sans-serif;}table{font-size:inherit;
     font-size: small;
     text-decoration-color: #9B3535;
 }
+#dos{
+    z-index: 2;
+}
+#uno{
+    z-index: 1;
+}
+#uno,dos{
+    position: absolute;
+    white-space: nowrap;
+    top:50px;
+    left:50px;
+}
 body {
 	text-align:center;
 	color:#000;

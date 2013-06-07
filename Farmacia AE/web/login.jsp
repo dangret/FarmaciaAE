@@ -13,8 +13,7 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBUsuariosRemote"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%!
-    EJBUsuariosRemote ejb2 = null;
+<%!    EJBUsuariosRemote ejb2 = null;
 
     public void jspInit() {
         try {
@@ -30,32 +29,32 @@
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     boolean invalido = false;
-    if (user == null){
-        
+    if (user == null) {
+
         String usuario = request.getParameter("txtNombre") == null ? "" : request.getParameter("txtNombre");
         String password = request.getParameter("txtPasswd") == null ? "" : request.getParameter("txtPasswd");
-        
-        if ( !usuario.equals("") && !password.equals("") ){
-            Codificador codec = new Codificador ();
+
+        if (!usuario.equals("") && !password.equals("")) {
+            Codificador codec = new Codificador();
             password = codec.encriptar(password, "MD5");
             user = ejb2.obtenerUsuario(usuario, password);
-            
-            if ((user != null) && (user.getEstado())){
+
+            if ((user != null) && (user.getEstado())) {
                 session.setAttribute("usuario", user);
-                int tipoUsr= user.getTipousuario().getIdtipousuario();
-                if(tipoUsr==1){
+                int tipoUsr = user.getTipousuario().getIdtipousuario();
+                if (tipoUsr == 1) {
                     response.sendRedirect("adm.jsp");
-                }else{
-                    if(tipoUsr==2 || tipoUsr==3){
-                    response.sendRedirect("cliente.jsp");
+                } else {
+                    if (tipoUsr == 2 || tipoUsr == 3) {
+                        response.sendRedirect("cliente.jsp");
                     }
                 }
-            }else{
-                invalido=true;
+            } else {
+                invalido = true;
             }
 
         }
-    }else{
+    } else {
         response.sendRedirect("index.jsp");
     }
     //response.sendRedirect("portal.jsp");
@@ -63,10 +62,34 @@
 %>
 <html>
     <head>
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
         <script>
-            function mandarLogin(cc){
-                document.getElementById('iframe1').src=cc;
+            function mandarLogin(cc) {
+                document.getElementById('iframe1').src = cc;
             }
+
+            jQuery(function($) {
+                $("#ru").hide();
+                $("#rp").hide();
+                $("#cform").change(function() {
+                    $("#ru").hide();
+                    $("#rp").hide();
+
+                    var index = $("#cform").val();
+                    if (index != "#"){
+                        if (index == 1)
+                            $("#ru").show();
+                        else
+                            $("#rp").show();
+                    }
+                     
+                });
+            });
+        </script>
+        <script type="text/css" > 
+            
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -74,53 +97,83 @@
     </head>
     <body>
         <div id="wrap">
-  <div id="header">
-    <div id="logo">
-      <h1>Medicinas con Iva+</h1>
-    </div>
-    <ul id="nav">
-      <li><a href="index.jsp">Inicio</a></li>
-      <li><a href="#" onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
-      <li><a href="login.jsp">Login</a></li>
-      <li><a href="#" onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
-    </ul>
-      <br></br>
-          <br></br>
-           <img src="images/img.jpg" alt="" class="img" />
-           <br></br>
-           <br></br>
-           
-  </div>   
-      <div  class="main fl " align="center">
-          <br></br>
+            <div id="header">
+                <div id="logo">
+                    <h1>Medicinas con Iva+</h1>
+                </div>
+                <ul id="nav">
+                    <li><a href="index.jsp">Inicio</a></li>
+                    <li><a href="#" onclick="mandarLogin('productoConsulta.jsp');">Productos</a></li>
+                    <li><a href="login.jsp">Login</a></li>
+                    <li><a href="#" onclick="mandarLogin('contacto.jsp');">Contacto</a></li>
+                </ul>
                 <br></br>
-            <div class="text">
-        <h2>Iniciar Sesion:</h2>
-        <br>
-        <form action="login.jsp" method="POST">
-            <table>
-                <tr>
-                    <td>Usuario:</td><td><input type="text" name="txtNombre"></td>
-                </tr>
-                <tr>
-                    <td>Password:</td><td><input type="password" name="txtPasswd"></td>
-                </tr>
-                <tr><td><input type="submit" name="btnEnviar" id="btnenviar" ></td></tr>
-            </table>
-            <%if (invalido){%><div id="div">login o contraseña incorrectos</div><%}%>
-             
-        </form>
+                <br></br>
+                <img src="images/img.jpg" alt="" class="img" />
+                <br></br>
+                <br></br>
+
+            </div>   
+            <div  class="main fl " align="center">
+                <br></br>
+                <br></br>
+                <div class="text">
+                    <h2>Iniciar Sesion:</h2>
+                    <br>    
+                    <div id="contenedor">
+                        <div id="uno">
+                        <form action="login.jsp" method="POST">
+
+                            <table>
+                                <tr>
+                                    <td>Usuario:</td><td><input type="text" name="txtNombre"></td>
+                                </tr>
+                                <tr>
+                                    <td>Password:</td><td><input type="password" name="txtPasswd"></td>
+                                </tr>
+                                <tr><td><input type="submit" name="btnEnviar" id="btnenviar" ></td></tr>
+                            </table>
+                            <%if (invalido) {%><div id="div">login o contraseña incorrectos</div><%}%>
+
+                        </form>
+                        </div>
+                        <div id="dos">
+                        <table>
+                            <tr>
+                                <td>Nuevo usuario:</td>
+                                <td><Select name="cForm" id="cform">
+                                        <option value="#">Seleccione un Tipo de Usuario</option>
+                                        <option value="1">Nuevo Cliente</option>
+                                        <option value="2">Nuevo Distribuidor</option>
+                                    </Select>
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-     </div><div class="text" align="left"><object data="registroUsuario.jsp" width="350" height="550"></object></div>
-            
-              <div class="clearfix"></div>
-  <div id="footer">
-    <div id="ftinner">
-      <div class="valid fr"><img src="images/xhtml.gif" alt="xhtml valid" /> <img src="images/css.gif" alt="css valid" /></div>
-    </div>
-  </div>
-  <!-- /footer -->
-</div>
-      
+
+            <div class="">
+
+
+            </div>
+            <div class="text" id ="ru"align="left"><object data="registroUsuario.jsp" width="350" height="550"></object></div>
+            <div class="text" id ="rp"align="left"><object data="registroProvedor.jsp" width="350" height="550"></object></div>
+
+
+            <div class="clearfix"></div>
+
+            <div id="footer">
+                <div id="ftinner">
+
+                    <div class="valid fr"><img src="images/xhtml.gif" alt="xhtml valid" /> <img src="images/css.gif" alt="css valid" /></div>
+                </div>
+            </div>
+            <!-- /footer -->
+        </div>
+
     </body>
 </html>
