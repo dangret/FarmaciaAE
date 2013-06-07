@@ -28,6 +28,12 @@ public class EJBPersonas implements EJBPersonasRemote {
     
     
     @Override
+   /**
+     * Metodo 
+     * @param nick String
+     * @param correo Número Entero
+     * @return int Retorna un entero 1 si fue exitoso, 0 Error
+     */
     public List<Persona> consultaPersonas() {
         em= emf.createEntityManager();
         return em.createNamedQuery("Persona.findAll").getResultList();
