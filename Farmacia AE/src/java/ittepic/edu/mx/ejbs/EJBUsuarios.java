@@ -31,6 +31,12 @@ public class EJBUsuarios implements EJBUsuariosRemote {
     private List<Usuario> personas = new ArrayList<Usuario>();
 
     @Override
+ /**
+     * Metodo para validar el login
+     * @param usuario email de la persona consultada
+     * @param pwd password del usuario
+     * @return Usuario Retorna el usuario correspondiente
+     */
     public Usuario obtenerUsuario(String usuario, String pwd) {
         Usuario user = null;
         em = emf.createEntityManager();
@@ -48,12 +54,21 @@ public class EJBUsuarios implements EJBUsuariosRemote {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     @Override
+     /**
+     * Metodo obtiene los usuarios en el sistema
+     * @return List<Usuario> Retorna el usuario correspondiente
+     */
     public List<Usuario> consultaGeneral() {
         em = emf.createEntityManager();
         return em.createNamedQuery("Usuario.findAll").getResultList();
     }
 
     @Override
+     /**
+     * Metodo dar de alta y modificar usuarios
+     * @param u Usuario obtenido del jsp
+     * @return int Retorna 0 si se actualizo correctamente, -1 si fallo 
+     */
     public int alta(Usuario u) {
         try {
             em = emf.createEntityManager();

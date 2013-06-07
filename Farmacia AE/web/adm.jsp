@@ -3,7 +3,7 @@
 ﻿<!DOCTYPE html>
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
-    boolean userValido = false;
+    boolean userValido = false;//
     if (user != null)
         if (user.getEstado())
             if (user.getTipousuario().getIdtipousuario() == 1)
@@ -46,9 +46,10 @@
       <li><a href="salir.jsp">Salir</a></li>
     </ul>
   </div>
+    <img src="images/img.jpg" alt="" class="img" />
     <div id="content" align="center"> 
-        <img src="images/img.jpg" alt="" class="img" />
-        <iframe marginwidth="0" align="center" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="about:blank"></iframe>
+        
+        <iframe marginwidth="0" align="center" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="principal.jsp"></iframe>
   <div class="clearfix"></div>
   <div id="footer">
     <div id="ftinner">

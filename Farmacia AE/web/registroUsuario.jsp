@@ -52,11 +52,8 @@
     int codigo = request.getParameter("codigo") == null ? 0 : Integer.parseInt(request.getParameter("codigo"));
     String fechaV = request.getParameter("fechaV") == null ? "" : request.getParameter("fechaV");
 
-
     Usuario usr;
     Persona per;
-    CatTiposusuario tipoUsr;
-
     if ((!email.equals("")) || (!nickname.equals("")) || (!pass.equals("")) || (!nombre.equals("")) || (!tarjeta.equals("")) || (codigo != 0) || (!fechaV.equals(""))) {
         //TABLA PERSONA
         String apepat = request.getParameter("apepat") == null ? null : request.getParameter("apepat").toUpperCase();
@@ -248,11 +245,7 @@
                         
                     }*/
                     
-                    
-                    
-                    
-                    
-                    if (errorValidacion == true) {return false;}
+                 if (errorValidacion == true) {return false;}
                     
                 });
                 
@@ -274,23 +267,23 @@
             });
         
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="principal.jsp";
             }
         </script>
     </head>
     <body>
         <div align="left">
-            <H2>REGISTRO DE USUARIOS</H1>
+            <H2>REGISTRO DE USUARIOS</H2>
         </div>
 
         <form name="formulario" action="registroUsuario.jsp" method="POST">
             <div align="left">
                 <table border="1">
                     <tr>
-                        <th colspan="2">Datos Usuarios</th>
+                        <th colspan="2" style="background-color: darkred; color: white">Datos Usuarios</th>
                     </tr>
                     <tr>
-                        <td>* Nombre: </td>
+                        <td> * Nombre: </td>
                         <td><input type="text" name="nombre" id="nombre"></td>
                     </tr> 
                     <tr>
@@ -316,7 +309,7 @@
                     <tr>
                         <td>Direccion:<br>
                         <td>   <textarea name="direccion" cols="20" rows="2"></textarea></td>
-                        </td>
+                        
                     </tr>
                     <tr>
                         <td>* E-Mail: </td>

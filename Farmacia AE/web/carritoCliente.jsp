@@ -39,7 +39,7 @@
     boolean userValido = false;
     if (user != null)
         if (user.getEstado())
-            if (user.getTipousuario().getIdtipousuario() == 2)
+            if (user.getTipousuario().getIdtipousuario() != 1)
                 userValido = true;
     
     if (!userValido){ 
@@ -132,7 +132,6 @@
         <title>Catalogo de Medicinas</title>
         <script src="js/jquery-1.7.2.min.js"></script>
         <script src="js/lightbox.js"></script>
-        <link href="lightbox.css" rel="stylesheet" />
 
         <script>
             window.onload = function() {
@@ -164,32 +163,52 @@
                 if (confirm("¿Seguro que quieres dar por finalizado tu pedido?")) {
                     location.href = "carritoCliente.jsp?terminar=1";
                 }
-                jQuery(function($){
-                    $("#txtNombre").keyup(function(){
-                        $("#underC").hide();
-                        $("#txtNombre").after("<div id='UnderC'>Filtro en Construccion</div>")
-                        //var nombre = $("#txtNombre").val();
-                        //$.post('ServletFiltroProducto',{nombre : nombre},function(data){
-                             
-                        //});
+                
+            }
+            
+            /**
+             * Esta funcion sirve para 
+             * @param {type} $
+             * @returns {undefined}
+             */
+            jQuery(function($){
+                $("#txtNombre").keyup(function(){
+                    var palabra = $("#txtNombre").val().toUpperCase();
+                    var table = $("#medicamentos");
+                    
+                    table.find('tr').each(function(index, row) {
+                        var allCells = $(row).find('td');
+                        if(allCells.length > 0) {
+                            var found = false;
+                            allCells.each(function(index, td) {
+                                var regExp = new RegExp(palabra, 'i');
+                                if(regExp.test($(td).attr("class"))) {
+                                    $(td).show()
+                                    //return false;
+                                }else $(td).hide();
+                                
+                            });
+                            //if (found == true) $(row).show();
+                            //else $(row).hide();
+                        }
                     });
                 });
-            }
+            });
         </script>    
     </head>
-    <body background="imgs/fondo.jpg">
+    <body background="imgs/fondo.jpg" class="img">
     <center>
         <div align="center">
             <table>
                 <tr>
                     <td>Filtrar por nombre:</td>
-                    <td><input type="text" id="txtNombre"> </td>
+                    <td><input type="text" autocomplete="false" id="txtNombre"> </td>
                 </tr>
             </table>
         </div>
         <%if (carritoCliente.getMedicamentos().size() > 0) {%>
         <h2>Lista de Medicinas Disponibles</h2>
-        <table align="center">
+        <table align="center" id ="medicamentos">
             <%
                 int filasRenglones;
                 int filaColumnas = 10;
@@ -213,7 +232,7 @@
                             }
                             pos1 = pos;
                             for (int j = 0; j < filaColumnas; j++) {%>
-                <td><a href="<%=medicamentos.get(pos).getRuta()%>" rel="lightbox" ><img  src="<%=medicamentos.get(pos).getRuta()%>"  width="75" height="75"></a></td>
+                            <td class="<%=medicamentos.get(pos).getProducto()%>"  ><a href="<%=medicamentos.get(pos).getRuta()%>" rel="lightbox" ><img  src="<%=medicamentos.get(pos).getRuta()%>"  width="75" height="75"></a></td>
                         <% pos++;
                                 }
                                 pos = pos1;%>
@@ -224,7 +243,7 @@
                 <%
                                 pos1 = pos;
                                 for (int j = 0; j < filaColumnas; j++) {%>
-                <td><%=medicamentos.get(pos).getProducto()%></td>
+                                <td class="<%=medicamentos.get(pos).getProducto()%>"><%=medicamentos.get(pos).getProducto()%></td>
                 <% pos++;
                                 }
                                 pos = pos1;%>
@@ -234,7 +253,7 @@
                 <%
                                 pos1 = pos;
                                 for (int j = 0; j < filaColumnas; j++) {%>                         
-                <td>$<%=medicamentos.get(pos).getPrecio()%></td>
+                <td class="<%=medicamentos.get(pos).getProducto()%>">$<%=medicamentos.get(pos).getPrecio()%></td>
                 <% pos++;
                                 }
                                 pos = pos1;%>
@@ -244,7 +263,7 @@
                 <%
                                 pos1 = pos;
                                 for (int j = 0; j < filaColumnas; j++) {%>
-                <td>
+                <td class ="<%=medicamentos.get(pos).getProducto()%>">
                     <input type="image" src="images/add.jpg" name="btnAgregar" onclick="agregarMedicina(<%=medicamentos.get(pos).getIdproducto()%>,
                            <%=medicamentos.get(pos).getCantidad()%>,<%=pos%>)">
                     <%

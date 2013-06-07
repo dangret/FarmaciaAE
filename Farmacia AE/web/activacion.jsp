@@ -13,6 +13,7 @@
 <%!    EJBUsuariosRemote ejb = null;
 
     public void jspInit() {
+        
         try {
             InitialContext ic = new InitialContext();
             ejb = (EJBUsuariosRemote) ic.lookup(EJBUsuariosRemote.class.getName());
@@ -66,13 +67,13 @@
         <%}else{%>
         <table border="1">
             <h3>La Pagina que usted solicito, No existe...</h3>
-            <a href="index.jsp">Regresar al Menu Principal</a>
+            <a href="login.jsp">Regresar al Menu Principal</a>
         </table>
         <%}%>
         <%}else{%>
         <table border="1">
             <h3>El Usuario ya se encuentra Registrado...</h3>
-            <a href="index.jsp">Regresar al Menu Principal</a>
+            <a href="login.jsp">Regresar al Menu Principal</a>
         </table>
         <%}%>
     </body>

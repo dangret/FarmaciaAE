@@ -10,6 +10,12 @@ body {font:13px/1.231 arial,helvetica,clean,sans-serif;}table{font-size:inherit;
     font-size: small;
     text-decoration-color: #9B3535;
 }
+
+#contenedor > div{
+    display:inline-block;
+    with:25%;
+    
+}
 body {
 	text-align:center;
 	color:#000;
@@ -46,13 +52,13 @@ background:url(images/bg.jpg);
 	padding-left:100px
 }
 #nav { position:absolute; top:35px; left:420px; background:url(images/nav.jpg); width:451px;height:30px; line-height:30px; padding:0 0 0 20px  }
-#nav li {float:left;  font-weight:700; width:80px; padding:0 5px }
+#nav li {float:left;  font-weight:700; width:80px; padding:0 5px; }
 #nav a {text-decoration:none; display:block; text-align:center; color:#fff}
 #nav a:hover {background: #AA4479; color:#000000}
 /* content */
 
 .img { margin:0px 0  0 70px }
-.main {width:440px;  font-family:Verdana, Arial, Helvetica, sans-serif; background:url(images/box.jpg); color:#000;}
+.main {width:490px;  font-family:Verdana, Arial, Helvetica, sans-serif; background:url(images/box.jpg); color:#000;}
 #text {margin:0px 0  0 65px }
 #text p {margin:0 auto; width:420px; }
 #text h2 {font-size:30px; padding:20px 0 20px 0}

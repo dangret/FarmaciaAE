@@ -45,6 +45,7 @@
     boolean userValido = false;
     if (user != null)
         if (user.getEstado())
+              if (user.getTipousuario().getIdtipousuario() != 1)
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");
@@ -123,7 +124,7 @@
          }
          terminar = 0;
          jspInit();
-         response.sendRedirect("carritoCliente.jsp");
+         response.sendRedirect("principal.jsp");
        }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();

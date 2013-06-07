@@ -40,7 +40,7 @@
     boolean userValido = false;
     if (user != null)
         if (user.getEstado())
-            if (user.getTipousuario().getIdtipousuario() == 2)
+            if (user.getTipousuario().getIdtipousuario() != 1)
                 userValido = true;
     
     if (!userValido) 

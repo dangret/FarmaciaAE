@@ -12,7 +12,7 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT CONCAT(per.appat,' ',per.apmat,' ',per.nombre) AS nombrecliente, SUM(p.precio*dv.cantidad) AS totalPreciolProducto,
-     (SELECT SUM(pp.precio*dvv.cantidad) FROM producto pp INNER JOIN detalleventa dvv ON pp.idproducto = dvv.idproducto WHERE dvv.idventa = 4) AS totalCompra,
+     (SELECT SUM(pp.precio*dvv.cantidad) FROM producto pp INNER JOIN detalleventa dvv ON pp.idproducto = dvv.idproducto WHERE dvv.idventa = $P{idventa}) AS totalCompra,
      v.idventa, p.producto, dv.cantidad, p.precio
 FROM persona per INNER JOIN usuario u ON per.idcliente = u.idcliente
      INNER JOIN venta v ON u.idusuario = v.idusuario

@@ -16,25 +16,38 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-    int idventa=request.getParameter("idventa")==null?0:Integer.parseInt(request.getParameter("idventa"));
-    try{
-    Connection conexion;
-    Class.forName("org.postgresql.Driver");
-    conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Farmacia","postgres","postgres");
-    File reportFile = new File(application.getRealPath("reportes/reporteFSC.jasper"));
-    Map parameters = new HashMap();
-    parameters.put("idventa",idventa);
-    byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters,conexion);
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null) {
+        if (user.getEstado()) //if (user.getTipousuario().getIdtipousuario() == 1)
+        {
+            userValido = true;
+        }
+    }
 
-    response.setContentType("application/pdf");
-    response.setContentLength(bytes.length);
-    ServletOutputStream ouputStream = response.getOutputStream();
-    ouputStream.write(bytes, 0, bytes.length);
-    ouputStream.flush();
-    ouputStream.close();
-}catch(Exception e){
-    out.print(e.getCause());
-}
+    if (!userValido) {
+        response.sendRedirect("index.jsp");
+    } else {
+        int idventa = request.getParameter("idventa") == null ? 0 : Integer.parseInt(request.getParameter("idventa"));
+        try {
+            Connection conexion;
+            Class.forName("org.postgresql.Driver");
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Farmacia", "postgres", "postgres");
+            File reportFile = new File(application.getRealPath("reportes/reporteFSC.jasper"));
+            Map parameters = new HashMap();
+            parameters.put("idventa", idventa);
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conexion);
+
+            response.setContentType("application/pdf");
+            response.setContentLength(bytes.length);
+            ServletOutputStream ouputStream = response.getOutputStream();
+            ouputStream.write(bytes, 0, bytes.length);
+            ouputStream.flush();
+            ouputStream.close();
+        } catch (Exception e) {
+            out.print(e.getCause());
+        }
+    }
 %>
 <html>
     <head>
@@ -43,8 +56,8 @@
     </head>
     <body>
     <center>
-        
+
     </center>
-        
-    </body>
+
+</body>
 </html>

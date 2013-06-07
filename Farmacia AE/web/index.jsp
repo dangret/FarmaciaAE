@@ -8,9 +8,10 @@
             response.sendRedirect("adm.jsp");
         else
             response.sendRedirect("cliente.jsp");
-    }
+    }//
 %>
 <head>
+    
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Farmacias!!!</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
@@ -26,7 +27,7 @@
 <div id="wrap">
   <div id="header">
     <div id="logo">
-      <h1>Medicinas con Iva+</h1>
+      <h1>Medicinas Online</h1>
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>

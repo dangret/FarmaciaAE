@@ -22,4 +22,5 @@ public interface EJBTarjetaLocal {
         public List<Numtarjeta> consultaId(int id);
         public Numtarjeta consultaPorTarjeta(String numtarjeta);
         public int borrarTarjetas(List<Numtarjeta> tarjetas);
+        public int borrarTarjeta(Numtarjeta tarjeta);
 }
