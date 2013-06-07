@@ -20,22 +20,12 @@
     </head>
     <body>
         <div class="side fr">
-      <div id="bm"> <img src="images/s.jpg"  width="200" height="250" /> </div>
+      <div id="bm"> <img src="images/s.jpg"  width="100" height="250" /> </div>
     </div>
-    
     <div class="main fl">
       <div id="text">
-        <h2>Compra Tu Medicinas Al Mejor Precio</h2>
-        <h3> Similares a tu alcance!!! parecen lo mismo pero solo parecen jajja <a href="http://www.farmaciasdesimilares.com.mx/">Somos Mejor que Esto!!!!!</a></h3> <br/>
-          <br/>
-              <ul>
-              <li><a href="carritoCliente.jsp">Mi Compra</a></li>  
-              <li> <a href="login.jsp">Login</a></li>  
-              <li> <a href="registroUsuario.jsp">Registrar un Usuario</a></li>
-              <li> <a onclick="miFuncion();"> Eliminar un Usuario</a></li>  
-              <li> <a href="wpProductoAlta.jsp">Alta Producto</a></li>  
-              <li><button onclick="abrirVent();">venga</button></li>  
-              </ul>
+        <h2>Bienvenido a Farmacias SAN CAZOLA</h3>
+        <h2>Tu Farmacia Online..</h3>
     </div>
     <!-- /content -->
   </div>

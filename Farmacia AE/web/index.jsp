@@ -27,7 +27,7 @@
 <div id="wrap">
   <div id="header">
     <div id="logo">
-      <h1>Medicinas con Iva+</h1>
+      <h1>Medicinas Online</h1>
     </div>
     <ul id="nav">
       <li><a href="index.jsp">Inicio</a></li>

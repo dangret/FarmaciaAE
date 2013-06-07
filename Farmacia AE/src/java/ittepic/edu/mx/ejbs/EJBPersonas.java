@@ -29,10 +29,8 @@ public class EJBPersonas implements EJBPersonasRemote {
     
     @Override
    /**
-     * Metodo 
-     * @param nick String
-     * @param correo Número Entero
-     * @return int Retorna un entero 1 si fue exitoso, 0 Error
+     * Metodo obtener todas las personas del sistema
+     * @return List<Persona> Retorna las Personas creadas
      */
     public List<Persona> consultaPersonas() {
         em= emf.createEntityManager();
@@ -40,6 +38,11 @@ public class EJBPersonas implements EJBPersonasRemote {
     }
 
     @Override
+   /**
+     * Metodo Para dar de alta y Modificar personas
+     * @param p Objeto tipo persona seteado
+     * @return int Retorna 0 si se dio de alta exitosamente,-1 si fallo 
+     */
     public int alta_modificacion(Persona p) {
         em = emf.createEntityManager();
         try{
@@ -51,12 +54,23 @@ public class EJBPersonas implements EJBPersonasRemote {
     }
 
     @Override
+       /**
+     * Metodo obtener una persona mediante su id
+     * @param idcliente id del cliente para consultar
+     * @return int Retorna 0 si se dio de alta exitosamente,-1 si fallo 
+     */
     public Persona consultaPorId(int idcliente) {
         em=emf.createEntityManager();
         return (Persona) em.createNamedQuery("Persona.findByIdcliente").setParameter("idcliente", idcliente).getSingleResult();
     }
 
     @Override
+    
+           /**
+     * Metodo eliminar Personas
+     * @param persona Persona obtenida del jsp
+     * @return int Retorna 1 si se dio de alta exitosamente,-1 si fallo 
+     */
     public int eliminar(Persona persona) {
         try{
             em = emf.createEntityManager();
@@ -68,14 +82,21 @@ public class EJBPersonas implements EJBPersonasRemote {
         
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+   /**
+     * Metodo reemplazar 
+     * @param list_p Persona obtenidas (Arreglo)
+     * @return int Retorna 1 si se dio de alta exitosamente,-1 si fallo 
+     */
     @Override
     public void reemplazar(List<Persona> list_p) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
+       /**
+     * Metodo para buscar personas mediante su email
+     * @param email email de la persona consultada
+     * @return Boolean Retorna 1 si se dio de alta exitosamente,-1 si fallo 
+     */
     public Boolean buscarPorEMail(String email){
         Persona persona = null;
         try{
