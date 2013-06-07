@@ -139,10 +139,10 @@
                 top.frames['iframe2'].location.href = 'iframeRecuentoVenta.jsp';
             }
             function agregarMedicina(idproducto, disponibles, index) {
-
-                var cantidad = prompt("Introduzca la cantidad de productos", 0);
-
-                if (cantidad == null)
+                
+                var cantidad = prompt("Introduzca la cantidad de productos",0);
+                
+                if(cantidad==null || cantidad < 1)
                 {
                     location.href = "carritoCliente.jsp";
                 }

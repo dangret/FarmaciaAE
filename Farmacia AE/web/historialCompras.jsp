@@ -4,6 +4,7 @@
     Author     : dangret
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="ittepic.edu.mx.entidades.Usuario"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="ittepic.edu.mx.entidades.Detalleventa"%>
@@ -33,6 +34,7 @@
     }
 %>
 <%
+    
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     Usuario user = sesionUser;
     boolean userValido = false;
@@ -41,12 +43,15 @@
             if (user.getTipousuario().getIdtipousuario() == 2)
                 userValido = true;
     
-    if (!userValido) response.sendRedirect("index.jsp");
-    else{
+    if (!userValido) 
+        response.sendRedirect("index.jsp");
     
     List<Detalleventa> detallesventas = new ArrayList();
     List<Venta> ventasTotales = new ArrayList();
     List<Producto> medicamentos = new ArrayList();
+    List<Date> fechaVentaUsuario = new ArrayList();
+    List<Double> montoTotalVenta = new ArrayList();
+    List<Integer> ventasIDs = new ArrayList(); 
     ventasTotales = carritoCliente.getVentas();
     detallesventas = carritoCliente.getDetalleventa();
     medicamentos = carritoCliente.getMedicamentos();
@@ -54,28 +59,30 @@
     double montoparcial = 0, montototal = 0;
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DecimalFormat df = new DecimalFormat("#.##");
-    
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script>
+            function verDetalleVentaUsuario(idventa)
+            {
+                location.href = "reporteDetalleVenta.jsp?idventa="+idventa;
+            }
+        </script>
     </head>
     <body>
         <center>
         <%if(ventasTotales.size()>0){%>
                     <h3>HISTORIAL</h3>
-                    <table align="center" border="5">
-;                        <tr>
-                            <th><center><b>Fecha Venta</b></center></th>
-                            <th><center><b>Costo</b></center></th>
+                    <table align="center" border="3">
+                        <tr>
+                            <th style="background-color: darkred; color: white"><center><b>&nbsp;&nbsp;Fecha Venta&nbsp;&nbsp;</b></center></th>
+                            <th style="background-color: darkred; color: white"><center><b>&nbsp;&nbsp;Costo&nbsp;&nbsp;</b></center></th>
+                            <th style="background-color: darkred; color: white"><center><b>&nbsp;&nbsp;Ver Detalle de Venta&nbsp;&nbsp;</b></center></th>
                         </tr>
-                        <%for (int i=0; i<ventasTotales.size(); i++) {%>
-                            <tr>
-                                <%if(ventasTotales.get(i).getIdusuario().equals(sesionUser)){%>
-                                <td><center><i><%out.println(sdf.format(ventasTotales.get(i).getFechadetalleventa()));%></i></center></td>
-                                <td><center>
-                                    <%
+                        <%for (int i=0; i<ventasTotales.size(); i++) {
+                            if(ventasTotales.get(i).getIdusuario().equals(sesionUser)){
                                         for(int j=0;j<detallesventas.size();j++){
                                             int var1 = ventasTotales.get(i).getIdventa();
                                             int var2 = detallesventas.get(j).getIdventa().getIdventa();
@@ -92,23 +99,30 @@
                                               }
                                              }
                                             }
-                                        }%>
-                                        $<%out.print(df.format(montototal));%>
-                                        <%montototal = 0;%>
-                                <%}%>
-                                </center></td>
+                                        }
+                                        fechaVentaUsuario.add(ventasTotales.get(i).getFechadetalleventa());
+                                        montoTotalVenta.add(montototal);
+                                        ventasIDs.add(ventasTotales.get(i).getIdventa());
+                                        montototal = 0;
+                            }%>
                          <%}%>
-                            </tr>
-                        </table>
-                        <br>
-                        <br>
-                        <br>
+                         <%for(int j=0;j<fechaVentaUsuario.size();j++){%>
+                         <tr>
+                             <td><center><i><%out.println(sdf.format(fechaVentaUsuario.get(j)));%></i></center></td>
+                             <td><center>$<%out.print(df.format(montoTotalVenta.get(j)));%></center></td>
+                             <td><center><input type="image" src="images/detalles.png" name="btnDetalles" onclick="verDetalleVentaUsuario(<%=ventasIDs.get(j)%>)"></center></td>
+                         </tr>
                         
-                        
+                      <%}%>
+                    </table>
+                        <br>
+                        <br>
+                        <br>
+           
                         
         <%} else {%>
             <h1><center>Sin Historial</center></h1>
-            <%}} %>
+            <%} %>
            
     </center>
     </body>
