@@ -116,7 +116,7 @@
             <div align="center">
             <table border="1">
                 <%if (combo < 0){%>
-                <tr><td>TARJETAS: 
+                <tr style="background-color: darkred; color: white"><td>TARJETAS: 
                     </td>
                     <td><SELECT NAME="combo" id='combo' SIZE=1> 
                             <option value="#">:: Seleccione ::</option>
