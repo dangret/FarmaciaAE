@@ -10,14 +10,14 @@ import java.util.logging.*;
  * @author e0s87
  */
 
-   /**
-     * Metodo que codifica
-     * @param a Número Entero
-     * @param b Número Entero
-     * @return int Un entero que es el resultado de a + b, si los numeros son negativos, retorna cero.
-     */
+
 public class Codificador {
-    /** * Clase con mÃ©todos estÃ¡ticos de cifrado * */
+   /**
+     * Metodo que Hashea en md5 la contraseña
+     * @param texto Contraseña a encriptar
+     * @param algoritmo Algoritmo a hashear Por defecto :md5
+     * @return String Cadena Hasheada en MD5
+     */
     public String encriptar(String texto, String algoritmo) {
          String output="";
          StringBuffer sb = new StringBuffer();
@@ -38,7 +38,14 @@ public class Codificador {
         return sb.toString();
  
     }
-    
+
+   /**
+     * Metodo que comara la cadena hasheada con el Password en texto plano
+     * @param textOriginal Contraseña a ser comparada
+     * @param textMD5 Cadena Hasheada
+     * @param algoritmo Algoritmo a comparar
+     * @return String Cadena Hasheada en MD5
+     */    
     public Boolean comprobar(String textOriginal,String textMD5, String algoritmo){
         String output;
         try{
