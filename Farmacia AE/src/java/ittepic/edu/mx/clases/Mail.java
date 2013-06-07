@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * @autor Gary Eduardo Diaz Palacios
+ * 
  */
 package ittepic.edu.mx.clases;
 
@@ -31,6 +31,12 @@ import sun.misc.BASE64Encoder;
  */
 public class Mail {
 
+   /**
+     * Metodo Para enviar Un Email a una cuneta Gmail
+     * @param nick String
+     * @param correo Número Entero
+     * @return int Retorna un entero 1 si fue exitoso, 0 Error
+     */
     public int enviarMail(String nick, String correo) {
         try {
             Properties props = new Properties();
@@ -71,6 +77,11 @@ public class Mail {
         }
     }
 
+   /**
+     * Metodo encriptar Base 64
+     * @param nick El usuario que va a ser encriptado
+     * @return String Retorna el Usuario encriptado en Base64
+     */
     public String encriptar(String nick) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String claveEncriptada = null;
         String claveOriginal = nick;
@@ -84,6 +95,12 @@ public class Mail {
         claveEncriptada = new BASE64Encoder().encode(claveEncriptadaBytes);
         return claveEncriptada;
     }
+    
+   /**
+     * Metodo que Desencripta a texto plano
+     * @param nick Cadena Enceriptada
+     * @return String Retorna el usuario desencriptado
+     */
 
     public String desencriptar(String nick) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         String cadena = nick;

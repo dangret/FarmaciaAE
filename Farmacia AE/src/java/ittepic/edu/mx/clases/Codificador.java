@@ -9,6 +9,13 @@ import java.util.logging.*;
  *
  * @author e0s87
  */
+
+   /**
+     * Metodo que codifica
+     * @param a Número Entero
+     * @param b Número Entero
+     * @return int Un entero que es el resultado de a + b, si los numeros son negativos, retorna cero.
+     */
 public class Codificador {
     /** * Clase con mÃ©todos estÃ¡ticos de cifrado * */
     public String encriptar(String texto, String algoritmo) {
