@@ -194,7 +194,7 @@
                             </table>
                         
         <%} else {%>
-            <h1><center>No Hay Productos Disponibles</center></h1>
+            <center>No Hay Productos Disponibles</center>
             <%} }%>
            
     </center>
