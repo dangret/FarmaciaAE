@@ -280,10 +280,10 @@
             <div align="left">
                 <table border="1">
                     <tr>
-                        <th colspan="2">Datos Usuarios</th>
+                        <th colspan="2" style="background-color: darkred; color: white">Datos Usuarios</th>
                     </tr>
                     <tr>
-                        <td>* Nombre: </td>
+                        <td> * Nombre: </td>
                         <td><input type="text" name="nombre" id="nombre"></td>
                     </tr> 
                     <tr>

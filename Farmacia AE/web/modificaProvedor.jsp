@@ -150,7 +150,7 @@
             <div align="center">
                 <table border="1">
                     <tr>
-                        <th colspan="2">Datos Proveedor</th>
+                        <th colspan="2" style="background-color: darkred; color: white">Datos Proveedor</th>
                     </tr>
                     <tr>
                         <td>* Nombre Empresa: </td>

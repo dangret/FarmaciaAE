@@ -114,11 +114,11 @@
     
     <table border="1">
         <tr>
-            <th>ID USUARIO</th>
-            <th>TIPO USUARIO</th>
-            <th>NICK NAME</th>
-            <th>FECHA CREACION</th>
-            <th>ELIMINAR</th>
+            <th style="background-color: darkred; color: white">ID USUARIO</th>
+            <th style="background-color: darkred; color: white">TIPO USUARIO</th>
+            <th style="background-color: darkred; color: white">NICK NAME</th>
+            <th style="background-color: darkred; color: white">FECHA CREACION</th>
+            <th style="background-color: darkred; color: white">ELIMINAR</th>
         </tr>
         
     
