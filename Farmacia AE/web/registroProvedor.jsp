@@ -36,7 +36,7 @@
         }
     }
 %>
-<% 
+<%
     Usuario usera = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     boolean userValido = false;
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
@@ -87,23 +87,112 @@
         usr.setFechacreacion(fecCre2);
         usr.setEstado(false);
         ejb2.alta(usr);
-        
-        Mail m=new Mail();
-        String clave=m.encriptar(user);
-        int i=m.enviarMail(clave,email);
-        if(i==1){
-        System.out.println(i);
-        }else{
-        System.out.println("NO SE CREO CORRECTAMENTE EL CORREO - ERROR");        
+
+        Mail m = new Mail();
+        String clave = m.encriptar(user);
+        int i = m.enviarMail(clave, email);
+        if (i == 1) {
+            System.out.println(i);
+        } else {
+            System.out.println("NO SE CREO CORRECTAMENTE EL CORREO - ERROR");
         }
     }
-  
+
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Alta de alumnos</title>
+        <title>Distribuidores</title>
+        <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+        <script src="js/jquery.maskedinput.js" type="text/javascript"></script>
+        <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
+        <link href="style.css" type="text/css">
         <script>
+            jQuery(function($){
+            $("#btn-submit").click(function(){
+                $(".error").hide();
+                var errorValidacion = false;
+                
+                var nombre=$("#nombre").val();
+                var rfc=$("#rfc").val();
+                var telf=$("#telf").val();   
+                var celular=$("#celular").val();  
+                var email=$("#email").val();
+                var user=$("#user").val();
+                var pass=$("#password").val();
+                var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                var nombreReg = /[a-zA-Z]*/;
+                var passReg = /[\w\W]{6}[\w\W]*/;
+                var userReg = /[a-z][\w]*/;
+                var rfcReg=/^(([A-Z]|[a-z]|\s){1})(([A-Z]|[a-z]){3})([0-9]{6})((([A-Z]|[a-z]|[0-9]){3}))/;
+                
+                     if (pass == ""){
+                        errorValidacion = true;
+                        $("#password").after("<span class='error'>Introduce Password</span>");
+                        $("#password").focus();
+                    }else{
+                        if (!passReg.test(pass)){
+                            errorValidacion = true;
+                            $("#password").after("<span class='error'>Usuario no Valido</span>");
+                            $("#password").focus();
+                        }
+                    }
+                    
+                     if (user == ""){
+                        errorValidacion = true;
+                        $("#user").after("<span class='error'>Introduce Usuario</span>");
+                        $("#user").focus();
+                    }else{
+                        if (!userReg.test(user)){
+                            errorValidacion = true;
+                            $("#user").after("<span class='error'>Usuario inicia con Letra</span>");
+                            $("#user").focus();
+                        }
+                    }
+                    
+                    if (email == ""){
+                        errorValidacion = true;
+                        $("#email").after("<span class='error'>introduzca e-mail</span>");
+                        $("#email").focus();
+                    }else{
+                        if(!emailReg.test(email)){
+                            errorValidacion = true;
+                            $("#email").after("<span class='error'>Email no valido</span>");
+                            $("#email").focus();
+                        } 
+                    }
+                    
+                    if (nombre == ""){
+                        errorValidacion = true;
+                        $("#nombre").after("<span class='error'>Introduce Nombre</span>");
+                        $("#nombre").focus();
+                    }else{
+                        if (!nombreReg.test(nombre)){
+                            errorValidacion = true;
+                            $("#nombre").after("<span class='error'>Nombre con Letras</span>");
+                            $("#nombre").focus();
+                        }
+                    }
+                   
+                   if (rfc == ""){
+                        errorValidacion = true;
+                        $("#rfc").after("<span class='error'>Introduce RFC, Ej:AASS810823FGD</span>");
+                        $("#rfc").focus();
+                    }else{
+                        if (!rfcReg.test(rfc)){
+                            errorValidacion = true;
+                            $("#rfc").after("<span class='error'>Error, Ej: AASS810823FGD</span>");
+                            $("#rfc").focus();
+                        }
+                    }
+                 $("#celular").mask("(999) 999-9999",{placeholder: " "});
+                $("#telf").mask("999-99-99",{placeholder: " "});
+                    
+                    if (errorValidacion == true) {return false;}
+                });
+                                });
+                
+                        
             function cancelar1() {
                 window.location="principal.jsp";
             }
@@ -111,14 +200,14 @@
     </head>
     <body>
         <div align="left">
-            <H2>REGISTRO DE PROOVEDORES</H1>
+            <H2>DISTRIBUIDORES</H1>
         </div>
 
         <form name="formulario" action="registroProvedor.jsp" method="POST">
             <div align="left">
                 <table border="1">
                     <tr>
-                        <th colspan="2" style="background-color: darkred; color: white">Datos Proveedor</th>
+                        <th colspan="2" style="background-color: darkred; color: white">Datos Distribuidor</th>
                     </tr>
                     <tr>
                         <td>* Nombre Empresa: </td>
@@ -126,7 +215,7 @@
                     </tr> 
                     <tr>
                         <td>* RFC: </td>
-                        <td><input type="text" name="rfc" id="rfc"></td>
+                        <td><input type="text" name="rfc" id="rfc" maxlength="13"></td>
                     </tr>
                     <tr>
                         <td>Teléfono Fijo: </td>
@@ -149,11 +238,11 @@
                 <table border="1">
                     <tr>
                         <td width="147">* USER:</td>
-                        <td width="140"><input type="text" name="user"></td>
+                        <td width="140"><input type="text" name="user" id="user"></td>
                     </tr>
                     <tr>
                         <td>* PASSWORD:</td>
-                        <td><input type="password" name="password"></td>
+                        <td><input type="password" name="password" id="password"></td>
                     </tr>
 
                 </table>
@@ -161,9 +250,9 @@
                 <table border="1">
                     <br>
                     <tr align="center">
-                    <input type="submit" name="guardar" value="GUARDAR">
+                    <input type="submit" name="guardar" value="Guardar" id="btn-submit">
 
-                    <input type="button" name="cancelar" value="CANCELAR" onclick="cancelar1();">
+                    <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                     </tr>
                 </table>
             </div>
