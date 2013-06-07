@@ -40,7 +40,7 @@
     boolean userValido = false;
     if (user != null)
         if (user.getEstado())
-                        if (user.getTipousuario().getIdtipousuario() != 1)
+                        //if (user.getTipousuario().getIdtipousuario() != 1)
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");
@@ -75,7 +75,7 @@
         //Persona per=ejb2.consultaPorId(user.getIdcliente().getIdcliente());
 
         Persona per = new Persona();
-        per.setIdcliente(2);
+        per.setIdcliente(user.getIdcliente().getIdcliente());
         //cuenta.setNotarjeta(tarjeta);
         cuenta.setIdcliente(per);
         cuenta.setCodigoseguridad(codigo);
@@ -83,6 +83,12 @@
         ejb.modificar(cuenta);
         
     }
+    String eliminar = request.getParameter("eliminar") == null ? null : request.getParameter("eliminar");
+    if (eliminar != null){
+        ejb.borrarTarjeta(tarjetas.get(combo));
+        response.sendRedirect("modificaTarjetas.jsp");
+    }
+    
 
 
 %>
@@ -114,6 +120,11 @@
     </head>
     <body>
         <form action="modificaTarjetas.jsp" method="POST">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <div align="center">
             <table border="1">
                 <%if (combo < 0){%>
@@ -148,10 +159,11 @@
             <table border="1">
                 <br>
                 <tr align="center">
-                <input type="submit" id="btn-submit" name="modificar" value="modificar">
-                <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                 <input type="button" name="nuevo" value="Nuevo" onclick="nuevo1();">
-                <input type="button" name="eliminar" value="Eliminar">
+                <input type="submit" id="btn-submit" name="Modificar" value="modificar">
+                <input type="submit" name="eliminar" value="Eliminar">
+                <br>
+                <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                 
                 </tr>
             </table>
