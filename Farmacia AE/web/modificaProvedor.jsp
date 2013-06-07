@@ -44,7 +44,7 @@
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");
-    else{
+    
     int idusuario = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
     String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
     String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
@@ -83,8 +83,8 @@
         //usr.setFechacreacion(fecCre2);
         ejb2.alta(usr);
         ejb.alta_modificacion(per);
-        response.sendRedirect("/Farmacia_AE/index.jsp");
-    }
+        response.sendRedirect("consultaUsuarios.jsp");
+    
     }
 %>
 <html>
@@ -93,7 +93,16 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="consultaUsuarios.jsp";
+            }
+            
+             function termina(){
+             var conf = confirm("¿Esta eguro que desea guardar los Cambios?");
+             if(!conf)
+             {
+                  location.href="consultaUsuarios.jsp";
+             }
+                
             }
         </script>
     </head>
@@ -150,7 +159,7 @@
                 <table border="1">
                     <br>
                     <tr align="center">
-                    <input type="submit" name="guardar" value="GUARDAR">
+                    <input type="submit" name="guardar" value="GUARDAR" onclick="termina();">
 
                     <input type="button" name="cancelar" value="CANCELAR" onclick="cancelar1();">
                     </tr>

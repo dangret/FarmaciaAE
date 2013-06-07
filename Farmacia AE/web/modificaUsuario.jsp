@@ -152,7 +152,7 @@
         ejb2.alta(usr);
         ejb.alta_modificacion(per);
 
-        response.sendRedirect("modificaUsuario.jsp");
+        response.sendRedirect("consultaUsuarios.jsp");
     }
 
 %>
@@ -289,8 +289,12 @@
             function cancelar1() {
                 window.location="consultaUsuarios.jsp";
             }
-            function termino(){
-                
+            function termina(){
+             var conf = confirm("¿Esta eguro que desea guardar los Cambios?");
+             if(!conf)
+             {
+                  location.href="consultaUsuarios.jsp";
+             }
                 
             }
         </script>
@@ -300,7 +304,7 @@
             <H2>REGISTRO DE USUARIOS</H1>
         </div>
 
-        <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST">
+        <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST" id="formulario">
             <div align="center">
                 <table border="1">
                     <tr>
@@ -369,7 +373,7 @@
                 <table border="1">
                     <br>
                     <tr align="center">
-                    <input type="submit" name="guardar" value="Guardar">
+                    <input type="submit" name="guardar" value="Guardar" onclick="termina();">
 
                     <input type="button" name="cancelar" value="Cancelar" onclick="cancelar1();">
                     </tr>

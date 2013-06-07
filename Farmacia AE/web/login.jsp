@@ -46,7 +46,7 @@
                 if(tipoUsr==1){
                     response.sendRedirect("adm.jsp");
                 }else{
-                    if(tipoUsr==2){
+                    if(tipoUsr==2 || tipoUsr==3){
                     response.sendRedirect("cliente.jsp");
                     }
                 }

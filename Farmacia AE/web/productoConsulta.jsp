@@ -45,7 +45,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Farmacias San Cazola</title>
         <script src="js/jquery-1.7.2.min.js"></script>
         <script src="js/lightbox.js"></script>
         <link href="lightbox.css" rel="stylesheet" />

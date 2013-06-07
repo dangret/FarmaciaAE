@@ -1,3 +1,4 @@
+<%@page import="ittepic.edu.mx.clases.Mail"%>
 <%@page import="ittepic.edu.mx.clases.Codificador"%>
 <%@page import="ittepic.edu.mx.ejbs.EJBPersonasRemote"%>
 <%@page import="ittepic.edu.mx.entidades.CatTiposusuario"%>
@@ -40,12 +41,10 @@
     boolean userValido = false;
     if (usera != null)
         if (usera.getEstado())
-            if (usera.getTipousuario().getIdtipousuario() == 1)
                 userValido = true;
     
     if (!userValido) response.sendRedirect("index.jsp");
     else{
-    usuario u = new usuario();
     String nickname = request.getParameter("user") == null ? "" : request.getParameter("user");
     String pass = request.getParameter("password") == null ? "" : request.getParameter("password");
     String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
@@ -60,9 +59,6 @@
         String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
         String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
 
-        String apepat = null;
-        String apemat = null;
-        Date fecnac = null;
         per = new Persona();
         per.setRfc(rfc);
         per.setNombre(nombre);
@@ -95,7 +91,17 @@
         usr.setLogin(user);
         usr.setPassword(password);
         usr.setFechacreacion(fecCre2);
+        usr.setEstado(false);
         ejb2.alta(usr);
+        
+        Mail m=new Mail();
+        String clave=m.encriptar(user);
+        int i=m.enviarMail(clave,email);
+        if(i==1){
+        System.out.println(i);
+        }else{
+        System.out.println("NO SE CREO CORRECTAMENTE EL CORREO - ERROR");        
+        }
     }
     }
 %>
@@ -105,7 +111,7 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="login.jsp";
             }
         </script>
     </head>
@@ -139,7 +145,6 @@
                     <tr>
                         <td>Direccion:<br>
                         <td>   <textarea name="direccion" cols="20" rows="2"></textarea></td>
-                        </td>
                     </tr>
                     <tr>
                         <td>* E-Mail: </td>
