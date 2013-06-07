@@ -267,7 +267,7 @@
             });
         
             function cancelar1() {
-                window.location="index.jsp";
+                window.location="principal.jsp";
             }
         </script>
     </head>

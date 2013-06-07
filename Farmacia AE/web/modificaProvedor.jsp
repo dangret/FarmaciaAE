@@ -38,50 +38,14 @@
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
     boolean userValido = false;
-    if (user != null) {
-        if (user.getEstado()) {
-            if (user.getTipousuario().getIdtipousuario() == 1) {
+    if (user != null) 
+        if (user.getEstado()) 
                 userValido = true;
     
-    if (!userValido) response.sendRedirect("index.jsp");
-    
-    int idusuario = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
-    String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
-    String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
-    String email = request.getParameter("email") == null ? "" : request.getParameter("email");
-    String telf = request.getParameter("telf") == null ? "" : request.getParameter("telf");
-    String celular = request.getParameter("celular") == null ? "" : request.getParameter("celular");
-    String direccion = request.getParameter("direccion") == null ? "" : request.getParameter("direccion").toUpperCase();
-
-    Usuario usr = ejb2.consultaPorId(idusuario);
-    Persona per = usr.getIdcliente();
-
-    if ((!rfc.equals("")) || (!email.equals("")) || (!nombre.equals(""))) {
-        usr = ejb2.consultaPorId(idusuario);
-        per = usr.getIdcliente();
-        //TABLA PERSONA
-        per.setRfc(rfc);
-        per.setNombre(nombre);
-        per.setTelefono(telf);
-        per.setCelular(celular);
-        per.setDireccion(direccion);
-        //per.setEmail(email);
-        //ejb.alta_modificacion(per);
-
-        // TABLA USUARIO
-        String password = request.getParameter("password");
-        //Codifico Password
-        if (!password.equals("")) {
-            Codificador codec = new Codificador();
-            password = codec.encriptar(password, "MD5");
-            usr.setPassword(password);
-        }
-    }
-    int idusuario;
     if (!userValido)
         response.sendRedirect("index.jsp");
     else {
-        idusuario = request.getParameter("idusuario") == null ? 0 : Integer.parseInt(request.getParameter("idusuario"));
+        int idusuario = request.getParameter("idusuario") == null ? user.getIdusuario() : Integer.parseInt(request.getParameter("idusuario"));
         String rfc = request.getParameter("rfc") == null ? "" : request.getParameter("rfc").toUpperCase();
         String nombre = request.getParameter("nombre") == null ? "" : request.getParameter("nombre").toUpperCase();
         String email = request.getParameter("email") == null ? "" : request.getParameter("email");
@@ -119,7 +83,10 @@
             //usr.setFechacreacion(fecCre2);
             ejb2.alta(usr);
             ejb.alta_modificacion(per);
-            response.sendRedirect("consultaUsuarios.jsp");
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                response.sendRedirect("consultaUsuarios.jsp");
+            else
+                response.sendRedirect("principal.jsp");
         }
 
 %>
@@ -129,11 +96,11 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="consultaUsuarios.jsp";
+                window.location="principal.jsp";
             }
             
              function termina(){
-             var conf = confirm("¿Esta eguro que desea guardar los Cambios?");
+             var conf = confirm("¿Esta seguro que desea guardar los Cambios?");
              if(!conf)
              {
                   location.href="consultaUsuarios.jsp";
@@ -144,7 +111,8 @@
     </head>
     <body>
         <div align="center">
-            <H2>REGISTRO DE PROOVEDORES</H1>
+            <H2>REGISTRO DE PROOVEDORES</H2>
+            <br>
         </div>
         <form name="formulario" action='modificaProvedor.jsp?idusuario=<%=idusuario%>' method="POST">
             <div align="center">
@@ -169,7 +137,7 @@
                         <td><input type="text" name="celular" id="celular" value="<%=per.getCelular()%>"></td>
                     </tr>
                     <tr>
-                        <td>Direccion:</td>>
+                        <td>Direccion:</td>
                         <td>   <textarea name="direccion" cols="20" rows="2"><%=per.getDireccion()%></textarea></td>
                     </tr>
                     <tr>

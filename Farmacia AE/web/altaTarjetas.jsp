@@ -68,7 +68,7 @@
             cuenta.setCodigoseguridad(codigo);
             cuenta.setFechacaducidad(fechaV);
             ejb.alta(cuenta);
-            response.sendRedirect("modificaTarjetas.jsp");
+            response.sendRedirect("principal.jsp");
         }
     }
 

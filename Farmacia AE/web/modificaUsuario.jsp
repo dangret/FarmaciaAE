@@ -152,7 +152,7 @@
         ejb2.alta(usr);
         ejb.alta_modificacion(per);
 
-        response.sendRedirect("consultaUsuarios.jsp");
+        response.sendRedirect("principal.jsp");
     }
 
 %>
@@ -287,13 +287,13 @@
             });
             
             function cancelar1() {
-                window.location="consultaUsuarios.jsp";
+                window.location="principal.jsp";
             }
             function termina(){
              var conf = confirm("¿Esta eguro que desea guardar los Cambios?");
              if(!conf)
              {
-                  location.href="consultaUsuarios.jsp";
+                  location.href="principal.jsp";
              }
                 
             }

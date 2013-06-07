@@ -124,7 +124,7 @@
          }
          terminar = 0;
          jspInit();
-         response.sendRedirect("carritoCliente.jsp");
+         response.sendRedirect("principal.jsp");
        }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();

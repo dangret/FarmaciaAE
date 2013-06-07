@@ -41,7 +41,11 @@
                 <ul id="nav">
                     <li><a href="#">Cuenta</a>
                         <ul>
+                            <%if (user.getTipousuario().getIdtipousuario() == 2) {%>
                             <li><a href="#" onclick="cargarCarrito('modificaUsuario.jsp')">Datos</a></li>
+                            <%}else{%>
+                            <li><a href="#" onclick="cargarCarrito('modificaProvedor.jsp')">Datos</a></li>
+                            <%}%>
                             <li><a href="#" onclick="cargarCarrito('modificaTarjetas.jsp')">Tarjetas</a></li>
                         </ul>
                     </li>
@@ -53,7 +57,7 @@
             </div>
             <!-- /header -->
             <div id="content"> <img src="images/img.jpg" alt="" class="img" />
-                <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src=""></iframe>
+                <iframe marginwidth="0" marginheight="0" width="850" height="370" scrolling="yes" frameborder=0 id="iframe1" src="principal.jsp"></iframe>
                 <!-- /content -->
             </div>
             <div class="clearfix"></div>

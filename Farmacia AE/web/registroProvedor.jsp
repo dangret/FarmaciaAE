@@ -105,7 +105,7 @@
         <title>Alta de alumnos</title>
         <script>
             function cancelar1() {
-                window.location="login.jsp";
+                window.location="principal.jsp";
             }
         </script>
     </head>

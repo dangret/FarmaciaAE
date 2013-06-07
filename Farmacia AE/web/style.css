@@ -10,17 +10,11 @@ body {font:13px/1.231 arial,helvetica,clean,sans-serif;}table{font-size:inherit;
     font-size: small;
     text-decoration-color: #9B3535;
 }
-#dos{
-    z-index: 2;
-}
-#uno{
-    z-index: 1;
-}
-#uno,dos{
-    position: absolute;
-    white-space: nowrap;
-    top:50px;
-    left:50px;
+
+#contenedor > div{
+    display:inline-block;
+    with:25%;
+    
 }
 body {
 	text-align:center;
@@ -64,7 +58,7 @@ background:url(images/bg.jpg);
 /* content */
 
 .img { margin:0px 0  0 70px }
-.main {width:440px;  font-family:Verdana, Arial, Helvetica, sans-serif; background:url(images/box.jpg); color:#000;}
+.main {width:490px;  font-family:Verdana, Arial, Helvetica, sans-serif; background:url(images/box.jpg); color:#000;}
 #text {margin:0px 0  0 65px }
 #text p {margin:0 auto; width:420px; }
 #text h2 {font-size:30px; padding:20px 0 20px 0}

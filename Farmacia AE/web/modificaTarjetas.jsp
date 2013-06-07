@@ -81,6 +81,7 @@
         cuenta.setCodigoseguridad(codigo);
         cuenta.setFechacaducidad(fechaM);
         ejb.modificar(cuenta);
+        
     }
 
 
@@ -94,7 +95,7 @@
         <script src="js/jquery.maskMoney.js" type="text/javascript"></script>
        <script>
             function cancelar1() {
-                window.location="carritoCliente.jsp";
+                window.location="principal.jsp";
             }
             
             function nuevo1() {

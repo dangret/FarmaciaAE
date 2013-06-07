@@ -79,10 +79,10 @@
 
                     var index = $("#cform").val();
                     if (index != "#"){
-                        if (index == 1)
-                            $("#ru").show();
-                        else
-                            $("#rp").show();
+                    if (index == 1)
+                        $("#ru").show();
+                    else
+                        $("#rp").show();
                     }
                      
                 });
