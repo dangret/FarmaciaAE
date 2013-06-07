@@ -8,11 +8,13 @@
         if (user.getEstado())
             if (user.getTipousuario().getIdtipousuario() != 1)
                 userValido = true;
-            
+            }
+        }
+    }
 
-    if (!userValido) 
+    if (!userValido) {
         response.sendRedirect("index.jsp");
-    
+    }
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
