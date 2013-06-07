@@ -22,6 +22,7 @@ import javax.ejb.Remove;
  */
 @Remote
 public interface EJBCarritoClienteLocal {
+   
     @PostConstruct
     public void inicializar();
     List<Venta> getVentas();
@@ -37,8 +38,4 @@ public interface EJBCarritoClienteLocal {
     Detalleventa registrarDetalleVenta(Detalleventa dv);
     public void registrarPedido(Pedido pe);
     public void actualizarStock(Producto p);
-    @Remove
-    public void terminarPedido();
-    @PreDestroy
-    public void liberarObjetos();
 }

@@ -41,6 +41,9 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
     private List<Venta> ventas = null;
     private List<Detalleventa> detalleventa = null;
     
+    /**
+     * Establece los valores iniciales de los ArrayList que se utilizaran posteriormente
+     */
     @PostConstruct
     @Override
     public void inicializar() {
@@ -51,12 +54,22 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         detalleventa = em.createNamedQuery("Detalleventa.findAll").getResultList();
         usuarios = em.createNamedQuery("Usuario.findAll").getResultList();
     }
-
+    
+    /**
+     * Obtiene la lista de medicamentos existentes.
+     * @return 
+     */
     @Override
     public List<Producto> getMedicamentos() {
         return medicamentos;
     }
-
+    
+    /**
+     * Recibe un parametro de tipo entero (la clave del medicamento) mediante el cual elimina un medicamento de la lista de 
+     * pedido del cliente. Retorna la lista de pedido actualizada sin dicho medicamento.
+     * @param index
+     * @return 
+     */
     @Override
     public List<Producto> removerMedicamento(int index) {
         pedido.remove(index);
@@ -64,6 +77,16 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         return pedido;
     }
 
+    /**
+     * Agrega un medicamento a la lista de pedido del cliente. Recibe 2 parametros de tipo enteros; el primero se encarga de
+     * recibir la clave del medicamento a agregar y el segundo la cantidad de dicho medicamento que pidio el cliente.
+     * Retorna la lista de pedido del cliente con el medicamento agregado y su respectiva cantidad.
+     * NOTA: En caso de que el medicamento ya exista en la lista del pedido, solamente agrega y actualiza la cantidad que se 
+     *       esta pidiendo de dicho medicamento.
+     * @param idproducto
+     * @param cantidad
+     * @return 
+     */
     @Override
     public List<Producto> agregar(int idproducto, int cantidad) {
         try {
@@ -82,100 +105,102 @@ public class EJBCarritoCliente implements EJBCarritoClienteLocal {
         return pedido;
     }
 
+    /**
+     * Recibe un parametro que es la clave del medicamento, y en base a ella realiza una busqueda entre los productos existentes.
+     * Retorna un objeto de tipo Producto con los atributos de dicho medicamento.
+     * @param idproducto
+     * @return 
+     */
     @Override
     public Producto getMedicamentoById(int idproducto) {
         return (Producto) em.createNamedQuery("Producto.findByIdproducto").setParameter("idproducto", idproducto).getSingleResult();
     }
 
+    /**
+     * Obtiene la lista del pedido actual del cliente
+     * @return 
+     */
     @Override
     public List<Producto> getPedido() {
         return pedido;
     }
 
+    /**
+     * Obtiene la lista de cantidades de los medicamentos en existencia.
+     * @return 
+     */
     @Override
     public List getCantidades() {
         return cantidades;
     }
 
-    @Override
-    public void liberarObjetos() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    /**
+     * Obtiene la lista de todas las ventas realizadas por la farmacia
+     * @return 
+     */
     
-    @Remove
-    @Override
-    public void terminarPedido() {
-       Venta v = new Venta();
-        //v.setIdusuario();
-        v.setHora(new Date());
-        v.setFechadetalleventa(new Date());
-        em.persist(v);//Se registra una nueva venta
-        for(int i=0; i<pedido.size(); i++)
-        {
-         int index = medicamentos.indexOf(medicamentos.get(i));
-         Producto p = medicamentos.get(index);
-         Detalleventa dv = new Detalleventa();
-         dv.setIdproducto(p);
-         dv.setIdventa(v);
-         dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
-         em.persist(dv);//Se registra el detalle de la venta con la lista de los productos
-         
-         if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
-         {
-          p.setCantidad(Short.parseShort("0"));
-          Pedido pe = new Pedido();
-          pe.setIdproducto(p);
-          pe.setIdventa(v);
-          pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
-          //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
-          pe.setEstado(1);//estado del pedido
-          pe.setFechapedido(new Date());
-          em.merge(pe);//Se registra el pedido
-         }
-         else
-         {
-           p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
-           
-         }
-         em.merge(p); //Actualiza la cantidad en productos despues de la venta realizada     
-        }
-    }
-
     @Override
     public List<Venta> getVentas() {
         return ventas; 
     }
 
+    /**
+     * Obtiene la lista de todos los detalles de todas las ventas realizadas.
+     * @return 
+     */
     @Override
     public List<Detalleventa> getDetalleventa() {
         return detalleventa;
     }
 
+    /**
+     * Obtiene la lista de todos los usuarios existentes.
+     * @return 
+     */
     @Override
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
 
+    /**
+     * Recibe de parametro un objeto de tipo Venta y registra una nueva venta; retorna dicha venta para procesos poteriores.
+     * @param v
+     * @return 
+     */
     @Override
     public Venta registrarVenta(Venta v) {
         em.persist(v);
         return v;
     }
 
+    /**
+     * Recibe de parametro un objeto de tipo Detalleventa y registra los medicamentos y sus respectivas cantidades de la venta realizada.
+     * Retorna dicho detalle para procesos posteriores
+     * @param dv
+     * @return 
+     */
     @Override
     public Detalleventa registrarDetalleVenta(Detalleventa dv) {
         em.persist(dv);
         return dv;
     }
 
+    /**
+     * Recibe un parametro de un objeto de tipo Pedido. Solamente se utiliza esta funcion en caso de que se pida una cantidad
+     * mayor de medicamento que la que se tiene en existencia. Se pone a 0 la existencia de productos y se agrega la diferencia
+     * a pedidos para posteriormente mandar pedir mas producto a los proveedores.
+     * @param pe 
+     */
     @Override
     public void registrarPedido(Pedido pe) {
         em.merge(pe);
     }
 
+    /**
+     * Recibe un parametro de tipo Producto en el cual disminuye y actualiza la cantidad de medicamento en base a los medicamentos
+     * que se hayan realizado en la lista de pedido del cliente.
+     * @param p 
+     */
     @Override
     public void actualizarStock(Producto p) {
         em.merge(p);
