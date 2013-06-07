@@ -50,7 +50,7 @@
         <script>
             function verReporte(idventa)
             {
-                location.href = "reporte.jsp?idventa="+idventa;
+                window.open("reporte.jsp?idventa="+idventa);
             }
         </script>
     </head>
