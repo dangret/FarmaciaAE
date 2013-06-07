@@ -300,7 +300,7 @@
             <H2>REGISTRO DE USUARIOS</H1>
         </div>
 
-        <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST">
+        <form name="formulario" action="modificaUsuario.jsp?idusuario=<%=idcliente%>&band=1" method="POST" enctype="UTF-8">
             <div align="center">
                 <table border="1">
                     <tr>
