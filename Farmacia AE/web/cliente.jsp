@@ -1,4 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page import="ittepic.edu.mx.entidades.Usuario"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<%
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 2)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -40,7 +52,7 @@
   <div id="footer">
     <div id="ftinner">
       <div class="ftlink fl"> <a href="#">Home</a> | <a href="#">About Us</a> | <a href="#">Production</a> | <a href="#">Submission</a> | <a href="#">Contact</a>
-        <p id="copyright">© 2008. All Rights Reserved. <br/>
+        <p id="copyright">Â© 2008. All Rights Reserved. <br/>
           Designed by <a href="http://www.free-css-templates.com/">Free CSS Templates</a>, Thanks to <a href="http://www.openwebdesign.org/">Web Design Dubai</a></p>
       </div>
       <div class="valid fr"><img src="images/xhtml.gif" alt="xhtml valid" /> <img src="images/css.gif" alt="css valid" /></div>

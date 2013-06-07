@@ -39,7 +39,16 @@
     }
 %>
 <%
+    
     Usuario sesionUser = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    Usuario user = sesionUser;
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     if (session.getAttribute("carritoCliente") != null) carritoCliente = (EJBCarritoClienteLocal) (session.getAttribute("carritoCliente"))  ;
     int idproducto=request.getParameter("idproducto")==null?0:Integer.parseInt(request.getParameter("idproducto"));
     int remover= request.getParameter("remover")==null?0:Integer.parseInt(request.getParameter("remover"));
@@ -57,67 +66,71 @@
     usuarios = carritoCliente.getUsuarios();
     ventas = carritoCliente.getVentas();
     
-    if(remover>0)
-    {
-     int index=Integer.parseInt(request.getParameter("index"));
-     carritoCliente.removerMedicamento(index);
-    }else{ 
-        if(terminar==1){
-            Venta v = new Venta();
-            v.setIdusuario(sesionUser);
-            v.setHora(new Date());
-            v.setFechadetalleventa(new Date());
-            v = carritoCliente.registrarVenta(v);//Se registra una nueva venta
+    
+    if(idproducto>0){
+        int cant=Integer.parseInt(request.getParameter("cantidad"));
+        carritoCliente.agregar(idproducto, cant);
+       
+    }
+       else if(remover>0){
+           int index=Integer.parseInt(request.getParameter("index"));
+           carritoCliente.removerMedicamento(index);
+           
+       }else if(terminar==1){
+         Venta v = new Venta();
+         v.setIdusuario(sesionUser);
+         v.setHora(new Date());
+         v.setFechadetalleventa(new Date());
+         v = carritoCliente.registrarVenta(v);//Se registra una nueva venta
          
-            for(int i=0; i<pedido.size(); i++)
-            {
-                int index = pedido.get(i).getIdproducto();
-                for(int j=0;j<medicamentos.size();j++)
-                {
-                    if(index==medicamentos.get(j).getIdproducto())
-                    {
-                        System.out.println(index);
-                        System.out.println(medicamentos.get(j).getIdproducto());
-                        System.out.println(medicamentos.get(j).getProducto());
-                        Producto p = medicamentos.get(j);
-                        Detalleventa dv = new Detalleventa();
-                        dv.setIdproducto(p);
-                        dv.setIdventa(v);
-                        dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
-                        dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
-                        if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
-                        {
-                            p.setCantidad(Short.parseShort("0"));
-                            Pedido pe = new Pedido();
-                            pe.setIdproducto(p);
-                            pe.setIdventa(v);
-                            pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
-                            //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
-                            pe.setEstado(1);//estado del pedido
-                            pe.setFechapedido(new Date());
-                            carritoCliente.registrarPedido(pe);//Se registra el pedido
-                        }
-                        else
-                        {
-                            p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
+         for(int i=0; i<pedido.size(); i++)
+         {
+          int index = pedido.get(i).getIdproducto();
+          for(int j=0;j<medicamentos.size();j++)
+          {
+              if(index==medicamentos.get(j).getIdproducto())
+              {
+               System.out.println(index);
+               System.out.println(medicamentos.get(j).getIdproducto());
+               System.out.println(medicamentos.get(j).getProducto());
+               Producto p = medicamentos.get(j);
+               Detalleventa dv = new Detalleventa();
+               dv.setIdproducto(p);
+               dv.setIdventa(v);
+               dv.setCantidad(Short.parseShort(cantidades.get(i).toString()));
+               dv = carritoCliente.registrarDetalleVenta(dv);//Se registra el detalle de la venta con la lista de los productos
+               if(p.getCantidad()<Short.parseShort(cantidades.get(i).toString()))
+               {
+                p.setCantidad(Short.parseShort("0"));
+                Pedido pe = new Pedido();
+                pe.setIdproducto(p);
+                pe.setIdventa(v);
+                pe.setCantidad(Integer.parseInt(String.valueOf(cantidades.get(i).toString()))-Integer.parseInt(String.valueOf(pedido.get(i).getCantidad())));
+                //Se hace la diferencia de cuanto producto falta y se anexa a la tabla pedido con la funcion dee arriba
+                pe.setEstado(1);//estado del pedido
+                pe.setFechapedido(new Date());
+                carritoCliente.registrarPedido(pe);//Se registra el pedido
+               }
+               else
+               {
+                p.setCantidad((Short.valueOf(String.valueOf(p.getCantidad()-Short.parseShort(cantidades.get(i).toString())))));//En caso contrario que no rebase el pedido la cantidad del stock disponible
                
-                        }
-                        carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada
-                        j=medicamentos.size();
-                       } 
+               }
+               carritoCliente.actualizarStock(p); //Actualiza la cantidad en productos despues de la venta realizada
+               j=medicamentos.size();
+              } 
           } 
          }
          terminar = 0;
          jspInit();
          response.sendRedirect("carritoCliente.jsp");
-    }
+       }
     cantidades=carritoCliente.getCantidades();
     pedido = carritoCliente.getPedido();
     medicamentos=carritoCliente.getMedicamentos();
     usuarios = carritoCliente.getUsuarios();
     ventas = carritoCliente.getVentas();
     session.setAttribute("carritoCliente", carritoCliente);
-
 %>
 <html>
     <head>
@@ -182,7 +195,7 @@
                         
         <%} else {%>
             <h1><center>No Hay Productos Disponibles</center></h1>
-            <%} %>
+            <%} }%>
            
     </center>
     </body>

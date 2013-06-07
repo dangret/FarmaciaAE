@@ -16,6 +16,7 @@
 <%@page import="ittepic.edu.mx.ejbs.EJBTarjetaLocal"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <%!    
     EJBTarjetaLocal ejb = null;
     EJBPersonasRemote ejb2 = null;
@@ -37,26 +38,37 @@
 %>
 <%
     Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+                userValido = true;
     
-    Numtarjeta cuenta=new Numtarjeta();
-    String tarjeta = request.getParameter("tarjeta") == null ? "" : request.getParameter("tarjeta");
-    int codigo = request.getParameter("codigo") == null ? 0 : Integer.parseInt(request.getParameter("codigo"));
-    String fecha = request.getParameter("fechaV")==null?"":request.getParameter("fechaV");
-    
-    if((!tarjeta.equals("")) || (codigo!=0) || (!fecha.equals(""))){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaV = format.parse(fecha);
-        
-        //CUANDO ESTE LISTA LA SESSION
-        //Persona per=ejb2.consultaPorId(user.getIdcliente().getIdcliente());
-        Persona per=new Persona();
-        per.setIdcliente(2);
-        
-        cuenta.setNotarjeta(tarjeta);
-        cuenta.setIdcliente(per);
-        cuenta.setCodigoseguridad(codigo);
-        cuenta.setFechacaducidad(fechaV);
-        ejb.alta(cuenta);
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
+%>
+
+<%
+       
+        Numtarjeta cuenta=new Numtarjeta();
+        String tarjeta = request.getParameter("tarjeta") == null ? "" : request.getParameter("tarjeta");
+        int codigo = request.getParameter("codigo") == null ? 0 : Integer.parseInt(request.getParameter("codigo"));
+        String fecha = request.getParameter("fechaV")==null?"":request.getParameter("fechaV");
+
+        if((!tarjeta.equals("")) || (codigo!=0) || (!fecha.equals(""))){
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaV = format.parse(fecha);
+
+            //CUANDO ESTE LISTA LA SESSION
+            //Persona per=ejb2.consultaPorId(user.getIdcliente().getIdcliente());
+            
+            
+
+            cuenta.setNotarjeta(tarjeta);
+            cuenta.setIdcliente(user.getIdcliente());
+            cuenta.setCodigoseguridad(codigo);
+            cuenta.setFechacaducidad(fechaV);
+            ejb.alta(cuenta);
+        }
     }
 
 %>

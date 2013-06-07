@@ -39,6 +39,15 @@
     }
 %>
 <%
+    Usuario user = (Usuario) session.getAttribute("usuario") == null ? null : (Usuario) session.getAttribute("usuario");
+    boolean userValido = false;
+    if (user != null)
+        if (user.getEstado())
+            if (user.getTipousuario().getIdtipousuario() == 1)
+                userValido = true;
+    
+    if (!userValido) response.sendRedirect("index.jsp");
+    else{
     String nombreUsr = request.getParameter("usuariox") == null ? "" : request.getParameter("usuariox");
     Usuario usr;
     Persona per;
@@ -51,6 +60,8 @@
        tipoUsr=usr.getTipousuario();
        ejb2.eliminarEntidad(usr);
     }
+    }
+    
 %>
 <html>
     <head>
